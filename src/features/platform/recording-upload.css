@@ -206,3 +206,36 @@ body:has(.recording-import-dialog) .dialog-overlay {
     font-size: 16px;
   }
 }
+@media (min-width: 601px) and (max-height: 800px) {
+  .recording-import-dialog {
+    padding: 24px 32px;
+  }
+  .recording-import-dialog > h2 {
+    font-size: 28px;
+  }
+  .recording-heading-icon {
+    width: 52px;
+    height: 52px;
+  }
+  .recording-import-dialog > p {
+    margin-left: 76px;
+    margin-bottom: 20px;
+  }
+  .recording-upload-form {
+    gap: 14px;
+  }
+  .recording-upload-zone {
+    min-height: 200px;
+    padding: 16px;
+  }
+  .recording-upload-art > svg {
+    width: 44px;
+    height: 44px;
+  }
+  .recording-upload-note {
+    padding-block: 10px;
+  }
+  .recording-upload-submit {
+    min-height: 48px;
+  }
+}
