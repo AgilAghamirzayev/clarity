@@ -19,11 +19,14 @@ class CallController {
   final Database db;
   final AudioStore audio;
   final AnalysisProfiles profiles;
+  final DemoWorkspaces workspaces;
 
-  CallController(Database db, AudioStore audio, AnalysisProfiles profiles) {
+  CallController(
+      Database db, AudioStore audio, AnalysisProfiles profiles, DemoWorkspaces workspaces) {
     this.db = db;
     this.audio = audio;
     this.profiles = profiles;
+    this.workspaces = workspaces;
   }
 
   record ImportMetadata(
@@ -113,10 +116,10 @@ class CallController {
               if (db.sql.queryForObject(
                       "select count(*) from calls where metadata->>'demoSeedVersion' is null",
                       Integer.class)
-                  >= 5)
+                  >= workspaces.maxFiles(user))
                 throw new ResponseStatusException(
                     HttpStatus.TOO_MANY_REQUESTS,
-                    "This demo workspace allows up to five recordings");
+                    "This workspace allows up to " + workspaces.maxFiles(user) + " recordings");
             }
             data.put("analysisProfile", profiles.snapshot());
             db.sql.update(

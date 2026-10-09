@@ -16,7 +16,7 @@ export function useWorkspace() {
   return useQuery({
     queryKey: workspaceKey,
     queryFn: () => repository.getWorkspace(),
-    refetchInterval: apiMode ? 10000 : false,
+    refetchInterval: apiMode ? 5000 : false,
   });
 }
 export function useReview() {

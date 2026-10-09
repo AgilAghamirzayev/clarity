@@ -30,6 +30,10 @@ interface Job {
 }
 export function Imports() {
   const user = useIdentity();
+  const [sampleUpload] = useState(() => ({
+    key: crypto.randomUUID(),
+    recordedAt: new Date().toISOString(),
+  }));
   const [open, setOpen] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const client = useQueryClient();
@@ -76,7 +80,7 @@ export function Imports() {
               customerId: "sample-customer",
               agent: "Sample support agent",
               department: "Payments",
-              recordedAt: new Date().toISOString(),
+              recordedAt: sampleUpload.recordedAt,
               language: "en",
               speakers: 2,
               customerChannel: 0,
@@ -87,7 +91,7 @@ export function Imports() {
       );
       return api("/calls/import", {
         method: "POST",
-        headers: { "Idempotency-Key": "live-demo-sample-v1" },
+        headers: { "Idempotency-Key": sampleUpload.key },
         body: form,
       });
     },

@@ -22,6 +22,7 @@ function GuestGate({ children }: { children: ReactNode }) {
     queryFn: () => api<Identity>("/auth/demo", { method: "POST" }),
     retry: false,
     staleTime: Infinity,
+    refetchInterval: 60000,
   });
   const refetch = session.refetch;
   useEffect(() => {

@@ -14,11 +14,11 @@ The Azure portal quoted $0.252 per hour for compute, approximately $6.05 per day
 
 ## Demo use
 
-Open the public URL. Each visitor receives a separate temporary workspace with eight fictional recordings, five issue groups, five recommendations and prepared reports. Choose **Try fresh analysis**, then **Analyze sample call**, to process a new 22-second recording.
+Open the public URL. All visitors now join one shared public workspace with eight fictional recordings, five issue groups, five recommendations and prepared reports. New recordings and decisions are visible across phones and computers, with automatic updates every five seconds. Choose **Try fresh analysis**, then **Analyze sample call**, to process a new 22-second recording.
 
 The first Azure smoke test completed in 205.2 seconds: transcription and masking took 30.5 seconds, analysis 172.6 seconds and clustering 0.7 seconds. It produced nine transcript segments and one accepted finding. This is one measurement on this CPU server, not a latency guarantee or a concurrency benchmark. While analysis runs, show the prepared conversations and their evidence.
 
-Guest sessions expire after 24 hours. A later visit can create a fresh workspace; do not rely on today's guest session retaining its changes throughout tomorrow's demo. Guest uploads and reports have the limits described in [DEPLOYMENT.md](DEPLOYMENT.md).
+Browser sessions expire after 24 hours, but a new session rejoins the same public workspace. Shared recordings have no automatic guest expiry. The upload dialog states that audio and analysis are visible to everyone with the link. Earlier private visitor recordings are not copied into this workspace. The shared workspace allows 50 new recordings, at most 25 MB and five minutes each. See [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## Access and operation
 
@@ -43,4 +43,4 @@ The VM is left running for the demo. After the demonstration, stop it from Azure
 - MinIO is built from official release source at commit `7ced9663e6a791fef9dc6be798ff24cda9c730ac`; its former container registry images were inaccessible. The running binary reports `RELEASE.2025-07-23T15-54-02Z`.
 - Images are built before services start so the initializer and cleanup service can reuse the worker image.
 
-The visual design and application behavior remain unchanged. HTTPS with a valid certificate, a fresh guest workspace, prepared audio playback, real uploaded-audio analysis, CSRF rejection and cross-visitor isolation were verified against the deployed service.
+The original deployment acceptance verified HTTPS, prepared playback, real uploaded-audio analysis, CSRF rejection and cross-visitor isolation. The later shared-workspace update intentionally shares public recordings across visitors while keeping private/admin workspaces isolated. The upload dialog has also been simplified to audio-only input with drag and drop.

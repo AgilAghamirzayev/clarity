@@ -96,7 +96,7 @@ class DemoCatalogTest {
     var audio = mock(AudioStore.class);
     UUID tenant = guest();
     new DemoCatalog(db, audio, summaries, true).ensure(tenant);
-    var controller = new CallController(db, audio, profiles);
+    var controller = new CallController(db, audio, profiles, new DemoWorkspaces(false, 50));
     var auth =
         new UsernamePasswordAuthenticationToken(
             new Security.Identity(

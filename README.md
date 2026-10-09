@@ -48,7 +48,7 @@ The public demo runs the complete application, including its backend, database, 
 4. When the upload shows **Ready to review**, open it, play the recording, inspect the transcript and follow its linked issue.
 5. In **Support summary**, choose **Refresh analysis** to create a new report that includes the completed call.
 
-On the Azure acceptance run, the fresh call completed in **205.2 seconds** and a report covering nine calls completed in **241.7 seconds**. These are individual CPU measurements, not a promised latency or concurrent-user capacity. Prepared records open immediately. Each visitor gets a separate temporary workspace with five uploads, a 25 MB/five-minute limit per file and a 24-hour session.
+On the Azure acceptance run, the fresh call completed in **205.2 seconds** and a report covering nine calls completed in **241.7 seconds**. These are individual CPU measurements, not a promised latency or concurrent-user capacity. Prepared records open immediately. The Azure site now uses one shared public workspace. All visitors see the same recordings, analysis and decisions, refreshed automatically every five seconds. There is a shared allowance of 50 uploads, with a 25 MB/five-minute limit per file. Browser sessions last 24 hours; shared recordings persist across visits. Upload only audio you are allowed to share publicly.
 
 ### What is deployed
 
@@ -77,7 +77,7 @@ The verified compute quote is **$0.252/hour, approximately $6.05/day**, plus dis
 - Fresh uploaded audio completed transcription/masking, analysis and clustering without a failed stage: nine transcript segments and one accepted issue.
 - Recording playback from transcript timestamps worked without a media error.
 - A refreshed report included all nine calls and produced three evidence-linked recommendations.
-- A second visitor could not access the first visitor's prepared or freshly uploaded calls (HTTP 404). A request without a CSRF token was rejected (HTTP 403).
+- The original isolated-mode acceptance run rejected cross-visitor access (HTTP 404) and requests without a CSRF token (HTTP 403). The public deployment has since switched to an explicitly shared workspace; private/admin tenants remain isolated.
 
 [Azure acceptance evidence](evaluation/reports/azure-acceptance-20261009.json) records the measurements. The interface and AI workflow are implemented and deployed; the fictional catalog and unvalidated business-impact claims remain explicitly separated.
 
@@ -99,7 +99,7 @@ New demo visitors can go directly to Conversations with **Try fresh analysis**, 
 
 ## Run the real demo
 
-The default frontend opens an isolated guest workspace without login. The prepared catalog is available when the API has seeded the workspace. For fresh processing, open Conversations and choose **Analyze sample call** or upload a permissioned recording. A new job uses the running worker and local demo models; wait for completion before describing the output as fresh inference.
+The default frontend opens a guest workspace without login. The VPS configuration enables a shared public workspace; local development keeps isolated visitors unless `DEMO_SHARED_WORKSPACE=true` is set. The prepared catalog is available when the API has seeded the workspace. For fresh processing, open Conversations and choose **Analyze sample call** or upload a permissioned recording. A new job uses the running worker and local demo models; wait for completion before describing the output as fresh inference.
 
 Start the local platform services below, enable `DEMO_ENABLED=true` in `.env.local`, then run:
 

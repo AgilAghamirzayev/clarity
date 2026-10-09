@@ -4,6 +4,7 @@ import { Modal } from "../../components/Modal";
 import { apiMode, guestMode } from "../../data/api";
 import { roleLabels } from "../../domain/presentation";
 import { useIdentity } from "./identity";
+import { usePlatformStatus } from "./platform-status";
 
 export function AccountPanel({
   open,
@@ -13,6 +14,7 @@ export function AccountPanel({
   onOpenChange: (open: boolean) => void;
 }) {
   const user = useIdentity();
+  const status = usePlatformStatus();
   const isDemo = guestMode || !apiMode;
   const name = isDemo ? "Clarity workspace" : user?.email || "Your account";
   const expiry = user?.expiresAt ? new Date(user.expiresAt) : null;
@@ -78,7 +80,9 @@ export function AccountPanel({
         {isDemo && (
           <p className="account-note">
             {guestMode
-              ? "Explore sample calls, upload recordings and review AI insights in your own temporary workspace."
+              ? status.data?.sharedWorkspace
+                ? "Everyone with this link shares the same recordings, AI insights and decisions. New uploads appear automatically on other devices."
+                : "Explore sample calls, upload recordings and review AI insights in your own temporary workspace."
               : "Explore sample conversations and recommendations. Your demo decisions are saved in this browser."}
           </p>
         )}

@@ -23,14 +23,17 @@ class DemoController {
   final boolean enabled;
   final int maxWorkspaces;
   final DemoCatalog catalog;
+  final DemoWorkspaces workspaces;
 
   DemoController(
       Database db,
       DemoCatalog catalog,
+      DemoWorkspaces workspaces,
       @Value("${DEMO_ENABLED:false}") boolean enabled,
       @Value("${DEMO_MAX_WORKSPACES:100}") int maxWorkspaces) {
     this.db = db;
     this.catalog = catalog;
+    this.workspaces = workspaces;
     this.enabled = enabled;
     this.maxWorkspaces = maxWorkspaces;
   }
@@ -45,6 +48,7 @@ class DemoController {
     if (auth != null
         && auth.getPrincipal() instanceof Security.Identity user
         && user.role().equals("DEMO")
+        && workspaces.shared == DemoWorkspaces.SHARED_TENANT.equals(user.tenant())
         && user.expiresAt() != null
         && user.expiresAt().isAfter(Instant.now())) {
       catalog.ensure(user.tenant());
@@ -69,11 +73,20 @@ class DemoController {
     if (attempts > 10)
       throw new ResponseStatusException(
           HttpStatus.TOO_MANY_REQUESTS, "Demo session limit reached. Try again in 15 minutes.");
-    UUID tenant = UUID.randomUUID();
+    UUID tenant = workspaces.shared ? DemoWorkspaces.SHARED_TENANT : UUID.randomUUID();
     Instant expires = Instant.now().plus(24, ChronoUnit.HOURS);
     db.tx.execute(
         status -> {
           db.sql.queryForList("select pg_advisory_xact_lock(742901)");
+          if (workspaces.shared) {
+            // This dedicated public tenant never absorbs previously private visitor data.
+            db.sql.update(
+                "insert into tenants(id,slug) values (?,?) on conflict(id) do nothing",
+                tenant,
+                "clarity-public-workspace");
+            catalog.ensure(tenant);
+            return null;
+          }
           if (db.sql.queryForObject(
                   "select count(*) from tenants where demo_expires_at > now()", Integer.class)
               >= maxWorkspaces)
@@ -119,6 +132,7 @@ class DemoController {
     result.put("api", "ready");
     result.put("processing", worker ? "ready" : "unavailable");
     result.put("demo", user.role().equals("DEMO"));
+    result.put("sharedWorkspace", workspaces.isShared(user));
     if (user.role().equals("DEMO")) {
       result.put(
           "catalogVersion",
@@ -127,7 +141,7 @@ class DemoController {
                   "select demo_seed_version from tenants where id=?", String.class, user.tenant()),
               ""));
       result.put("expiresAt", user.expiresAt());
-      result.put("maxFiles", 5);
+      result.put("maxFiles", workspaces.maxFiles(user));
       result.put("maxFileMb", 25);
       result.put("maxMinutes", 5);
     }

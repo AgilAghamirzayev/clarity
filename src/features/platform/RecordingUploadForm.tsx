@@ -14,6 +14,7 @@ import {
   recordingError,
 } from "../../domain/recordings";
 import "./recording-upload.css";
+import { usePlatformStatus } from "./platform-status";
 
 type RecordingUpload = ReturnType<typeof prepareRecordingUpload>;
 
@@ -28,6 +29,8 @@ export function RecordingUploadForm({
   onUpload: (recording: RecordingUpload) => void;
   onReset: () => void;
 }) {
+  const status = usePlatformStatus();
+  const unavailable = pending || (guestMode && !status.data);
   const input = useRef<HTMLInputElement>(null);
   const prepared = useRef<RecordingUpload | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -35,7 +38,7 @@ export function RecordingUploadForm({
   const [fileError, setFileError] = useState<string | null>(null);
 
   function choose(files: File[]) {
-    if (pending || !files.length) return;
+    if (unavailable || !files.length) return;
     onReset();
     prepared.current = null;
     const selected = files[0];
@@ -51,7 +54,7 @@ export function RecordingUploadForm({
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (pending) return;
+    if (unavailable) return;
     if (!file) {
       setFileError("Choose an audio file to continue.");
       return;
@@ -75,7 +78,7 @@ export function RecordingUploadForm({
           className={`recording-upload-zone${dragging ? " is-dragging" : ""}${file ? " has-file" : ""}`}
           onDragOver={(event) => {
             event.preventDefault();
-            if (!pending) setDragging(true);
+            if (!unavailable) setDragging(true);
           }}
           onDragLeave={(event) => {
             if (
@@ -109,7 +112,7 @@ export function RecordingUploadForm({
             accept={recordingAccept}
             className="sr-only"
             tabIndex={-1}
-            disabled={pending}
+            disabled={unavailable}
             aria-describedby="recording-upload-formats recording-upload-selection"
             onChange={(event) => {
               choose(Array.from(event.target.files ?? []));
@@ -119,7 +122,7 @@ export function RecordingUploadForm({
           <button
             type="button"
             className="button recording-choose"
-            disabled={pending}
+            disabled={unavailable}
             onClick={() => input.current?.click()}
           >
             <File size={20} aria-hidden="true" />
@@ -144,15 +147,29 @@ export function RecordingUploadForm({
           <Clock3 size={23} />
         </span>
         <p>
-          The upload time is saved automatically. No call details to fill in.
+          {status.data?.sharedWorkspace
+            ? "Uploads are visible to everyone with this link. Time is saved automatically."
+            : "The upload time is saved automatically. No call details to fill in."}
         </p>
       </div>
+      {guestMode && status.isError && (
+        <p role="alert" className="field-error">
+          Workspace details could not be loaded.{" "}
+          <button
+            type="button"
+            className="text-link"
+            onClick={() => void status.refetch()}
+          >
+            Try again
+          </button>
+        </p>
+      )}
       {(fileError || error) && (
         <p role="alert" className="field-error">
           {fileError || error}
         </p>
       )}
-      <button className="button recording-upload-submit" disabled={pending}>
+      <button className="button recording-upload-submit" disabled={unavailable}>
         {pending ? "Uploading…" : "Import and analyze"}
         <ArrowRight size={22} aria-hidden="true" />
       </button>

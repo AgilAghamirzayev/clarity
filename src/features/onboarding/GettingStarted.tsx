@@ -11,10 +11,12 @@ import { Link } from "react-router-dom";
 import { PageHeader } from "../../components/ui";
 import { apiMode, guestMode } from "../../data/api";
 import { tourSteps } from "./content";
+import { usePlatformStatus } from "../platform/platform-status";
 import { useOnboarding } from "./context";
 
 export default function GettingStarted() {
   const tour = useOnboarding();
+  const status = usePlatformStatus();
   return (
     <>
       <PageHeader
@@ -151,8 +153,13 @@ export default function GettingStarted() {
           </p>
           {guestMode && (
             <p className="guide-limit">
-              Live demo: 5 uploads, up to 25 MB and 5 minutes each. Prepared
-              samples do not use this allowance.
+              {status.data?.sharedWorkspace
+                ? "Shared workspace: "
+                : "Workspace: "}
+              {status.data?.maxFiles ?? 5} uploads, up to 25 MB and 5 minutes
+              each. Prepared samples do not use this allowance.
+              {status.data?.sharedWorkspace &&
+                " Audio and analysis are visible to everyone with the link."}
             </p>
           )}
         </div>

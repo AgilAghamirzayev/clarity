@@ -1,12 +1,12 @@
 # Real demo on a VPS
 
-The default frontend uses the real API. Each visitor automatically receives a separate demo workspace without a password. Imported audio runs through local transcription, speaker separation, masking, analysis and clustering. Summary reports also use the local model. No transcript or analysis is substituted with fixture data.
+The default frontend uses the real API. Visitors join without a password. `compose.vps.yml` enables one shared public workspace by default; set `DEMO_SHARED_WORKSPACE=false` for isolated visitor workspaces. Imported audio runs through local transcription, speaker separation, masking, analysis and clustering. Summary reports also use the local model. No transcript or analysis is substituted with fixture data.
 
 Each guest also receives a prepared catalog of eight generated support recordings, their actual local transcripts, five issue groups, five AI recommendations and completed 7-, 30- and 90-day reports. These artifacts and audio files ship inside the API image, so the sample workspace appears automatically on a fresh VPS. Viewing the prepared catalog does not require waiting for the models to download. New uploads and refreshed analysis require the worker and models.
 
 The recordings are fictional support scenarios, not private customer data. Their transcription, analysis, clustering and reports were produced by the real local pipeline. Three sample decision histories illustrate approval, work in progress and completion. They are labeled sample reviews and do not claim an actual business improvement. Metrics and outcome comparisons come from the sample call records. An administrator's real workspace is not seeded.
 
-The first guest request copies the catalog into that visitor's tenant and its audio prefix. Later requests reuse it without resetting decisions or adding duplicates. Prepared calls and reports do not consume the visitor's five uploads or three report requests. Dates are set relative to the session's start so the charts remain useful on future deployments. Existing visitors receive the catalog on their next page reload. Set `DEMO_SEED_ENABLED=false` only when an intentionally empty demo is needed.
+The first guest request copies the catalog into the selected workspace and its audio prefix. Later requests reuse it without resetting decisions or adding duplicates. Prepared calls and reports do not consume the workspace's upload or report allowance. Dates are set relative to the session's start so the charts remain useful on future deployments. Existing visitors receive the catalog on their next page reload. Set `DEMO_SEED_ENABLED=false` only when an intentionally empty demo is needed.
 
 The public demo does not send Jira, Slack, CRM or email messages. Its connection forms remain explicitly simulated, as requested for the demo. Real Jira, Slack and CRM delivery requires an administrator, an allowlisted destination and a worker credential. Email delivery is not implemented. See [PLATFORM.md](PLATFORM.md) for adapter configuration.
 
@@ -60,13 +60,15 @@ Enable only the intended adapter after checking its destination. Public guest ap
 
 The live demo cannot be deployed as static files alone. Publish the complete Compose stack. The fixture build is the static-only alternative.
 
-## Visitor isolation and limits
+## Public sharing and limits
 
-Guest sessions have a dedicated tenant and a DEMO role. They can import and play their own audio, inspect analysis, review proposals and request summaries. They cannot create users, access server audit, configure real adapters or trigger external deliveries. PostgreSQL RLS isolates their records from all other visitors and real workspaces. CSRF protection stays enabled.
+With `DEMO_SHARED_WORKSPACE=true`, all guest identities join one dedicated public tenant. Recordings, transcripts, AI findings and review decisions are visible to every visitor. Browser cookies and actor identities stay separate. The UI refreshes uploads and workspace data every five seconds. Existing private visitor recordings are never moved into the shared tenant. Refresh an already open page once after switching modes.
 
-Each demo workspace allows five recordings, at most 25 MB and five minutes per recording, three summary requests, and at most two manual retries per failed recording. New guest sessions are limited to ten per client IP in fifteen minutes. The API stores a salted address fingerprint, not a raw address. `DEMO_MAX_WORKSPACES` caps concurrent unexpired guest workspaces and defaults to 100.
+The public workspace allows `DEMO_SHARED_UPLOAD_LIMIT` new recordings (default 50), at most 25 MB and five minutes each, three summary requests, and two manual retries per failed recording. Prepared samples do not use the upload allowance. Guests cannot create users, read server audit, configure real integrations or send external deliveries. Private and administrator tenants remain protected by PostgreSQL RLS; CSRF checks stay enabled.
 
-Access expires after 24 hours. The cleanup service checks every five minutes and deletes the tenant's audio, transcripts, analytics and audit after a further 24-hour grace period. The grace period lets queued workflows finish before removal. Real workspaces have no demo expiry and are excluded. Do not use the public demo for long-term customer records.
+Shared recordings persist across visits and are excluded from the expired-guest cleanup. Session cookies still expire after 24 hours; returning visitors rejoin the same workspace. Use recordings authorized for public sharing. The deployment owner is responsible for retention and removal of the shared workspace data.
+
+With `DEMO_SHARED_WORKSPACE=false`, guests receive isolated tenants with five uploads each. Access expires after 24 hours; cleanup removes their data after a further 24-hour grace period. `DEMO_MAX_WORKSPACES` caps concurrent unexpired private guest workspaces at 100 by default. In both modes, new sessions are limited to ten per client IP in fifteen minutes using a salted address fingerprint.
 
 Credentials and gateway headers are server-controlled. The API is internal to the Docker network; Caddy supplies the forwarded client address. Do not publish the API directly or add an untrusted proxy in front without configuring trusted proxy handling and reassessing rate limits.
 
