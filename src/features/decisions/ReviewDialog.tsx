@@ -44,7 +44,7 @@ export function ReviewDialog({
         if (!open && !mutation.isPending) onClose();
       }}
       title="Review recommendation"
-      description={`${recommendation.id} · ${recommendation.title}`}
+      description={recommendation.title}
     >
       <form onSubmit={submit} noValidate className="review-form">
         <div className="notice">

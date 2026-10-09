@@ -8,6 +8,7 @@ import {
   Panel,
   TextLink,
 } from "../../components/ui";
+import { callReference, callTitle } from "../../domain/presentation";
 import { apiMode } from "../../data/api";
 import { hasIssue, inPeriod, issueMetrics } from "../../domain/analytics";
 
@@ -35,7 +36,7 @@ export default function IssueDetail() {
               All issues
             </Link>
             <PageHeader
-              eyebrow={`${issue.id} · ${issue.category}`}
+              eyebrow={issue.category}
               title={issue.title}
               description={issue.description}
               action={
@@ -58,22 +59,25 @@ export default function IssueDetail() {
                       <article key={call.id}>
                         <div className="split">
                           <TextLink to={`/conversations/${call.id}`}>
-                            {call.id}
+                            {callTitle(call)}
                           </TextLink>
                           <Badge tone={call.sentiment}>{call.sentiment}</Badge>
                         </div>
                         <blockquote>
                           “
-                          {
-                            call.transcript.find(
-                              (s) => s.speaker === "Customer",
-                            )?.text
-                          }
+                          {call.transcript.find((s) => s.speaker === "Customer")
+                            ?.text ||
+                            call.transcript[0]?.text ||
+                            "Transcript unavailable"}
                           ”
                         </blockquote>
                         <span className="muted">
-                          {call.customer} ·{" "}
-                          {apiMode ? "Imported recording" : "Synthetic example"}
+                          {callReference(call)} · {call.customer} ·{" "}
+                          {call.sample
+                            ? "Sample recording"
+                            : apiMode
+                              ? "Imported recording"
+                              : "Synthetic example"}
                         </span>
                       </article>
                     ))}

@@ -37,7 +37,7 @@ test("sign in, inspect import and integration controls, and sign out", async ({
   await expect(
     page.getByRole("heading", { name: "Server audit" }),
   ).toBeVisible();
-  for (const width of [1440, 320]) {
+  for (const width of [1440, 1024, 768, 320]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
@@ -57,11 +57,29 @@ test("sign in, inspect import and integration controls, and sign out", async ({
     await expect(
       page.getByRole("heading", { name: "Recording imports" }),
     ).toBeVisible();
+    await expect(page.locator("tbody .table-link").first()).toBeVisible();
+    expect(await page.locator("main").innerText()).not.toMatch(
+      /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i,
+    );
+    await page.getByRole("button", { name: "View upload history" }).click();
+    await expect(page.locator(".import-row").first()).toBeVisible();
+    await expect(page.locator(".import-list")).not.toContainText("COMPLETED");
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= window.innerWidth,
       ),
     ).toBe(true);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    await page.screenshot({
+      path: `test-results/live-conversations-${width}.png`,
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Hide upload history" }).click();
+    await page.locator("tbody .table-link").first().click();
+    await expect(
+      page.getByRole("heading", { name: "Conversation transcript" }),
+    ).toBeVisible();
+    await expect(page.locator(".eyebrow").first()).toContainText("CALL-");
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.getByRole("button", { name: "Sign out" }).click();

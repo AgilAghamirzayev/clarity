@@ -4,9 +4,24 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../data/api";
 import { useIdentity } from "./identity";
 import { Modal } from "../../components/Modal";
+import { AudioLines, CheckCircle2, Clock3, AlertCircle } from "lucide-react";
+import {
+  statusLabels,
+  stageLabels,
+  errorLabels,
+} from "../../domain/presentation";
 import { Panel } from "../../components/ui";
 interface Job {
   id: string;
+  reference: string;
+  topic: string | null;
+  metadata: {
+    title?: string | null;
+    agent?: string;
+    department?: string;
+    date?: string;
+    sample?: boolean;
+  };
   status: string;
   stage: string;
   error_code: string | null;
@@ -21,6 +36,7 @@ export function Imports() {
   );
   const [importKey, setImportKey] = useState(() => crypto.randomUUID());
   const [open, setOpen] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const client = useQueryClient();
   const jobs = useQuery({
     queryKey: ["imports"],
@@ -54,6 +70,8 @@ export function Imports() {
       new Blob(
         [
           JSON.stringify({
+            title: fields.get("title"),
+            sample: fields.get("sample") === "on",
             customerId: fields.get("customerId"),
             agent: fields.get("agent"),
             department: fields.get("department"),
@@ -80,7 +98,7 @@ export function Imports() {
     <>
       <Panel
         title="Recording imports"
-        description="Local transcription, speaker separation, privacy masking and analysis"
+        description="Track uploaded recordings as they become searchable conversations."
         action={
           canImport ? (
             <button className="button" onClick={() => setOpen(true)}>
@@ -95,36 +113,92 @@ export function Imports() {
           </p>
         )}
         {retry.isError && <p role="alert">{retry.error.message}</p>}
+        <div className="import-summary">
+          <span>
+            <CheckCircle2 size={16} />{" "}
+            <strong>
+              {jobs.data?.filter((j) => j.status === "COMPLETED").length ?? 0}
+            </strong>{" "}
+            ready
+          </span>
+          <span>
+            <Clock3 size={16} />{" "}
+            <strong>
+              {jobs.data?.filter((j) =>
+                ["QUEUED", "PROCESSING"].includes(j.status),
+              ).length ?? 0}
+            </strong>{" "}
+            processing
+          </span>
+          {!!jobs.data?.some((j) => j.status === "FAILED") && (
+            <span>
+              <AlertCircle size={16} />{" "}
+              {jobs.data.filter((j) => j.status === "FAILED").length} need
+              attention
+            </span>
+          )}
+          <button
+            className="text-link"
+            onClick={() => setShowHistory(!showHistory)}
+          >
+            {showHistory ? "Hide upload history" : "View upload history"}
+          </button>
+        </div>
+        {jobs.isPending && (
+          <p className="panel-copy" role="status">
+            Loading recordings…
+          </p>
+        )}
         <div className="import-list">
-          {jobs.data?.slice(0, 20).map((job) => (
-            <div className="integration-row" key={job.id}>
-              <div>
-                <strong>{job.id.slice(0, 8)}</strong>
-                <small className="cell-secondary">
-                  {job.stage} · {job.status}
-                  {job.error_code ? ` · ${job.error_code}` : ""}
-                </small>
-              </div>
-              {job.status === "COMPLETED" ? (
-                <Link className="text-link" to={`/conversations/${job.id}`}>
-                  Open
-                </Link>
-              ) : job.status === "FAILED" && canImport ? (
-                <button
-                  className="button secondary"
-                  disabled={retry.isPending}
-                  onClick={() => retry.mutate(job.id)}
+          {jobs.data
+            ?.filter((job) => showHistory || job.status !== "COMPLETED")
+            .map((job) => (
+              <div className="import-row" key={job.id}>
+                <span className="import-icon">
+                  <AudioLines size={20} />
+                </span>
+                <div className="import-description">
+                  <strong>
+                    {job.metadata.title ||
+                      job.topic ||
+                      `${job.metadata.department || "Customer support"} call`}
+                  </strong>
+                  <small className="cell-secondary">
+                    {job.reference} ·{" "}
+                    {job.metadata.agent || "Agent not provided"}
+                    {job.metadata.sample ? " · Sample" : ""}
+                  </small>
+                  <p>
+                    {job.error_code
+                      ? errorLabels[job.error_code] ||
+                        "Processing could not finish. Please try again."
+                      : stageLabels[job.stage] || "Preparing recording"}
+                  </p>
+                </div>
+                <span
+                  className={`processing-state ${job.status.toLowerCase()}`}
                 >
-                  Retry
-                </button>
-              ) : (
-                <span>Processing</span>
-              )}
-            </div>
-          ))}
+                  {statusLabels[job.status] || "Processing"}
+                </span>
+                {job.status === "COMPLETED" ? (
+                  <Link className="text-link" to={`/conversations/${job.id}`}>
+                    View conversation
+                  </Link>
+                ) : job.status === "FAILED" && canImport ? (
+                  <button
+                    className="button secondary"
+                    disabled={retry.isPending}
+                    onClick={() => retry.mutate(job.id)}
+                  >
+                    Try again
+                  </button>
+                ) : null}
+              </div>
+            ))}
           {jobs.data?.length === 0 && (
             <p className="panel-copy">
-              Import a WAV, FLAC or MP3 recording to start.
+              Upload your first recording to see its transcript, customer
+              feedback and suggested actions.
             </p>
           )}
         </div>
@@ -133,7 +207,7 @@ export function Imports() {
         open={open}
         onOpenChange={setOpen}
         title="Import a recording"
-        description="Audio stays in your local object store. Use internal identifiers instead of personal names."
+        description="Add a recording and its call details. Transcription and analysis run locally."
       >
         <form onSubmit={submit} className="platform-form">
           <label>
@@ -141,16 +215,47 @@ export function Imports() {
             <input name="audio" type="file" accept=".wav,.flac,.mp3" required />
           </label>
           <label>
-            Customer reference
-            <input name="customerId" required maxLength={128} />
+            Conversation title
+            <input
+              name="title"
+              maxLength={120}
+              placeholder="e.g. Card delivery follow-up"
+            />
+            <small>
+              A short description without personal details. Leave blank to use
+              the detected topic.
+            </small>
           </label>
           <label>
-            Agent reference
-            <input name="agent" required maxLength={80} />
+            Customer reference
+            <input
+              name="customerId"
+              required
+              maxLength={128}
+              placeholder="e.g. CUST-1042"
+            />
+            <small>
+              Use your internal customer reference. It is stored as a private
+              identifier.
+            </small>
+          </label>
+          <label>
+            Support agent
+            <input
+              name="agent"
+              required
+              maxLength={80}
+              placeholder="e.g. Support advisor 12"
+            />
           </label>
           <label>
             Department
-            <input name="department" required maxLength={80} />
+            <input
+              name="department"
+              required
+              maxLength={80}
+              placeholder="e.g. Cards and payments"
+            />
           </label>
           <label>
             Recorded at
@@ -172,16 +277,25 @@ export function Imports() {
             </select>
           </label>
           <label>
-            Expected speakers (optional)
-            <input name="speakers" type="number" min={1} max={8} />
+            Number of speakers (optional)
+            <input
+              name="speakers"
+              type="number"
+              min={1}
+              max={8}
+              placeholder="e.g. 2"
+            />
           </label>
           <label>
-            Customer channel (stereo only)
+            Customer audio channel (stereo recordings)
             <select name="channel">
-              <option value="">Unknown, retain speaker labels</option>
+              <option value="">Detect speakers without assigning roles</option>
               <option value="0">Left channel</option>
               <option value="1">Right channel</option>
             </select>
+          </label>
+          <label className="checkbox-label">
+            <input name="sample" type="checkbox" /> This is a sample recording
           </label>
           {upload.isError && (
             <p role="alert" className="field-error">

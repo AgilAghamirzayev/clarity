@@ -288,7 +288,7 @@ function OverviewContent({
             <article className="recommendation-summary" key={rec.id}>
               <div className="split">
                 <Badge tone={rec.priority}>{rec.priority} priority</Badge>
-                <span className="mono">{rec.id}</span>
+                <span>Recommended action</span>
               </div>
               <h3>{rec.title}</h3>
               <p>{rec.description}</p>

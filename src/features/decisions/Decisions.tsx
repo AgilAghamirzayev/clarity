@@ -89,7 +89,7 @@ export default function Decisions() {
                         </span>
                         <div>
                           <div className="decision-meta">
-                            <span className="mono">{rec.id}</span>
+                            <span>Recommended action</span>
                             <Badge tone={rec.priority}>
                               {rec.priority} priority
                             </Badge>

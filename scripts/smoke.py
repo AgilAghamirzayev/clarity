@@ -33,8 +33,10 @@ with httpx.Client(base_url=base, timeout=30, trust_env=False) as client:
     assert login.status_code == 200, f"Login failed: {login.status_code}"
     key = str(uuid4())
     metadata = {
+        "title": "Card payment declined at checkout",
+        "sample": True,
         "customerId": "synthetic-smoke-customer",
-        "agent": "synthetic-agent",
+        "agent": "Payments support",
         "department": "Payments",
         "recordedAt": datetime.now(timezone.utc).isoformat(),
         "language": "en",

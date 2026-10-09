@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
+import { roleLabels } from "../domain/presentation";
 import { apiMode } from "../data/api";
 import { SignOut } from "../features/platform/Auth";
 import { useIdentity } from "../features/platform/identity";
@@ -92,10 +93,12 @@ export function Layout() {
             </button>
           </div>
           <div className="profile">
-            <span className="avatar">DR</span>
+            <span className="avatar">
+              {user ? user.email.slice(0, 2).toUpperCase() : "DR"}
+            </span>
             <div>
               <strong>{user?.email ?? "Demo reviewer"}</strong>
-              <small>{user?.role ?? "Local preview"}</small>
+              <small>{user ? roleLabels[user.role] : "Local preview"}</small>
             </div>
             <BadgeDot />
           </div>
@@ -122,7 +125,9 @@ export function Layout() {
             </span>
             {apiMode && <SignOut />}
             <span className="topbar-divider" />
-            <span className="avatar small">DR</span>
+            <span className="avatar small">
+              {user ? user.email.slice(0, 2).toUpperCase() : "DR"}
+            </span>
           </div>
         </header>
         <main ref={main} tabIndex={-1} id="main-content">

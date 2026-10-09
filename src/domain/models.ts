@@ -11,6 +11,9 @@ export interface Segment {
 }
 export interface Conversation {
   id: string;
+  reference?: string;
+  title?: string | null;
+  sample?: boolean;
   customer: string;
   agent: string;
   department: string;

@@ -92,7 +92,19 @@ All application endpoints start with `/api/v1` and require a session except `/au
 | GET /deliveries, /audit                           | Admin delivery and append-only audit history           |
 | POST /users                                       | Create a user in the current tenant                    |
 
-Import metadata: `customerId`, `agent`, `department`, ISO `recordedAt`, optional two-letter `language`, expected `speakers` (1-8), and stereo `customerChannel` (0 or 1). Use internal references for agent/customer inputs. The original customer reference is not stored. Files are never fetched from arbitrary URLs.
+Import metadata: optional `title` (up to 120 characters, without personal details), optional `sample` (marks generated or example audio), `customerId`, `agent`, `department`, ISO `recordedAt`, optional two-letter `language`, expected `speakers` (1-8), and stereo `customerChannel` (0 or 1). Use internal references for agent/customer inputs. The original customer reference is not stored. Files are never fetched from arbitrary URLs.
+
+## Readable references and sample recordings
+
+Each recording has a persistent `CALL-1001` style reference and a descriptive title. Private customer identifiers are shown as readable customer references. Database UUIDs remain internal routing keys; administrators can inspect them under technical details in the audit view. Import and delivery states use plain-language labels.
+
+To populate realistic sample conversations on macOS with the installed Samantha and Daniel voices:
+
+```sh
+python3 scripts/run.py uv run --project worker python scripts/seed-sample-recordings.py
+```
+
+This imports seven generated stereo conversations through the real audio and AI pipeline. The scenarios cover sign-in codes, card delivery, transfer fees, card activation and loan repayment explanations. Every recording is marked as sample data; employee names are fictional. Stable import keys prevent duplicates on repeated runs. It creates no approval decisions and sends no partner messages. Existing records are preserved. Generated audio is cached under `.runtime/sample-recordings`.
 
 ## Verification
 

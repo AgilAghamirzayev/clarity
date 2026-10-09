@@ -1,3 +1,8 @@
+import {
+  callReference,
+  callTitle,
+  languageLabel,
+} from "../../domain/presentation";
 import { apiMode } from "../../data/api";
 import { useIdentity } from "../platform/identity";
 import { Link, useParams } from "react-router-dom";
@@ -34,8 +39,8 @@ export default function ConversationDetail() {
               All conversations
             </Link>
             <PageHeader
-              eyebrow={call.id}
-              title={call.topic}
+              eyebrow={`${callReference(call)}${call.sample ? " · SAMPLE RECORDING" : ""}`}
+              title={callTitle(call)}
               description={`${call.customer} · ${call.agent} · ${format(new Date(call.date), "d MMM yyyy, HH:mm")}`}
               action={
                 <Badge tone={call.sentiment}>{call.sentiment} sentiment</Badge>
@@ -44,7 +49,7 @@ export default function ConversationDetail() {
             <div className="detail-grid">
               <Panel
                 title="Conversation transcript"
-                description={`${call.language} · ${durationLabel(call.duration)} · ${apiMode ? "Local transcription" : "Synthetic sample"}`}
+                description={`${languageLabel(call.language)} · ${durationLabel(call.duration)} · ${call.sample ? "Generated sample audio" : apiMode ? "Local transcription" : "Synthetic sample"}`}
                 action={<FileText size={18} />}
               >
                 {apiMode ? (
@@ -110,7 +115,11 @@ export default function ConversationDetail() {
                     <div>
                       <span>Source</span>
                       <strong>
-                        {apiMode ? "Imported recording" : "Synthetic fixture"}
+                        {call.sample
+                          ? "Generated sample recording"
+                          : apiMode
+                            ? "Imported recording"
+                            : "Synthetic fixture"}
                       </strong>
                     </div>
                   </div>

@@ -1,3 +1,4 @@
+import { callReference, callTitle } from "../../domain/presentation";
 import { apiMode } from "../../data/api";
 import { Imports } from "../platform/Imports";
 import { useSearchParams, Link } from "react-router-dom";
@@ -12,14 +13,18 @@ import type { Conversation } from "../../domain/models";
 
 const columns: ColumnDef<Conversation>[] = [
   {
-    accessorKey: "id",
+    accessorFn: (call) => callTitle(call),
+    id: "conversation",
     header: "Conversation",
     cell: ({ row }) => (
       <div>
         <Link className="table-link" to={`/conversations/${row.original.id}`}>
-          {row.original.id}
+          {callTitle(row.original)}
         </Link>
-        <small className="cell-secondary">{row.original.customer}</small>
+        <small className="cell-secondary">
+          {callReference(row.original)} · {row.original.customer}
+          {row.original.sample ? " · Sample" : ""}
+        </small>
       </div>
     ),
   },
@@ -76,14 +81,30 @@ export default function Conversations() {
         {(data) => {
           const calls = data.conversations.filter(
             (c) =>
-              `${c.id} ${c.customer} ${c.topic} ${c.agent} ${c.summary}`
+              `${c.id} ${c.reference ?? ""} ${c.title ?? ""} ${c.customer} ${c.topic} ${c.agent} ${c.department} ${c.summary}`
                 .toLowerCase()
                 .includes(query.toLowerCase()) &&
               (sentiment === "All sentiments" || c.sentiment === sentiment) &&
               (!params.get("issue") || hasIssue(c, params.get("issue")!)),
           );
           return (
-            <section className="panel">
+            <section className="panel conversation-panel">
+              {params.get("issue") && (
+                <div className="active-filter">
+                  Showing conversations about{" "}
+                  <strong>
+                    {data.issues.find(
+                      (issue) => issue.id === params.get("issue"),
+                    )?.title ?? "the selected issue"}
+                  </strong>
+                  <button
+                    className="text-link"
+                    onClick={() => update("issue", "")}
+                  >
+                    Show all conversations
+                  </button>
+                </div>
+              )}
               <div className="filter-toolbar">
                 <div className="search-field">
                   <Search size={18} />
@@ -131,7 +152,7 @@ export default function Conversations() {
       </WorkspaceView>
       <p className="quiet-note">
         {apiMode
-          ? "Completed recordings appear here. Speaker labels do not imply customer or agent identity unless channel metadata supplies it."
+          ? "Open a conversation to read its transcript, review the findings or listen to the recording."
           : "All transcripts are synthetic examples. No customer recordings are stored in this preview."}
       </p>
     </>

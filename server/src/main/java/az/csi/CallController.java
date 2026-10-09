@@ -25,6 +25,8 @@ class CallController {
   }
 
   record ImportMetadata(
+      @Size(max = 120) String title,
+      boolean sample,
       @NotBlank @Size(max = 128) String customerId,
       @NotBlank @Size(max = 80) String agent,
       @NotBlank @Size(max = 80) String department,
@@ -88,6 +90,8 @@ class CallController {
                 .substring(0, 20);
     Map<String, Object> data = new LinkedHashMap<>();
     data.put("customer", customer);
+    data.put("title", metadata.title());
+    data.put("sample", metadata.sample());
     data.put("agent", metadata.agent());
     data.put("department", metadata.department());
     data.put("date", metadata.recordedAt().toString());
@@ -128,9 +132,20 @@ class CallController {
     return db.tenant(
         u.tenant(),
         () ->
-            db.sql.queryForList(
-                "select id,status,stage,error_code,attempts,metadata,created_at from calls order by"
-                    + " created_at desc limit 500"));
+            db.sql.query(
+                "select"
+                    + " id,display_number,status,stage,error_code,attempts,metadata,analysis->>'topic'"
+                    + " topic,created_at from calls order by created_at desc limit 500",
+                (r, n) -> {
+                  var row = new LinkedHashMap<String, Object>();
+                  for (String key :
+                      List.of(
+                          "id", "status", "stage", "error_code", "attempts", "topic", "created_at"))
+                    row.put(key, r.getObject(key));
+                  row.put("reference", "CALL-" + r.getLong("display_number"));
+                  row.put("metadata", db.decode(r.getObject("metadata")));
+                  return row;
+                }));
   }
 
   Map<String, Object> find(UUID id) {

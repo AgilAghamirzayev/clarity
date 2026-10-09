@@ -23,9 +23,12 @@ class WorkspaceController {
         () -> {
           var calls =
               db.sql.query(
-                  "select c.*, (select issue_id from call_issues where call_id=c.id order by"
-                      + " mentions desc limit 1) issue_id from calls c where status='COMPLETED'"
-                      + " order by created_at desc limit 500",
+                  "select c.*, (select min(other.display_number) from calls other where"
+                      + " other.tenant_id=c.tenant_id and"
+                      + " other.metadata->>'customer'=c.metadata->>'customer') customer_number,"
+                      + " (select issue_id from call_issues where call_id=c.id order by mentions"
+                      + " desc limit 1) issue_id from calls c where status='COMPLETED' order by"
+                      + " created_at desc limit 500",
                   (r, n) -> {
                     var meta = db.decode(r.getObject("metadata"));
                     var analysis = db.decode(r.getObject("analysis"));
@@ -38,6 +41,8 @@ class WorkspaceController {
                             String.class,
                             r.getObject("id")));
                     c.put("id", r.getString("id"));
+                    c.put("reference", "CALL-" + r.getLong("display_number"));
+                    c.put("customer", "Customer " + r.getLong("customer_number"));
                     c.put("duration", transcript.get("duration"));
                     c.put("language", transcript.get("language"));
                     c.put("sentiment", analysis.get("sentiment"));

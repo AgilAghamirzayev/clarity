@@ -24,6 +24,12 @@ The initialization script is copied into the database image instead of bind-moun
 
 The temporary database forward used during diagnosis has been stopped. The earlier CSI validation database is retained as a local backup inside this project's Temporal database container; Temporal's own databases are separate. Other projects' containers were not restarted or changed.
 
+## Readable workspace follow-up
+
+The workspace now contains ten explicitly marked sample recordings, including seven generated customer/agent conversations imported through the local processing pipeline. The model classified the successful card activation as positive, the repayment explanation as neutral, and the reported service problems as negative. No external action was approved by the sample importer.
+
+Visible call references, descriptive titles, customer aliases, processing states, role names and audit descriptions replace database keys in normal views. UUIDs remain available in administrator technical details. The authenticated browser check verifies that UUIDs do not appear in the conversation view, opens recording details, and checks layouts and accessibility at 320, 768, 1024 and 1440 pixels. The React build, formatting, lint, seven frontend tests, eleven Java tests and eleven browser scenarios passed after these changes.
+
 ## Operational boundaries
 
 Partner credentials and approved destinations must be configured by the tenant administrator. Full production deployment, high availability, retention policy, model accuracy certification and the missing sections of the original source document are not claimed by these local tests. The optional GLiNER weights were not required for the tested default local Qwen PII backend.

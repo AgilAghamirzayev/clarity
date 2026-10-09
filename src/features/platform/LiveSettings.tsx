@@ -1,3 +1,12 @@
+import { useWorkspace } from "../../data/queries";
+import {
+  auditLabels,
+  callReference,
+  callTitle,
+  readableKey,
+  roleLabels,
+  statusLabels,
+} from "../../domain/presentation";
 import { useState, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../data/api";
@@ -35,9 +44,27 @@ interface Audit {
 }
 export default function LiveSettings() {
   const user = useIdentity();
+  const workspace = useWorkspace();
+  function resourceName(id: string) {
+    const data = workspace.data;
+    const call = data?.conversations.find((c) => c.id === id);
+    if (call) return `${callReference(call)} · ${callTitle(call)}`;
+    const recommendation = data?.recommendations.find((r) => r.id === id);
+    if (recommendation) return recommendation.title;
+    const decision = data?.decisions.find((d) => d.id === id);
+    if (decision)
+      return (
+        data?.recommendations.find((r) => r.id === decision.recommendationId)
+          ?.title ?? "Reviewed recommendation"
+      );
+    return id === "workspace"
+      ? "Customer intelligence workspace"
+      : "Workspace activity";
+  }
   const admin = user?.role === "ADMIN";
   const client = useQueryClient();
   const [credential, setCredential] = useState("");
+  const [integrationKind, setIntegrationKind] = useState("crm");
   const integrations = useQuery({
     queryKey: ["integrations"],
     queryFn: () => api<Integration[]>("/integrations"),
@@ -111,7 +138,7 @@ export default function LiveSettings() {
       <PageHeader
         eyebrow="LOCAL PLATFORM"
         title="Workspace settings"
-        description={`${user?.email} · ${user?.role} · PostgreSQL persistence and local model processing`}
+        description={`${user?.email} · ${roleLabels[user?.role ?? ""] ?? "Team member"} · Manage your team, notifications and connected tools`}
       />
       <div className="settings-grid">
         <Panel title="Notifications">
@@ -120,7 +147,9 @@ export default function LiveSettings() {
               <div className="integration-row" key={n.id}>
                 <div>
                   <strong>{n.title}</strong>
-                  <small className="cell-secondary">{n.resource}</small>
+                  <small className="cell-secondary">
+                    {resourceName(n.resource)}
+                  </small>
                 </div>
                 {!n.read_at && (
                   <button
@@ -141,18 +170,19 @@ export default function LiveSettings() {
         <Panel title="Processing and privacy">
           <div className="panel-copy">
             <p>
-              Whisper transcribes audio locally. Speaker embeddings identify
-              voice groups; customer and agent roles require stereo channel
-              metadata.
+              Your recordings are transcribed and analyzed on this computer. No
+              cloud AI account is used. Speaker labels help you follow the
+              conversation.
             </p>
             <p>
-              Pattern matching and local entity detection mask personal details
-              before analysis. Review accuracy before sharing results.
+              Personal details are automatically masked before analysis. Review
+              the transcript before sharing it, especially when audio is
+              unclear.
             </p>
             <p>
-              Qwen generates structured analysis. Nomic embeddings group similar
-              findings in PostgreSQL. Human approval is required for external
-              actions.
+              Related customer problems are grouped into issues with supporting
+              evidence. A reviewer must approve a recommendation before it can
+              be sent to a connected tool.
             </p>
           </div>
         </Panel>
@@ -167,14 +197,26 @@ export default function LiveSettings() {
               <div className="panel-copy">
                 {integrations.data?.map((i) => (
                   <p key={i.id}>
-                    <strong>{i.kind}</strong>:{" "}
-                    {i.enabled ? "Enabled" : "Disabled"} · {i.config.endpoint}
+                    <strong>
+                      {{
+                        crm: "CRM webhook",
+                        jira: "Jira Cloud",
+                        slack: "Slack",
+                      }[i.kind] || readableKey(i.kind)}
+                    </strong>
+                    : {i.enabled ? "Enabled" : "Disabled"} · {i.config.endpoint}
                   </p>
                 ))}
                 <form className="platform-form" onSubmit={configure}>
                   <label>
                     Integration
-                    <select name="kind">
+                    <select
+                      name="kind"
+                      value={integrationKind}
+                      onChange={(event) =>
+                        setIntegrationKind(event.target.value)
+                      }
+                    >
                       <option value="crm">CRM webhook</option>
                       <option value="jira">Jira Cloud</option>
                       <option value="slack">Slack</option>
@@ -183,24 +225,56 @@ export default function LiveSettings() {
                   <label>
                     HTTPS endpoint
                     <input
+                      key={integrationKind}
                       name="endpoint"
                       type="url"
+                      defaultValue={
+                        integrationKind === "slack"
+                          ? "https://slack.com/api/chat.postMessage"
+                          : ""
+                      }
                       required
-                      placeholder="https://crm.example.com/events"
+                      placeholder={
+                        integrationKind === "jira"
+                          ? "https://your-team.atlassian.net"
+                          : "https://crm.example.com/events"
+                      }
                     />
                   </label>
-                  <label>
-                    Slack channel
-                    <input name="channel" />
-                  </label>
-                  <label>
-                    Jira project key
-                    <input name="project" />
-                  </label>
-                  <label>
-                    Jira service account email
-                    <input name="email" type="email" />
-                  </label>
+                  {integrationKind === "slack" && (
+                    <label>
+                      Slack channel
+                      <input
+                        name="channel"
+                        placeholder="e.g. C0123456789"
+                        required
+                      />
+                      <small>
+                        Copy the channel ID from Slack channel details.
+                      </small>
+                    </label>
+                  )}
+                  {integrationKind === "jira" && (
+                    <>
+                      <label>
+                        Jira project key
+                        <input
+                          name="project"
+                          placeholder="e.g. SUPPORT"
+                          required
+                        />
+                      </label>
+                      <label>
+                        Jira service account email
+                        <input
+                          name="email"
+                          type="email"
+                          placeholder="e.g. integrations@example.com"
+                          required
+                        />
+                      </label>
+                    </>
+                  )}
                   <label>
                     <span>
                       <input
@@ -246,7 +320,12 @@ export default function LiveSettings() {
               >
                 <label>
                   Email
-                  <input name="email" type="email" required />
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="e.g. analyst@example.com"
+                  />
                 </label>
                 <label>
                   Initial password
@@ -263,7 +342,9 @@ export default function LiveSettings() {
                   Role
                   <select name="role">
                     {["VIEWER", "ANALYST", "REVIEWER", "ADMIN"].map((r) => (
-                      <option key={r}>{r}</option>
+                      <option key={r} value={r}>
+                        {roleLabels[r]}
+                      </option>
                     ))}
                   </select>
                 </label>
@@ -284,13 +365,23 @@ export default function LiveSettings() {
               {deliveries.data?.map((d) => (
                 <div className="integration-row" key={d.id}>
                   <div>
-                    <strong>{d.status}</strong>
+                    <strong>
+                      {statusLabels[d.status] || readableKey(d.status)}
+                    </strong>
                     <small>
                       {d.attempts} attempts ·{" "}
-                      {d.external_id || d.error_code || "Queued"}
+                      {d.external_id
+                        ? `External reference: ${d.external_id}`
+                        : d.error_code
+                          ? "Delivery needs attention. Check the connection settings."
+                          : "Waiting for delivery"}
                     </small>
                   </div>
-                  <code>{d.id.slice(0, 8)}</code>
+                  <details className="technical-details">
+                    <summary>Technical details</summary>
+                    <code>{d.id}</code>
+                    {d.error_code && <code>{d.error_code}</code>}
+                  </details>
                   {d.status === "FAILED" && (
                     <button
                       className="button secondary"
@@ -312,8 +403,18 @@ export default function LiveSettings() {
               {audit.data?.map((a, i) => (
                 <div className="integration-row" key={i}>
                   <div>
-                    <strong>{a.action}</strong>
-                    <small className="cell-secondary">{a.resource}</small>
+                    <strong>
+                      {auditLabels[a.action] || readableKey(a.action)}
+                    </strong>
+                    <small className="cell-secondary">
+                      {resourceName(a.resource)}
+                    </small>
+                    <details className="technical-details">
+                      <summary>Technical details</summary>
+                      <code>Record: {a.resource}</code>
+                      <code>Event: {a.action}</code>
+                      <code>Actor: {a.actor}</code>
+                    </details>
                   </div>
                   <time>{new Date(a.created_at).toLocaleString()}</time>
                 </div>

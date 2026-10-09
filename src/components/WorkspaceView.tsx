@@ -21,6 +21,16 @@ export function WorkspaceView({
     );
   return (
     <>
+      {query.data.conversations.some((call) => call.sample) && (
+        <div className="sample-notice">
+          <strong>Includes sample recordings</strong>
+          <span>
+            Generated support scenarios are marked “Sample”. Insights from these
+            recordings illustrate the workflow and do not represent real
+            customer results.
+          </span>
+        </div>
+      )}
       {query.data.projection &&
         query.data.projection.totalCompleted > query.data.projection.limit && (
           <p className="notice">
