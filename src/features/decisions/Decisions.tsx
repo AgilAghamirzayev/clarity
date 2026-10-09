@@ -1,3 +1,6 @@
+import { apiMode } from "../../data/api";
+import { useIdentity } from "../platform/identity";
+import { Outcomes } from "../platform/Outcomes";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Check, Clock3, Lightbulb } from "lucide-react";
@@ -10,6 +13,9 @@ import type { Recommendation } from "../../domain/models";
 import { ReviewDialog } from "./ReviewDialog";
 
 export default function Decisions() {
+  const user = useIdentity();
+  const canReview =
+    !apiMode || (user && ["ADMIN", "REVIEWER"].includes(user.role));
   const [params, setParams] = useSearchParams();
   const [review, setReview] = useState<Recommendation | null>(null);
   const advance = useAdvance();
@@ -137,19 +143,29 @@ export default function Decisions() {
                             ))}
                           </ol>
                           {decision.status === "Completed" && (
-                            <div className="notice">
-                              Action marked complete in this demo. Outcome
-                              measurement requires connected production data; no
-                              impact is claimed.
-                            </div>
+                            <>
+                              {apiMode && decision.id ? (
+                                <Outcomes id={decision.id} />
+                              ) : (
+                                <div className="notice">
+                                  Action marked complete in this demo. Outcome
+                                  measurement requires connected production
+                                  data; no impact is claimed.
+                                </div>
+                              )}
+                            </>
                           )}
                         </div>
                       )}
                       <div className="decision-footer">
                         <span className="muted">
-                          Sample recommendation · Human approval required
+                          {apiMode
+                            ? "Local model recommendation · Human approval required"
+                            : "Sample recommendation · Human approval required"}
                         </span>
-                        {!decision ? (
+                        {!canReview ? (
+                          <span className="muted">Reviewer role required</span>
+                        ) : !decision ? (
                           <button
                             className="button"
                             onClick={() => setReview(rec)}

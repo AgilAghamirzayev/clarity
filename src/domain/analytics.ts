@@ -1,10 +1,17 @@
+import { apiMode } from "../data/api";
 import { format, subDays } from "date-fns";
 import { snapshotDate, type Conversation } from "./models";
 
+export function hasIssue(call: Conversation, issueId: string) {
+  return call.issueIds?.includes(issueId) ?? call.issueId === issueId;
+}
+function reportingDate() {
+  return apiMode ? new Date() : snapshotDate;
+}
 export function inPeriod(
   calls: Conversation[],
   days: number,
-  end = snapshotDate,
+  end = reportingDate(),
 ) {
   const start = subDays(end, days).getTime();
   return calls.filter(
@@ -14,9 +21,9 @@ export function inPeriod(
   );
 }
 export function issueMetrics(calls: Conversation[], issueId: string, days = 7) {
-  const current = inPeriod(calls, days).filter((c) => c.issueId === issueId);
-  const previous = inPeriod(calls, days, subDays(snapshotDate, days)).filter(
-    (c) => c.issueId === issueId,
+  const current = inPeriod(calls, days).filter((c) => hasIssue(c, issueId));
+  const previous = inPeriod(calls, days, subDays(reportingDate(), days)).filter(
+    (c) => hasIssue(c, issueId),
   );
   return {
     count: current.length,
@@ -29,7 +36,7 @@ export function issueMetrics(calls: Conversation[], issueId: string, days = 7) {
 }
 export function volumeSeries(calls: Conversation[], days: number) {
   return Array.from({ length: days }, (_, index) => {
-    const date = subDays(snapshotDate, days - index - 1)
+    const date = subDays(reportingDate(), days - index - 1)
       .toISOString()
       .slice(0, 10);
     const day = calls.filter((c) => c.date.startsWith(date));

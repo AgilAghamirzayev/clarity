@@ -19,5 +19,17 @@ export function WorkspaceView({
         }}
       />
     );
-  return children(query.data);
+  return (
+    <>
+      {query.data.projection &&
+        query.data.projection.totalCompleted > query.data.projection.limit && (
+          <p className="notice">
+            This view contains the latest {query.data.projection.limit}{" "}
+            completed calls out of {query.data.projection.totalCompleted}. Use
+            the aggregate analytics API for full-history counts.
+          </p>
+        )}
+      {children(query.data)}
+    </>
+  );
 }

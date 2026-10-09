@@ -1,3 +1,5 @@
+import { apiMode } from "../../data/api";
+import LiveSettings from "../platform/LiveSettings";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -36,6 +38,9 @@ const integrations = [
   },
 ];
 export default function Settings() {
+  return apiMode ? <LiveSettings /> : <DemoSettings />;
+}
+function DemoSettings() {
   const [confirm, setConfirm] = useState(false);
   const [resetComplete, setResetComplete] = useState(false);
   const client = useQueryClient();

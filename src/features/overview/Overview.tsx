@@ -1,3 +1,4 @@
+import { apiMode } from "../../data/api";
 import { useSearchParams } from "react-router-dom";
 import {
   Activity,
@@ -57,7 +58,9 @@ function OverviewContent({
     }))
     .sort((a, b) => b.count - a.count);
   const series = volumeSeries(data.conversations, days);
-  const totalIssues = new Set(calls.map((c) => c.issueId).filter(Boolean)).size;
+  const totalIssues = new Set(
+    calls.flatMap((c) => c.issueIds ?? [c.issueId]).filter(Boolean),
+  ).size;
   return (
     <>
       <PageHeader
@@ -83,13 +86,20 @@ function OverviewContent({
           <Activity size={21} />
         </div>
         <div>
-          <strong>{ranked[0].title}</strong>
+          <strong>
+            {ranked[0]?.title ?? "Ready for your first recording"}
+          </strong>
           <p>
-            {ranked[0].count} conversations mention this issue in the selected
-            period. Review the evidence before taking action.
+            {ranked[0]
+              ? `${ranked[0].count} conversations mention this issue in the selected period. Review the evidence before taking action.`
+              : "Import a recording to start local analysis and build your evidence base."}
           </p>
         </div>
-        <TextLink to={`/issues/${ranked[0].id}`}>Explore issue</TextLink>
+        {ranked[0] ? (
+          <TextLink to={`/issues/${ranked[0].id}`}>Explore issue</TextLink>
+        ) : (
+          <TextLink to="/conversations">Import recording</TextLink>
+        )}
       </div>
       <div className="stats-grid">
         {[
@@ -212,7 +222,11 @@ function OverviewContent({
           <details className="chart-data">
             <summary>View chart data</summary>
             <table>
-              <caption>Daily sample conversation counts</caption>
+              <caption>
+                {apiMode
+                  ? "Daily conversation counts"
+                  : "Daily sample conversation counts"}
+              </caption>
               <thead>
                 <tr>
                   <th>Date</th>
@@ -292,8 +306,11 @@ function OverviewContent({
         </div>
       </Panel>
       <div className="quiet-note">
-        <ShieldIcon /> Recommendations are sample hypotheses. Every decision
-        stays with your team.
+        <ShieldIcon />{" "}
+        {apiMode
+          ? "Recommendations are model hypotheses."
+          : "Recommendations are sample hypotheses."}{" "}
+        Every decision stays with your team.
       </div>
     </>
   );

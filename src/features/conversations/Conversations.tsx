@@ -1,3 +1,5 @@
+import { apiMode } from "../../data/api";
+import { Imports } from "../platform/Imports";
 import { useSearchParams, Link } from "react-router-dom";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Search, SlidersHorizontal } from "lucide-react";
@@ -5,7 +7,7 @@ import { format } from "date-fns";
 import { WorkspaceView } from "../../components/WorkspaceView";
 import { DataTable } from "../../components/DataTable";
 import { Badge, PageHeader } from "../../components/ui";
-import { durationLabel } from "../../domain/analytics";
+import { hasIssue, durationLabel } from "../../domain/analytics";
 import type { Conversation } from "../../domain/models";
 
 const columns: ColumnDef<Conversation>[] = [
@@ -69,6 +71,7 @@ export default function Conversations() {
         title="Conversations"
         description="Go beyond the numbers. Understand the conversation behind every insight."
       />
+      {apiMode && <Imports />}
       <WorkspaceView>
         {(data) => {
           const calls = data.conversations.filter(
@@ -77,7 +80,7 @@ export default function Conversations() {
                 .toLowerCase()
                 .includes(query.toLowerCase()) &&
               (sentiment === "All sentiments" || c.sentiment === sentiment) &&
-              (!params.get("issue") || c.issueId === params.get("issue")),
+              (!params.get("issue") || hasIssue(c, params.get("issue")!)),
           );
           return (
             <section className="panel">
@@ -127,8 +130,9 @@ export default function Conversations() {
         }}
       </WorkspaceView>
       <p className="quiet-note">
-        All transcripts are synthetic examples. No customer recordings are
-        stored in this preview.
+        {apiMode
+          ? "Completed recordings appear here. Speaker labels do not imply customer or agent identity unless channel metadata supplies it."
+          : "All transcripts are synthetic examples. No customer recordings are stored in this preview."}
       </p>
     </>
   );

@@ -1,18 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createDemoRepository } from "./workspace";
+import { apiMode, apiRepository } from "./api";
 import type { ReviewInput } from "../domain/models";
 
 // This is the only browser storage adapter. Feature components depend on the repository contract.
-export const repository = createDemoRepository({
-  getItem: (key) => window.localStorage.getItem(key),
-  setItem: (key, value) => window.localStorage.setItem(key, value),
-  removeItem: (key) => window.localStorage.removeItem(key),
-});
+export const repository = apiMode
+  ? apiRepository
+  : createDemoRepository({
+      getItem: (key) => window.localStorage.getItem(key),
+      setItem: (key, value) => window.localStorage.setItem(key, value),
+      removeItem: (key) => window.localStorage.removeItem(key),
+    });
 export const workspaceKey = ["workspace"] as const;
 export function useWorkspace() {
   return useQuery({
     queryKey: workspaceKey,
     queryFn: () => repository.getWorkspace(),
+    refetchInterval: apiMode ? 10000 : false,
   });
 }
 export function useReview() {

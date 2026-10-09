@@ -5,7 +5,7 @@ export type Priority = "Critical" | "High" | "Medium";
 export type DecisionStatus =
   "Pending review" | "Approved" | "Rejected" | "In progress" | "Completed";
 export interface Segment {
-  speaker: "Customer" | "Agent";
+  speaker: string;
   seconds: number;
   text: string;
 }
@@ -19,6 +19,7 @@ export interface Conversation {
   sentiment: Sentiment;
   topic: string;
   issueId: string | null;
+  issueIds?: string[];
   summary: string;
   transcript: Segment[];
   language: string;
@@ -58,6 +59,7 @@ export const reviewSchema = z.object({
 });
 export type ReviewInput = z.infer<typeof reviewSchema>;
 export const decisionSchema = z.object({
+  id: z.string().optional(),
   recommendationId: z.string(),
   status: z.enum(["Approved", "Rejected", "In progress", "Completed"]),
   owner: z.string().min(2).max(80),
@@ -75,6 +77,7 @@ export const decisionSchema = z.object({
 });
 export type Decision = z.infer<typeof decisionSchema>;
 export interface Workspace {
+  projection?: { limit: number; totalCompleted: number };
   conversations: Conversation[];
   issues: Issue[];
   recommendations: Recommendation[];

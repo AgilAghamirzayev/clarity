@@ -13,6 +13,9 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
+import { apiMode } from "../data/api";
+import { SignOut } from "../features/platform/Auth";
+import { useIdentity } from "../features/platform/identity";
 import { Modal } from "../components/Modal";
 
 const navigation = [
@@ -42,6 +45,7 @@ function Navigation({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 export function Layout() {
+  const user = useIdentity();
   const [menu, setMenu] = useState(false);
   const [about, setAbout] = useState(false);
   const location = useLocation();
@@ -72,7 +76,7 @@ export function Layout() {
           <span className="workspace-avatar">CI</span>
           <div>
             <strong>Customer Intelligence</strong>
-            <small>Demo workspace</small>
+            <small>{apiMode ? "Local AI workspace" : "Demo workspace"}</small>
           </div>
           <ChevronDown size={14} aria-hidden />
         </div>
@@ -90,8 +94,8 @@ export function Layout() {
           <div className="profile">
             <span className="avatar">DR</span>
             <div>
-              <strong>Demo reviewer</strong>
-              <small>Local preview</small>
+              <strong>{user?.email ?? "Demo reviewer"}</strong>
+              <small>{user?.role ?? "Local preview"}</small>
             </div>
             <BadgeDot />
           </div>
@@ -114,8 +118,9 @@ export function Layout() {
           <div className="topbar-right">
             <span className="demo-label">
               <span />
-              Demo data
+              {apiMode ? "Local models" : "Demo data"}
             </span>
+            {apiMode && <SignOut />}
             <span className="topbar-divider" />
             <span className="avatar small">DR</span>
           </div>
@@ -125,7 +130,11 @@ export function Layout() {
         </main>
         <footer className="footer">
           <span>Clarity · Customer Intelligence</span>
-          <span>Synthetic sample data · Snapshot: 9 Oct 2026</span>
+          <span>
+            {apiMode
+              ? "Local processing · Human review required"
+              : "Synthetic sample data · Snapshot: 9 Oct 2026"}
+          </span>
         </footer>
       </div>
       <Modal
@@ -150,8 +159,9 @@ export function Layout() {
           <li>Assign actions and measure outcomes.</li>
         </ol>
         <p className="notice">
-          This preview uses synthetic conversations and sample recommendations.
-          It does not transcribe audio or run AI models.
+          {apiMode
+            ? "Recordings are processed by local models. Review transcript accuracy and evidence before acting."
+            : "This preview uses synthetic conversations and sample recommendations. It does not transcribe audio or run AI models."}
         </p>
         <button className="button secondary" onClick={() => setAbout(false)}>
           <X size={16} />

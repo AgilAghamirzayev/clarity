@@ -7,6 +7,7 @@ The existing React demo remains available with `VITE_DATA_MODE=demo`. The API mo
 Requirements: Docker, Java 21, Python 3.12, uv, Node 20.19+ and Ollama. The first setup downloads public packages and model weights. Inference does not need a cloud AI account. Before sending text, the worker checks Ollama model metadata and rejects cloud/remote aliases. For a dedicated Ollama installation, also disable its cloud feature in `~/.ollama/server.json`.
 
 ```sh
+npm ci
 python3 scripts/setup-local.py
 docker compose --env-file .env.local up -d
 uv sync --project worker --locked

@@ -1,3 +1,5 @@
+import { apiMode } from "../../data/api";
+import { useIdentity } from "../platform/identity";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, AudioLines, FileText, ShieldCheck } from "lucide-react";
 import { format } from "date-fns";
@@ -13,6 +15,7 @@ import { durationLabel } from "../../domain/analytics";
 
 export default function ConversationDetail() {
   const { id } = useParams();
+  const user = useIdentity();
   return (
     <WorkspaceView>
       {(data) => {
@@ -41,24 +44,40 @@ export default function ConversationDetail() {
             <div className="detail-grid">
               <Panel
                 title="Conversation transcript"
-                description={`${call.language} · ${durationLabel(call.duration)} · Synthetic sample`}
+                description={`${call.language} · ${durationLabel(call.duration)} · ${apiMode ? "Local transcription" : "Synthetic sample"}`}
                 action={<FileText size={18} />}
               >
-                <div className="recording-placeholder">
-                  <AudioLines size={25} />
-                  <div>
-                    <strong>Sample transcript</strong>
-                    <p>
-                      Audio playback will be available when a recording provider
-                      is connected.
+                {apiMode ? (
+                  user && ["ADMIN", "ANALYST"].includes(user.role) ? (
+                    <audio
+                      className="recording-player"
+                      controls
+                      preload="none"
+                      src={`/api/v1/calls/${call.id}/audio`}
+                      aria-label="Call recording"
+                    />
+                  ) : (
+                    <p className="panel-copy">
+                      Audio access requires the analyst role.
                     </p>
+                  )
+                ) : (
+                  <div className="recording-placeholder">
+                    <AudioLines size={25} />
+                    <div>
+                      <strong>Sample transcript</strong>
+                      <p>
+                        Audio playback will be available when a recording
+                        provider is connected.
+                      </p>
+                    </div>
                   </div>
-                </div>
+                )}
                 <div className="transcript">
-                  {call.transcript.map((segment) => (
+                  {call.transcript.map((segment, index) => (
                     <div
                       className={`transcript-segment ${segment.speaker.toLowerCase()}`}
-                      key={segment.seconds}
+                      key={index}
                     >
                       <span className="mono timestamp">
                         {durationLabel(segment.seconds)}
@@ -74,7 +93,9 @@ export default function ConversationDetail() {
               <div className="stack">
                 <Panel
                   title="Conversation summary"
-                  description="Sample analysis"
+                  description={
+                    apiMode ? "Local model analysis" : "Sample analysis"
+                  }
                 >
                   <p className="panel-copy">{call.summary}</p>
                   <div className="metadata-list">
@@ -88,7 +109,9 @@ export default function ConversationDetail() {
                     </div>
                     <div>
                       <span>Source</span>
-                      <strong>Synthetic fixture</strong>
+                      <strong>
+                        {apiMode ? "Imported recording" : "Synthetic fixture"}
+                      </strong>
                     </div>
                   </div>
                 </Panel>
@@ -110,7 +133,9 @@ export default function ConversationDetail() {
                 </Panel>
                 <p className="quiet-note">
                   <ShieldCheck size={16} />
-                  No real personal data is used.
+                  {apiMode
+                    ? "Automated masking is applied. Verify accuracy before sharing."
+                    : "No real personal data is used."}
                 </p>
               </div>
             </div>

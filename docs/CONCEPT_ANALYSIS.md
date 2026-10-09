@@ -1,10 +1,10 @@
-# Concept analysis and frontend boundaries
+# Concept analysis and implementation boundaries
 
 ## Source and confidence
 
 The recovered conversation titled "Texniki sənədləşdirmə arxitekturası" describes Customer Intelligence AI Platform v1.0. Its accessible text covers product goals, ingestion, transcription, PII protection, issue discovery, recommendation scoring, decision management, storage, events, workflows, API routes and major UI views. The retrieval was truncated during the AI strategy section; embedded architecture diagrams and original design images were unavailable. This foundation does not claim to reproduce those missing artifacts.
 
-The current request narrows delivery to a React app and reusable base structure. Infrastructure proposals in the source are preserved as future integration requirements rather than implemented in the browser.
+The initial delivery was the React foundation. The subsequent request expanded delivery to backend, local AI, orchestration, security and integrations. Those components are now implemented separately from the browser. See [the platform guide](PLATFORM.md) for current contracts and validation boundaries.
 
 ## Product analysis
 
@@ -45,7 +45,7 @@ No calibrated confidence, financial savings or causal impact is invented. Calls 
 
 ### Feature folders with shared primitives
 
-Routes compose feature pages. Shared components own repeated layout and interaction patterns, while features own domain-specific presentation. The domain layer contains no React components. The repository interface is the seam between fixtures and future APIs.
+Routes compose feature pages. Shared components own repeated layout and interaction patterns, while features own domain-specific presentation. The domain layer contains no React components. The repository interface is the seam between fixtures and authenticated APIs.
 
 ### Libraries for repeated behavior
 
@@ -63,7 +63,7 @@ The UI is English to match the current request. Fixtures have explicit ISO times
 
 ## API integration map
 
-The recovered document proposes these routes. They are integration targets, not live endpoints in this repository.
+The recovered document proposes these routes. These routes are now implemented by the Spring API.
 
 | Frontend need      | Proposed backend route                          |
 | ------------------ | ----------------------------------------------- |
@@ -79,18 +79,13 @@ The recovered document proposes these routes. They are integration targets, not 
 | Overview           | `GET /api/v1/analytics/overview`                |
 | Outcomes           | `GET /api/v1/decisions/{id}/outcomes`           |
 
-Action transition endpoints, role permissions, approval policy, real provider selection, recording retention, tenant isolation and outcome measurement windows still need confirmed contracts. The demo workflow is a frontend interaction example, not a replacement for those business decisions.
+The platform guide defines action transitions, four roles, tenant isolation, local models and seven-day outcome windows. The user selected a generic CRM webhook adapter and fully local inference. Recording retention and production deployment policies remain organization-specific.
 
-## Next implementation slices
+## Implementation status
 
-1. Confirm missing document sections, design references, tenancy, roles and action transition contract.
-2. Implement authenticated call and issue queries with pagination and tenant-bound validation.
-3. Implement server-side review transactions, optimistic concurrency and durable audit history.
-4. Connect object storage and background transcription, redaction and analysis workers.
-5. Connect issue discovery and recommendation generation with traceable evidence.
-6. Add approved external action integrations and independent outcome measurements.
+The Spring core, local Python workers, PostgreSQL/pgvector, MinIO, Kafka outbox and Temporal workflows are present. React uses an HTTP repository in API mode and retains fixtures only in explicit demo mode. The browser never stores API credentials. External adapter activation requires deployment configuration and an authorized destination.
 
-The source suggests a modular Spring Boot core, separate AI workers, PostgreSQL and object storage, with Temporal/Kafka for durable asynchronous work. These components require backend work and are intentionally outside this frontend foundation.
+The source retrieval was incomplete, so this implementation covers the six explicitly requested areas without claiming to reproduce unavailable document sections or design assets.
 
 ## Documentation consulted
 

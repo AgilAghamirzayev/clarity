@@ -8,7 +8,8 @@ import {
   Panel,
   TextLink,
 } from "../../components/ui";
-import { inPeriod, issueMetrics } from "../../domain/analytics";
+import { apiMode } from "../../data/api";
+import { hasIssue, inPeriod, issueMetrics } from "../../domain/analytics";
 
 export default function IssueDetail() {
   const { id } = useParams();
@@ -23,8 +24,8 @@ export default function IssueDetail() {
             </EmptyState>
           );
         const metrics = issueMetrics(data.conversations, issue.id);
-        const calls = inPeriod(data.conversations, 7).filter(
-          (c) => c.issueId === issue.id,
+        const calls = inPeriod(data.conversations, 7).filter((c) =>
+          hasIssue(c, issue.id),
         );
         const recs = data.recommendations.filter((r) => r.issueId === issue.id);
         return (
@@ -71,7 +72,8 @@ export default function IssueDetail() {
                           ”
                         </blockquote>
                         <span className="muted">
-                          {call.customer} · Synthetic example
+                          {call.customer} ·{" "}
+                          {apiMode ? "Imported recording" : "Synthetic example"}
                         </span>
                       </article>
                     ))}

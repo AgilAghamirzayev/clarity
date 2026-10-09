@@ -1,99 +1,83 @@
 # Clarity - Customer Intelligence
 
-A React and TypeScript frontend foundation for turning customer conversations into evidence-backed business decisions. Built from the recovered Customer Intelligence AI Platform concept and technical document.
+A React and TypeScript application with a Java 21 / Spring Boot API and fully local AI workers. It turns recordings into masked transcripts, recurring issues, evidence-backed recommendations, reviewed actions and measured outcomes.
 
-## Run locally
+## Run the platform
 
-Requires Node.js 20.19+ (Node 22.13+ recommended) and npm.
+Follow [the platform guide](docs/PLATFORM.md) for initial setup, generated credentials, local model provisioning and service startup.
 
 ```sh
 npm ci
-npm run dev -- --host 127.0.0.1
+python3 scripts/setup-local.py
+docker compose --env-file .env.local up -d
+uv sync --project worker --locked
+uv run --project worker python scripts/provision-models.py
+ollama pull qwen3:4b-instruct
+ollama pull nomic-embed-text:latest
+scripts/start-api
 ```
 
-Open the local address printed by Vite. No API keys or backend services are needed.
+Start `scripts/start-worker` and `npm run dev -- --host 127.0.0.1 --port 4173` in separate terminals. Local credentials are generated in `.env.local`; they are never committed.
+
+For the self-contained synthetic demo:
 
 ```sh
-npm run build          # TypeScript checks and production bundle
-npm run preview        # Serve the production build locally
-npm run lint           # Oxlint checks
-npm test               # Domain and repository tests
-npx playwright install chromium
-npm run test:e2e       # Browser flows and accessibility checks
-npm run format:check   # Formatting verification
+npm ci
+VITE_DATA_MODE=demo npm run dev
 ```
 
-If Chromium cannot be downloaded, use an installed Google Chrome in an isolated test profile:
+## Implemented
 
-```sh
-PLAYWRIGHT_CHANNEL=chrome npm run test:e2e
-```
+- PostgreSQL persistence with Flyway migrations, pgvector, tenant RLS and append-only server audit.
+- Private MinIO audio storage, validated multipart imports, replay keys and authorized playback.
+- Local Faster Whisper transcription, SpeechBrain speaker embeddings, diarization and explicit stereo role mapping.
+- Pattern and local Qwen PII detection before transcript persistence, with an optional GLiNER backend.
+- Structured Ollama analysis, validated evidence references, Nomic embeddings, online issue clustering and reviewable recommendations.
+- Transactional outbox, Kafka dispatch, Temporal workflows, stage checkpoints, bounded retries and a failed-call retry flow.
+- BCrypt authentication, database-backed sessions, CSRF, role enforcement and tenant-scoped user provisioning.
+- Jira Cloud, Slack and signed generic CRM webhook adapters, delivery history and in-app notifications.
+- Versioned decision transitions and observational seven-day outcome comparisons.
+- Responsive React views for login, imports, conversations, issues, reviews, integrations, notifications and audit.
 
-## What works
-
-- Overview with 7-day / 30-day metrics and an accessible volume chart.
-- Searchable, sortable, paginated conversation explorer with URL-based filters.
-- Conversation detail with synthetic transcript, summary, and linked issue.
-- Issue groups with distinct customer counts, period comparisons, evidence and root cause hypotheses.
-- Recommendation review with validated owner and rationale fields.
-- Approval or rejection, action progress, completion and local review history.
-- Browser-persisted demo decisions, a confirmed reset flow, and corrupt-storage recovery.
-- Responsive navigation, lazy-loaded pages, error boundaries, loading and empty states.
-- Settings showing the readiness of future integrations.
-
-## Third-party libraries
-
-| Concern             | Library                      | Responsibility                                        |
-| ------------------- | ---------------------------- | ----------------------------------------------------- |
-| Rendering and types | React + TypeScript           | Components and typed contracts                        |
-| Build               | Vite                         | Development server, code splitting, production assets |
-| Routing             | React Router                 | Nested layouts, detail routes, URL filters            |
-| Data fetching       | TanStack Query               | Async state, caching, mutations, invalidation         |
-| Tables              | TanStack Table v8            | Sorting, pagination, row models                       |
-| Forms               | React Hook Form              | Field registration, errors, submission                |
-| Validation          | Zod + resolvers              | Form and persisted-data schemas                       |
-| Dialogs             | Radix Dialog                 | Focus trapping, Escape, dialog semantics              |
-| Charts              | Recharts                     | Responsive SVG data visualization                     |
-| Icons               | Lucide                       | Consistent interface icons                            |
-| Dates               | date-fns                     | Date arithmetic and formatting                        |
-| Class names         | clsx                         | Conditional component styles                          |
-| Error boundary      | react-error-boundary         | Top-level render recovery                             |
-| Tests               | Vitest, Playwright, axe-core | Domain behavior and browser verification              |
-| Quality             | Oxlint, Prettier             | Linting and formatting                                |
+External adapters remain disabled until configured. No live partner messages are sent by the test suite. Model quality, speaker accuracy and PII recall need evaluation on representative, consented data. Human review is required before external action. Production operations and deployment boundaries are detailed in the platform guide.
 
 ## Structure
 
 ```text
 src/
-  app/              Application providers, routes, persistent layout
-  components/       Shared panels, badges, dialogs, table and query states
-  domain/           Domain types, schemas and analytics calculations
-  data/             Synthetic fixtures, repository contract and query hooks
-  features/
-    overview/       Period KPIs and volume visualization
-    conversations/  Searchable list and transcript detail
-    issues/         Issue discovery views and linked evidence
-    decisions/      Review form, action lifecycle and audit display
-    settings/       Integration readiness and demo reset
-  styles.css        Semantic tokens, shared patterns and responsive rules
-tests/              Browser acceptance tests
-docs/               Concept analysis and integration plan
+  app/              Providers, authentication gate, routes and layout
+  components/       Shared accessible UI and query states
+  domain/           Types, schemas and analytics calculations
+  data/             HTTP and explicit demo repositories
+  features/         Overview, calls, issues, decisions, settings and platform UI
+server/
+  src/main/java/    Spring API, security, storage and outbox publisher
+  src/main/resources/db/migration/ PostgreSQL schema and RLS policies
+  src/test/         API authorization and database isolation checks
+worker/
+  csi_worker/       Local models, privacy, clustering, Temporal and adapters
+  tests/            Contracts, live database and opt-in local model tests
+infra/              Local database image and role initialization
+scripts/            Setup, model provisioning, startup and real pipeline smoke
+compose.yml         Local PostgreSQL, MinIO, Kafka and Temporal topology
+docs/PLATFORM.md    Setup, contracts, security and operational boundaries
 ```
 
-## Demo boundary
+## Libraries
 
-This is a frontend foundation, not the complete production AI platform. The 126 conversations, four issues, and three recommendations are synthetic. All analytics derive from these fixtures, anchored to 9 October 2026. The chart and period cards share the same data. Pending review is an all-time count and is labeled accordingly.
+React Router, TanStack Query/Table, React Hook Form, Zod, Radix Dialog and Recharts handle repeated UI behavior. Spring Security, JDBC, Flyway and the AWS S3 SDK handle API infrastructure. Temporal, aiokafka, Pydantic, Faster Whisper, SpeechBrain, scikit-learn, httpx and Ollama handle processing and delivery. Exact dependency resolutions are in the npm and uv lockfiles and Maven POM.
 
-Reviews are stored under `csi.demo.decisions.v1` in this browser. Use fictional names only. Local history is editable by the browser user, is not a production audit log, and does not provide authenticated approval or atomic cross-tab concurrency. Completing an action does not imply a measured business outcome.
+## Verification
 
-Audio ingestion/playback, speech-to-text, diarization, PII redaction, inference, clustering, backend persistence, authentication, tenant isolation, notifications and external integrations are not implemented. No external task creation or message sending occurs.
+```sh
+VITE_DATA_MODE=demo npm test
+npm run lint
+npm run build
+PLAYWRIGHT_CHANNEL=chrome npm run test:e2e
+scripts/mvn test
+uv run --project worker pytest worker/tests
+```
 
-The original design images were not available to inspect. The interface uses an original restrained green/neutral visual direction under the provisional product name Clarity. See [concept analysis](docs/CONCEPT_ANALYSIS.md) for source limitations and the proposed backend boundary.
+The platform guide includes commands for real PostgreSQL, local model, authenticated browser and complete audio-pipeline tests. Opt-in tests are explicitly skipped when their services are absent.
 
-## Connect a backend
-
-Implement `WorkspaceRepository` in `src/data/workspace.ts` with an HTTP adapter, then replace the demo adapter in `src/data/queries.ts`. Keep response validation at this boundary. Production list APIs should use server pagination, filtering and sorting instead of loading the full demo workspace. Split the aggregate workspace query into feature queries as endpoints become available.
-
-Enforce authorization, version checks, tenant isolation and audit writes on the server. Keep STT/LLM credentials in backend configuration, never in `VITE_*` variables. Use authenticated recording access rather than accepting arbitrary recording URLs in the browser.
-
-For SPA hosting, serve `index.html` for non-asset routes such as `/issues/ISS-001`. `dist/` is generated by `npm run build`. The dev server is local by default; no deployment has been configured.
+The original design images and the end of the source document were unavailable. [Concept analysis](docs/CONCEPT_ANALYSIS.md) records that source boundary. The interface preserves the existing restrained green visual direction. No deployment or remote push is included.

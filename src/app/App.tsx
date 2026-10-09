@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
+import { AuthGate } from "../features/platform/Auth";
 import { Layout } from "./Layout";
 import { LoadingState } from "../components/ui";
 const Overview = lazy(() => import("../features/overview/Overview"));
@@ -32,36 +33,38 @@ export default function App() {
       }
     >
       <QueryClientProvider client={client}>
-        <BrowserRouter>
-          <Suspense fallback={<LoadingState />}>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route index element={<Overview />} />
-                <Route path="conversations" element={<Conversations />} />
-                <Route
-                  path="conversations/:id"
-                  element={<ConversationDetail />}
-                />
-                <Route path="issues" element={<Issues />} />
-                <Route path="issues/:id" element={<IssueDetail />} />
-                <Route path="decisions" element={<Decisions />} />
-                <Route path="settings" element={<Settings />} />
-                <Route
-                  path="*"
-                  element={
-                    <div className="empty-state">
-                      <h1>Page not found</h1>
-                      <p>This view does not exist in the workspace.</p>
-                      <Link to="/" className="button">
-                        Back to overview
-                      </Link>
-                    </div>
-                  }
-                />
-              </Route>
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
+        <AuthGate>
+          <BrowserRouter>
+            <Suspense fallback={<LoadingState />}>
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route index element={<Overview />} />
+                  <Route path="conversations" element={<Conversations />} />
+                  <Route
+                    path="conversations/:id"
+                    element={<ConversationDetail />}
+                  />
+                  <Route path="issues" element={<Issues />} />
+                  <Route path="issues/:id" element={<IssueDetail />} />
+                  <Route path="decisions" element={<Decisions />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route
+                    path="*"
+                    element={
+                      <div className="empty-state">
+                        <h1>Page not found</h1>
+                        <p>This view does not exist in the workspace.</p>
+                        <Link to="/" className="button">
+                          Back to overview
+                        </Link>
+                      </div>
+                    }
+                  />
+                </Route>
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </AuthGate>
       </QueryClientProvider>
     </ErrorBoundary>
   );
