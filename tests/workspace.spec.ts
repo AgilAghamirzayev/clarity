@@ -12,7 +12,7 @@ test("demo opens automatically without authentication or API requests", async ({
   });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Overview");
-  await expect(page.locator(".profile")).toContainText("Demo account");
+  await expect(page.locator(".profile")).toContainText("Clarity workspace");
   await expect(
     page.getByRole("button", { name: /sign in|sign out|register/i }),
   ).toHaveCount(0);

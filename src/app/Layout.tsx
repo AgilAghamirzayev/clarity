@@ -170,7 +170,7 @@ function WorkspaceLayout() {
             <strong>Customer Intelligence</strong>
             <small>
               {guestMode
-                ? "Live demo workspace"
+                ? "AI workspace"
                 : apiMode
                   ? "Local AI workspace"
                   : "Demo workspace"}
@@ -207,13 +207,15 @@ function WorkspaceLayout() {
           >
             <span
               className="avatar"
-              title={guestMode || !apiMode ? "Demo account" : user?.email}
+              title={guestMode || !apiMode ? "Clarity workspace" : user?.email}
             >
-              {user ? user.email.slice(0, 2).toUpperCase() : "DR"}
+              {guestMode || !apiMode
+                ? "CL"
+                : user?.email.slice(0, 2).toUpperCase() || "CL"}
             </span>
             <span className="profile-details">
               <strong>
-                {guestMode || !apiMode ? "Demo account" : user?.email}
+                {guestMode || !apiMode ? "Clarity workspace" : user?.email}
               </strong>
               <small>{user ? roleLabels[user.role] : "Local preview"}</small>
             </span>

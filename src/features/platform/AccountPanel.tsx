@@ -14,7 +14,7 @@ export function AccountPanel({
 }) {
   const user = useIdentity();
   const isDemo = guestMode || !apiMode;
-  const name = isDemo ? "Demo account" : user?.email || "Your account";
+  const name = isDemo ? "Clarity workspace" : user?.email || "Your account";
   const expiry = user?.expiresAt ? new Date(user.expiresAt) : null;
   return (
     <Modal
@@ -26,7 +26,7 @@ export function AccountPanel({
       <div className="account-panel">
         <div className="account-identity">
           <span className="account-avatar" aria-hidden="true">
-            {isDemo ? "DE" : user?.email.slice(0, 2).toUpperCase() || "CL"}
+            {isDemo ? "CL" : user?.email.slice(0, 2).toUpperCase() || "CL"}
           </span>
           <div>
             <h3>{name}</h3>
@@ -48,7 +48,7 @@ export function AccountPanel({
             <dt>Access</dt>
             <dd>
               {guestMode
-                ? "Demo participant"
+                ? "Guest access"
                 : user
                   ? roleLabels[user.role]
                   : "Local preview"}
@@ -56,9 +56,7 @@ export function AccountPanel({
           </div>
           <div>
             <dt>Environment</dt>
-            <dd>
-              {guestMode ? "Live demo" : apiMode ? "Local AI" : "Demo preview"}
-            </dd>
+            <dd>{apiMode ? "Local AI" : "Demo preview"}</dd>
           </div>
           {guestMode && expiry && !Number.isNaN(expiry.getTime()) && (
             <div>
@@ -80,7 +78,7 @@ export function AccountPanel({
         {isDemo && (
           <p className="account-note">
             {guestMode
-              ? "Explore sample calls, upload recordings and review AI insights in your own demo workspace."
+              ? "Explore sample calls, upload recordings and review AI insights in your own temporary workspace."
               : "Explore sample conversations and recommendations. Your demo decisions are saved in this browser."}
           </p>
         )}

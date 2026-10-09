@@ -1,9 +1,12 @@
-import { Select } from "../../components/Select";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, guestMode } from "../../data/api";
-import { recordingAccept, recordingError } from "../../domain/recordings";
+import {
+  recordingAccept,
+  recordingError,
+  prepareRecordingUpload,
+} from "../../domain/recordings";
 import { useIdentity } from "./identity";
 import { Modal } from "../../components/Modal";
 import { AudioLines, CheckCircle2, Clock3, AlertCircle } from "lucide-react";
@@ -30,12 +33,9 @@ interface Job {
 }
 export function Imports() {
   const user = useIdentity();
-  const [recordedAt] = useState(() =>
-    new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 16),
-  );
-  const [importKey, setImportKey] = useState(() => crypto.randomUUID());
+  const pendingUpload = useRef<ReturnType<
+    typeof prepareRecordingUpload
+  > | null>(null);
   const [open, setOpen] = useState(false);
   const [fileError, setFileError] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
@@ -46,16 +46,16 @@ export function Imports() {
     refetchInterval: 5000,
   });
   const upload = useMutation({
-    mutationFn: (body: FormData) =>
+    mutationFn: ({ body, key }: ReturnType<typeof prepareRecordingUpload>) =>
       api("/calls/import", {
         method: "POST",
-        headers: { "Idempotency-Key": importKey },
+        headers: { "Idempotency-Key": key },
         body,
       }),
     onSuccess: () => {
       setOpen(false);
       setShowHistory(true);
-      setImportKey(crypto.randomUUID());
+      pendingUpload.current = null;
       void client.invalidateQueries({ queryKey: ["imports"] });
     },
   });
@@ -118,40 +118,9 @@ export function Imports() {
         : recordingError(selectedFile);
     setFileError(error);
     if (error) return;
-    const form = new FormData();
-    form.set("audio", fields.get("audio")!);
-    form.set(
-      "metadata",
-      new Blob(
-        [
-          JSON.stringify({
-            title:
-              fields.get("title") ||
-              selectedFile.name.replace(/\.[^.]+$/, "").slice(0, 120),
-            sample: fields.get("sample") === "on",
-            customerId: fields.get("customerId"),
-            agent: fields.get("agent"),
-            department: fields.get("department"),
-            recordedAt: new Date(
-              String(fields.get("recordedAt")),
-            ).toISOString(),
-            language:
-              fields.get("language") === "auto"
-                ? null
-                : fields.get("language") || null,
-            speakers: fields.get("speakers")
-              ? Number(fields.get("speakers"))
-              : null,
-            customerChannel:
-              !fields.get("channel") || fields.get("channel") === "auto"
-                ? null
-                : Number(fields.get("channel")),
-          }),
-        ],
-        { type: "application/json" },
-      ),
-    );
-    upload.mutate(form);
+    // Keep the same timestamp and reference if the user retries a failed request.
+    pendingUpload.current ??= prepareRecordingUpload(selectedFile);
+    upload.mutate(pendingUpload.current);
   }
   const canImport = user && ["ADMIN", "ANALYST", "DEMO"].includes(user.role);
   return (
@@ -215,7 +184,12 @@ export function Imports() {
             <button
               className="button"
               data-tour="import-recording"
-              onClick={() => setOpen(true)}
+              onClick={() => {
+                pendingUpload.current = null;
+                setFileError(null);
+                upload.reset();
+                setOpen(true);
+              }}
             >
               Import recording
             </button>
@@ -284,115 +258,30 @@ export function Imports() {
         open={open}
         onOpenChange={setOpen}
         title="Import a recording"
-        description="Add a recording and its call details. Transcription and analysis run locally."
+        description="Upload your audio. Clarity detects the language, creates a transcript and finds the key topics automatically."
       >
         <form onSubmit={submit} className="platform-form">
           <label>
             Audio file (up to {guestMode ? "25" : "100"} MB)
-            <input name="audio" type="file" accept={recordingAccept} required />
+            <input
+              name="audio"
+              type="file"
+              accept={recordingAccept}
+              required
+              disabled={upload.isPending}
+              onChange={() => {
+                pendingUpload.current = null;
+                setFileError(null);
+                upload.reset();
+              }}
+            />
             <small>
               MP3, MP4, M4A, WAV or FLAC. MP4 recordings must contain audio.
             </small>
           </label>
-          <label>
-            Conversation title
-            <input
-              name="title"
-              maxLength={120}
-              placeholder="e.g. Card delivery follow-up"
-            />
-            <small>
-              A short description without personal details. Leave blank to use
-              the detected topic.
-            </small>
-          </label>
-          <label>
-            Customer reference
-            <input
-              name="customerId"
-              defaultValue={guestMode ? "demo-customer" : undefined}
-              required
-              maxLength={128}
-              placeholder="e.g. CUST-1042"
-            />
-            <small>
-              Use your internal customer reference. It is stored as a private
-              identifier.
-            </small>
-          </label>
-          <label>
-            Support agent
-            <input
-              name="agent"
-              defaultValue={guestMode ? "Not provided" : undefined}
-              required
-              maxLength={80}
-              placeholder="e.g. Support advisor 12"
-            />
-          </label>
-          <label>
-            Department
-            <input
-              name="department"
-              defaultValue={guestMode ? "Customer support" : undefined}
-              required
-              maxLength={80}
-              placeholder="e.g. Cards and payments"
-            />
-          </label>
-          <label>
-            Recorded at
-            <input
-              type="datetime-local"
-              name="recordedAt"
-              required
-              defaultValue={recordedAt}
-            />
-          </label>
-          <label>
-            Language
-            <Select
-              name="language"
-              aria-label="Language"
-              defaultValue="auto"
-              options={[
-                { value: "auto", label: "Detect automatically" },
-                { value: "az", label: "Azerbaijani" },
-                { value: "en", label: "English" },
-                { value: "tr", label: "Turkish" },
-                { value: "ru", label: "Russian" },
-              ]}
-            />
-          </label>
-          <label>
-            Number of speakers (optional)
-            <input
-              name="speakers"
-              type="number"
-              min={1}
-              max={8}
-              placeholder="e.g. 2"
-            />
-          </label>
-          <label>
-            Customer audio channel (stereo recordings)
-            <Select
-              name="channel"
-              aria-label="Customer audio channel (stereo recordings)"
-              defaultValue="auto"
-              options={[
-                {
-                  value: "auto",
-                  label: "Detect speakers without assigning roles",
-                },
-                { value: "0", label: "Left channel" },
-                { value: "1", label: "Right channel" },
-              ]}
-            />
-          </label>
-          <label className="checkbox-label">
-            <input name="sample" type="checkbox" /> This is a sample recording
-          </label>
+          <p className="panel-copy">
+            The upload time is saved automatically. No call details to fill in.
+          </p>
           {fileError && (
             <p role="alert" className="field-error">
               {fileError}

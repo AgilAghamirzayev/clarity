@@ -13,3 +13,30 @@ export function recordingError(
   }
   return null;
 }
+
+export function prepareRecordingUpload(file: File, uploadedAt = new Date()) {
+  const key = crypto.randomUUID();
+  const body = new FormData();
+  body.set("audio", file);
+  body.set(
+    "metadata",
+    new Blob(
+      [
+        JSON.stringify({
+          title: null,
+          sample: false,
+          // Unidentified callers must not be grouped as one recurring customer.
+          customerId: `upload-${key}`,
+          agent: "Not identified",
+          department: "Customer support",
+          recordedAt: uploadedAt.toISOString(),
+          language: null,
+          speakers: null,
+          customerChannel: null,
+        }),
+      ],
+      { type: "application/json" },
+    ),
+  );
+  return { key, body };
+}
