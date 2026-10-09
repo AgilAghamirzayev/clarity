@@ -16,15 +16,13 @@ The six requested platform areas are implemented. Validation distinguishes real 
 
 The synthetic end-to-end call reports repeated payment failure. The local model returned negative customer sentiment, an issue supported by transcript indices, and an investigation recommendation. The outcome remains in its collection window and claims no business improvement.
 
-## Local infrastructure exception
+## Local infrastructure
 
-The Docker daemon accepted new containers but did not complete their startup. Existing containers continued serving requests. Its root cause was not established. Docker was not restarted because other projects have running containers.
+The standard Compose topology is running with a dedicated PostgreSQL 18.6 database, pgvector 0.8.1 and the application connection on port 5546. MinIO, Kafka and Temporal are also running. The API and local Python worker use this database.
 
-To complete real database testing without disrupting those projects, a separate `csi` database and `csi_owner`/`csi_app` roles were created inside this project's running `csi-temporal-db-1` PostgreSQL 17.11 container. pgvector 0.8.1 was built from its official release source. A temporary loopback forward serves that database on port 5547. The private `.env.local` contains the matching JDBC and worker connection URLs. Temporal's own databases are separate.
+The initialization script is copied into the database image instead of bind-mounted from macOS. A separate disposable database container verified fresh initialization of the application role and vector extension. Existing local sample data was restored into the dedicated database, including the audit permission restriction. The real database tests, authenticated browser scenario and full synthetic-audio pipeline passed again after this switch.
 
-The temporary forward is `.runtime/pg-forward.py` and is running for the current preview. If this process stops, start it with `python3 .runtime/pg-forward.py`. This is a local validation workaround, not the deployment topology.
-
-The repository's intended Compose topology has a dedicated PostgreSQL service on 5546. Its PostgreSQL 18.6 + pgvector image built successfully, but container startup in this Docker session is unverified. After Docker is healthy, use a fresh development database or an explicit backup/restore migration before switching the private connection URLs. Do not delete the existing volumes to resolve this issue.
+The temporary database forward used during diagnosis has been stopped. The earlier CSI validation database is retained as a local backup inside this project's Temporal database container; Temporal's own databases are separate. Other projects' containers were not restarted or changed.
 
 ## Operational boundaries
 

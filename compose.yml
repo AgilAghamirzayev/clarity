@@ -11,11 +11,7 @@ services:
       POSTGRES_DB: csi
       DB_APP_PASSWORD: ${DB_APP_PASSWORD:?Run scripts/setup-local.py}
     ports: ["127.0.0.1:5546:5432"]
-    volumes:
-      [
-        "db:/var/lib/postgresql",
-        "./infra/init-db.sh:/docker-entrypoint-initdb.d/init.sh:ro",
-      ]
+    volumes: ["db:/var/lib/postgresql"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U csi_owner -d csi"]
       interval: 3s
