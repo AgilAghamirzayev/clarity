@@ -10,6 +10,22 @@ Built by **DigiSolution** for **NeuroBridge.SI 2026**, AI Enterprise Solutions.
 
 **Flow:** connected recording source → masked transcript → recurring issue group → evidence-linked recommendation → human-reviewed decision → observational outcome comparison.
 
+## Architecture
+
+### System overview
+
+The React workspace connects to the Spring Boot API. Recordings are stored in MinIO, while application data and the transactional outbox live in PostgreSQL. Kafka carries processing events; Temporal coordinates the Python worker and retries failed activities. Results return to the workspace for human review.
+
+![Clarity system architecture showing React, Spring Boot, PostgreSQL, MinIO, Kafka, Temporal, the AI worker and human-approved integrations](deliverables/architecture/clarity-system-architecture.png)
+
+### Inside the AI pipeline
+
+Each recording passes through three activities: transcribe and mask, analyze and validate, then embed and group. The diagram identifies the models used at each step and separates AI output, deterministic checks and human decisions. A configured compatible analysis endpoint is optional and receives masked text only, alongside company instructions.
+
+![Clarity AI pipeline showing Faster Whisper, SpeechBrain, PII masking, Qwen analysis, Nomic embeddings, issue grouping and human review](deliverables/architecture/clarity-ai-pipeline.png)
+
+[Open the system diagram](deliverables/architecture/clarity-system-architecture.png) · [Open the AI pipeline diagram](deliverables/architecture/clarity-ai-pipeline.png) · [Architecture notes, implementation sources and boundaries](deliverables/architecture/README.md)
+
 ## Judge quick start
 
 - [Six-slide pitch, speaker notes and three-minute script](docs/PITCH.md) · [Editable deck](deliverables/judge-pitch/Clarity-Judge-Pitch-Current.pptx)
