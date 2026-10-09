@@ -256,7 +256,7 @@ function WorkspaceLayout() {
             >
               <span className="avatar" aria-hidden="true">
                 {guestMode || !apiMode
-                  ? "DE"
+                  ? "CL"
                   : user?.email.slice(0, 2).toUpperCase() || "CL"}
               </span>
             </button>
