@@ -1,22 +1,30 @@
 :root {
   font-family:
-    "DM Sans Variable",
+    "Roboto Variable",
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  color: #253c32;
-  background: #f7f9f7;
+  color: #202824;
+  background: #f6f8f7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --ink: #253c32;
-  --muted: #5b695f;
+  --ink: #202824;
+  --muted: #58665f;
   --green: #176b58;
   --green-dark: #125543;
   --green-light: #eaf3ed;
   --surface: #fff;
-  --border: #e3e9e4;
-  --radius: 10px;
+  --border: #e1e7e3;
+  --radius: 18px;
+  --canvas: #f6f8f7;
+  --surface-tonal: #edf3ef;
+  --selected: #d6eade;
+  --outline: #87958d;
+  --motion-fast: 140ms;
+  --motion-standard: 240ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --elevation-low: 0 1px 2px #20382b12, 0 2px 6px #20382b08;
   font-size: 14px;
 }
 * {
@@ -80,7 +88,7 @@ p {
 h1,
 h2,
 h3 {
-  font-family: "Manrope Variable", sans-serif;
+  font-family: "Roboto Variable", sans-serif;
 }
 h1 {
   font-size: clamp(24px, 2.15vw, 32px);
@@ -123,7 +131,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 9px;
-  font-family: "Manrope Variable", sans-serif;
+  font-family: "Roboto Variable", sans-serif;
   font-size: 29px;
   font-weight: 800;
   letter-spacing: -1.3px;
@@ -373,7 +381,7 @@ main {
   color: #899b8c;
 }
 .stat-value {
-  font-family: "Manrope Variable", sans-serif;
+  font-family: "Roboto Variable", sans-serif;
   font-size: 32px;
   letter-spacing: -1px;
   font-weight: 750;
@@ -898,7 +906,7 @@ tbody tr:hover {
 .issue-stats strong {
   font-size: 22px;
   display: block;
-  font-family: "Manrope Variable", sans-serif;
+  font-family: "Roboto Variable", sans-serif;
 }
 .issue-stats span {
   display: block;
@@ -1529,6 +1537,7 @@ blockquote {
   *::before,
   *::after {
     animation: none !important;
+    transition: none !important;
     scroll-behavior: auto !important;
   }
 }
@@ -1942,7 +1951,7 @@ button.text-link {
 }
 .mobile-brand {
   display: none;
-  font-family: "Manrope Variable", sans-serif;
+  font-family: "Roboto Variable", sans-serif;
   font-weight: 800;
   font-size: 21px;
   letter-spacing: -0.8px;

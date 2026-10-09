@@ -214,3 +214,67 @@ test("support summary changes period and distinguishes sample data", async ({
     page.getByRole("heading", { name: "Conversation transcript" }),
   ).toBeVisible();
 });
+
+test("navigation motion preserves filters and respects reduced motion", async ({
+  page,
+}) => {
+  await page.goto("/conversations");
+  await expect(page.locator(".page-content")).toHaveCSS("opacity", "1");
+  await page.getByLabel("Search conversations").fill("verification");
+  await expect(page.getByLabel("Search conversations")).toBeFocused();
+  await expect(page.locator("tbody")).toContainText("verification", {
+    ignoreCase: true,
+  });
+  await page
+    .getByRole("link", { name: "Issue intelligence", exact: true })
+    .click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Issue intelligence",
+  );
+  await page
+    .getByRole("link", { name: "Support summary", exact: true })
+    .click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Support summary",
+  );
+  await expect(page.locator(".nav-link.active")).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+  await expect(page.locator(".sidebar .nav-indicator")).toHaveCount(1);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/decisions?recommendation=REC-001");
+  await expect(page.locator(".page-content")).toHaveCSS("transform", "none");
+  await expect(page.locator(".page-content")).toHaveCSS("opacity", "1");
+  await page.getByRole("button", { name: "Review proposal" }).click();
+  await expect(page.getByRole("dialog")).toHaveCSS("animation-name", "none");
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("button", { name: "Review proposal" }),
+  ).toBeFocused();
+
+  const menu = page.getByRole("button", { name: "Open navigation" });
+  await menu.click();
+  await expect(page.locator(".navigation-drawer")).toHaveCSS(
+    "animation-name",
+    "none",
+  );
+  await page.keyboard.press("Escape");
+  await expect(menu).toBeFocused();
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await menu.click();
+  await expect(page.locator(".navigation-drawer")).toHaveCSS(
+    "animation-name",
+    "drawer-in",
+  );
+  await page
+    .getByRole("dialog")
+    .getByRole("link", { name: "Conversations", exact: true })
+    .click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Conversations",
+  );
+});

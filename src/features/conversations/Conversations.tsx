@@ -107,7 +107,7 @@ export default function Conversations() {
                   <input
                     type="search"
                     aria-label="Search conversations"
-                    placeholder="Search conversations, topics, or agents…"
+                    placeholder="Search conversations"
                     value={query}
                     onChange={(e) => update("q", e.target.value)}
                   />

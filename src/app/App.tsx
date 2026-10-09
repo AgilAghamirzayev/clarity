@@ -1,10 +1,10 @@
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
+import { MotionConfig } from "motion/react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { AuthGate } from "../features/platform/Auth";
 import { Layout } from "./Layout";
-import { LoadingState } from "../components/ui";
 const SupportSummary = lazy(() => import("../features/summary/SupportSummary"));
 const Overview = lazy(() => import("../features/overview/Overview"));
 const Conversations = lazy(
@@ -33,10 +33,10 @@ export default function App() {
         </div>
       }
     >
-      <QueryClientProvider client={client}>
-        <AuthGate>
-          <BrowserRouter>
-            <Suspense fallback={<LoadingState />}>
+      <MotionConfig reducedMotion="user">
+        <QueryClientProvider client={client}>
+          <AuthGate>
+            <BrowserRouter>
               <Routes>
                 <Route element={<Layout />}>
                   <Route index element={<Overview />} />
@@ -64,10 +64,10 @@ export default function App() {
                   />
                 </Route>
               </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </AuthGate>
-      </QueryClientProvider>
+            </BrowserRouter>
+          </AuthGate>
+        </QueryClientProvider>
+      </MotionConfig>
     </ErrorBoundary>
   );
 }

@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useId, useRef, useState } from "react";
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { LoadingState } from "../components/ui";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   Activity,
@@ -27,25 +29,42 @@ const navigation = [
   { to: "/settings", title: "Workspace settings", icon: Settings2 },
 ];
 function Navigation({ onNavigate }: { onNavigate?: () => void }) {
+  const groupId = useId();
+  const reducedMotion = useReducedMotion();
   return (
-    <nav aria-label="Main navigation">
-      {navigation.map(({ to, title, icon: Icon }) => (
-        <NavLink
-          key={to}
-          to={to}
-          end={to === "/"}
-          onClick={onNavigate}
-          className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-        >
-          <Icon size={18} />
-          <span>{title}</span>
-        </NavLink>
-      ))}
-    </nav>
+    <LayoutGroup id={groupId}>
+      <nav aria-label="Main navigation">
+        {navigation.map(({ to, title, icon: Icon }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={to === "/"}
+            onClick={onNavigate}
+            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+          >
+            {({ isActive }) => (
+              <>
+                {isActive && (
+                  <motion.span
+                    className="nav-indicator"
+                    layoutId={reducedMotion ? undefined : "active-navigation"}
+                    transition={{ type: "spring", stiffness: 420, damping: 38 }}
+                    aria-hidden="true"
+                  />
+                )}
+                <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
+                <span className="nav-label">{title}</span>
+              </>
+            )}
+          </NavLink>
+        ))}
+      </nav>
+    </LayoutGroup>
   );
 }
 export function Layout() {
   const user = useIdentity();
+  const reducedMotion = useReducedMotion();
   const [menu, setMenu] = useState(false);
   const [about, setAbout] = useState(false);
   const location = useLocation();
@@ -102,6 +121,8 @@ export function Layout() {
             <button
               className="icon-button mobile-menu"
               aria-label="Open navigation"
+              aria-expanded={menu}
+              aria-haspopup="dialog"
               onClick={() => setMenu(true)}
             >
               <Menu size={20} />
@@ -119,7 +140,20 @@ export function Layout() {
           </div>
         </header>
         <main ref={main} tabIndex={-1} id="main-content">
-          <Outlet />
+          <Suspense fallback={<LoadingState />}>
+            <motion.div
+              key={location.pathname}
+              className="page-content"
+              initial={reducedMotion ? false : { y: 8 }}
+              animate={{ y: 0 }}
+              transition={{
+                duration: reducedMotion ? 0 : 0.24,
+                ease: [0.2, 0, 0, 1],
+              }}
+            >
+              <Outlet />
+            </motion.div>
+          </Suspense>
         </main>
         <footer className="footer">
           <span>Clarity · Customer Intelligence</span>
@@ -133,7 +167,8 @@ export function Layout() {
       <Modal
         open={menu}
         onOpenChange={setMenu}
-        title="Workspace navigation"
+        variant="navigation"
+        title="Your workspace"
         description="Explore your customer intelligence workspace."
       >
         <Navigation onNavigate={() => setMenu(false)} />

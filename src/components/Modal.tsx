@@ -8,12 +8,14 @@ export function Modal({
   title,
   description,
   children,
+  variant = "dialog",
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
   description: string;
   children: ReactNode;
+  variant?: "dialog" | "navigation";
 }) {
   const returnFocus = useRef<HTMLElement | null>(null);
   return (
@@ -21,7 +23,7 @@ export function Modal({
       <Dialog.Portal>
         <Dialog.Overlay className="dialog-overlay" />
         <Dialog.Content
-          className="dialog-content"
+          className={`dialog-content${variant === "navigation" ? " navigation-drawer" : ""}`}
           onOpenAutoFocus={() => {
             returnFocus.current = document.activeElement as HTMLElement | null;
           }}
