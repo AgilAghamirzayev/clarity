@@ -40,7 +40,7 @@ AI can interpret varied descriptions of the same service problem and propose a r
 
 ## How much does it cost, and is it faster than manual review?
 
-Neither has been measured on representative customer data. A [sourced pilot budget](../evaluation/COSTS.md) lists a $302.40/month server-and-weekly-backup subtotal, excluding labor, taxes and extras. It is not a measured unit cost. Local models avoid a required external inference bill but still consume compute and operations effort. Configured providers add their own usage charges. We will measure resource use, retries, retention and review minutes on ten representative calls and compare manual and assisted review on a labeled set. No measured cost per call, speedup or savings is supported yet. [Cost worksheet and comparison design](EVIDENCE_PLAN.md).
+The deployed Azure VM was quoted at $0.252/hour, about $6.05/day for compute, plus disk and public IP. A fresh 22-second sample took 205.2 seconds; a nine-call report took 241.7 seconds. These measurements establish that the deployed flow works, not that it beats manual review or sustains production traffic. The earlier $302.40/month alternative-hosting scenario is separately labeled in [cost notes](../evaluation/COSTS.md). Local models avoid required external inference fees but consume compute and operations effort. Representative reviewer effort, cost per successful audio hour and customer savings remain unmeasured. [Comparison design](EVIDENCE_PLAN.md).
 
 ## Where will the data come from?
 
@@ -48,7 +48,7 @@ Today the catalog contains eight fictional recordings generated from authored sc
 
 ## Is the demo live, and is Clarity deployed?
 
-Prepared catalog outputs load immediately without inference. A fresh upload requires running services and models; judges can request a separate fresh run. The catalog's stored prompt version differs from the current worker. Seeded decisions and guest integrations are illustrative. Deployment instructions and historical local verification exist, but this review did not establish a public or production deployment. Existing screenshots are prepared prototype captures.
+Yes. The complete application is available at [the public Azure demo](https://clarity.eastus.cloudapp.azure.com), with working backend, persistent storage, local AI and HTTPS. Judges can choose Try fresh analysis, then Analyze sample call, without signing in. A fresh uploaded call and a refreshed report were completed and verified on the server; [Azure acceptance evidence](../evaluation/reports/azure-acceptance-20261009.json) records timing and access checks. Prepared catalog outputs still load without fresh inference, use an older prompt version, and have documented editorial corrections. Seeded decisions and guest integrations are illustrative. This is a working deployed demo, not a claim of customer adoption, production certification or a validated recovery process.
 
 ## Did the recommendation improve the business?
 

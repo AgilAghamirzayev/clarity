@@ -31,9 +31,9 @@ The old version 5 results remain available unchanged. Different datasets prevent
 
 ## Feasibility: 15 points
 
-The repository includes deployment instructions, recording-source ingestion, retries, replay protection, persistence and human approval boundaries. A candidate one-server pilot has a published **$302.40/month infrastructure subtotal**, including weekly backup, in [the cost scenario](../evaluation/COSTS.md). This is a budget quote, not a measured bill or proof that the server can sustain a target workload. Review labor, operations, tax and additional storage are excluded.
+The complete product runs on [Azure](https://clarity.eastus.cloudapp.azure.com): 4 vCPUs, 32 GiB RAM and a 128 GiB SSD, with local inference, persistence, retries and human approval boundaries. The compute quote is **$0.252/hour**, about **$6.05/day**, plus disk and public IP. The fresh-call acceptance run took **205.2 seconds** and a nine-call report took **241.7 seconds**. [Evidence](../evaluation/reports/azure-acceptance-20261009.json) records the real deployment checks. The earlier $302.40/month alternative-hosting scenario is separately identified in [cost notes](../evaluation/COSTS.md). Neither quote nor one acceptance run establishes sustained capacity or unit economics.
 
-Next: benchmark the selected host, confirm recording access, collect the reviewer pilot and measure cost per successful audio hour. Local laptop throughput must not be assigned to the proposed cloud host. No production deployment or customer data agreement is claimed.
+Next: benchmark sustained workloads on the deployed host, confirm consented recording access, collect the reviewer pilot and measure cost per successful audio hour. Local laptop timings and Azure timings are reported separately. Customer data agreements, representative privacy quality and production recovery remain open work.
 
 ## Originality: 10 points
 
