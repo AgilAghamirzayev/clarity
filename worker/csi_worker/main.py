@@ -12,7 +12,8 @@ from temporalio.worker import Worker
 
 from .activities import analyze_call, cluster_call, deliver_event, fail_call, fail_delivery, transcribe_call
 from .events import parse_event
-from .workflows import CallWorkflow, DeliveryWorkflow
+from .support_summary import build_support_summary, fail_support_summary
+from .workflows import CallWorkflow, DeliveryWorkflow, SupportSummaryWorkflow
 
 
 async def consume(client):
@@ -53,6 +54,9 @@ async def consume(client):
             elif event["type"] == "decision.approved":
                 workflow_class = DeliveryWorkflow
                 workflow_id = f"delivery-{event['id']}-{event['generation']}"
+            elif event["type"] == "summary.requested":
+                workflow_class = SupportSummaryWorkflow
+                workflow_id = f"summary-{event['tenant']}-{event['resource']}"
             else:
                 raise ValueError("UNRECOGNIZED_EVENT_TYPE")
             try:
@@ -80,8 +84,17 @@ async def main():
         worker = Worker(
             client,
             task_queue="csi-local",
-            workflows=[CallWorkflow, DeliveryWorkflow],
-            activities=[transcribe_call, analyze_call, cluster_call, fail_call, deliver_event, fail_delivery],
+            workflows=[CallWorkflow, DeliveryWorkflow, SupportSummaryWorkflow],
+            activities=[
+                transcribe_call,
+                analyze_call,
+                cluster_call,
+                fail_call,
+                deliver_event,
+                fail_delivery,
+                build_support_summary,
+                fail_support_summary,
+            ],
             activity_executor=executor,
             max_concurrent_activities=1,
         )

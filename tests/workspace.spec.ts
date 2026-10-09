@@ -188,3 +188,33 @@ test("invalid routes and missing records have recovery links", async ({
     "Listen closer. See the bigger picture.",
   );
 });
+
+test("support summary changes period and distinguishes sample data", async ({
+  page,
+}) => {
+  await page.goto("/summary");
+  await expect(
+    page.getByRole("heading", { name: "Support summary", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Policy & communication" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Product & engineering" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Support operations" }),
+  ).toBeVisible();
+  await expect(page.locator(".summary-metrics").first()).toContainText("34");
+  await page.getByLabel("Summary period").selectOption("30");
+  await expect(page.locator(".summary-metrics")).toContainText("126");
+  await page.getByLabel("Include sample recordings").uncheck();
+  await expect(
+    page.getByRole("heading", { name: "There is not enough evidence yet" }),
+  ).toBeVisible();
+  await page.getByLabel("Include sample recordings").check();
+  await page.locator(".summary-evidence a").first().click();
+  await expect(
+    page.getByRole("heading", { name: "Conversation transcript" }),
+  ).toBeVisible();
+});

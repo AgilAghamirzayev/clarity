@@ -3,6 +3,7 @@ const live = process.env.CSI_E2E_API === "true";
 const port = live ? 4175 : 4174;
 export default defineConfig({
   testDir: "./tests",
+  outputDir: live ? "test-results/live" : "test-results/demo",
   testMatch: live ? "**/live.spec.ts" : "**/workspace.spec.ts",
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,

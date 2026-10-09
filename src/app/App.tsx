@@ -5,6 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { AuthGate } from "../features/platform/Auth";
 import { Layout } from "./Layout";
 import { LoadingState } from "../components/ui";
+const SupportSummary = lazy(() => import("../features/summary/SupportSummary"));
 const Overview = lazy(() => import("../features/overview/Overview"));
 const Conversations = lazy(
   () => import("../features/conversations/Conversations"),
@@ -39,6 +40,7 @@ export default function App() {
               <Routes>
                 <Route element={<Layout />}>
                   <Route index element={<Overview />} />
+                  <Route path="summary" element={<SupportSummary />} />
                   <Route path="conversations" element={<Conversations />} />
                   <Route
                     path="conversations/:id"

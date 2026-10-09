@@ -36,6 +36,8 @@ export const errorLabels: Record<string, string> = {
     "We could not save the findings. Try processing this recording again.",
 };
 export const auditLabels: Record<string, string> = {
+  "summary.requested": "Support summary requested",
+  "summary.completed": "Support summary generated",
   "workspace.read": "Workspace viewed",
   "call.import": "Recording uploaded",
   "call.completed": "Recording analysis completed",

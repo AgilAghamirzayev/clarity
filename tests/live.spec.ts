@@ -88,3 +88,61 @@ test("sign in, inspect import and integration controls, and sign out", async ({
   ).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("support summary shows local advice, evidence and reporting boundaries", async ({
+  page,
+}) => {
+  await page.goto("/summary");
+  await page
+    .getByLabel("Workspace", { exact: true })
+    .fill(process.env.BOOTSTRAP_TENANT ?? "local");
+  await page
+    .getByLabel("Email", { exact: true })
+    .fill(process.env.BOOTSTRAP_EMAIL ?? "admin@csi.local");
+  await page
+    .getByLabel("Password", { exact: true })
+    .fill(process.env.BOOTSTRAP_PASSWORD!);
+  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Support summary", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Refresh analysis" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Policy & communication" }),
+  ).toBeVisible();
+  await expect(page.locator(".summary-advice").first()).toBeVisible();
+  await expect(
+    page.getByText(
+      "No policy documents, source code, SLA targets or resolution records were analyzed.",
+      { exact: false },
+    ),
+  ).toBeVisible();
+  await page.getByLabel("Include sample recordings").uncheck();
+  await expect(
+    page.getByRole("heading", { name: "There is not enough evidence yet" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Generate analysis" }),
+  ).toBeDisabled();
+  await page.getByLabel("Include sample recordings").check();
+  for (const width of [1440, 1024, 768, 320]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await expect(page.locator(".summary-advice").first()).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    await page.screenshot({
+      path: `test-results/support-summary-${width}.png`,
+      fullPage: true,
+    });
+  }
+  await page.locator(".summary-evidence a").first().click();
+  await expect(
+    page.getByRole("heading", { name: "Conversation transcript" }),
+  ).toBeVisible();
+});

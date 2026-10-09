@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   Activity,
+  ChartNoAxesCombined,
   ArrowUpRight,
   AudioLines,
   ChevronDown,
@@ -21,6 +22,7 @@ import { Modal } from "../components/Modal";
 
 const navigation = [
   { to: "/", title: "Overview", icon: LayoutDashboard },
+  { to: "/summary", title: "Support summary", icon: ChartNoAxesCombined },
   { to: "/conversations", title: "Conversations", icon: AudioLines },
   { to: "/issues", title: "Issue intelligence", icon: GitBranch },
   { to: "/decisions", title: "Decision center", icon: Lightbulb },

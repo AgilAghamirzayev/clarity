@@ -8,7 +8,7 @@ class Event(BaseModel):
     model_config = ConfigDict(extra="forbid")
     id: UUID
     tenant: UUID
-    type: Literal["call.imported", "decision.approved"]
+    type: Literal["call.imported", "decision.approved", "summary.requested"]
     resource: UUID
     generation: int = Field(ge=1)
 

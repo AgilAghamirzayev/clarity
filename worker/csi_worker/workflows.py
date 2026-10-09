@@ -55,3 +55,25 @@ class DeliveryWorkflow:
                 retry_policy=RetryPolicy(maximum_attempts=10),
             )
             raise
+
+
+@workflow.defn
+class SupportSummaryWorkflow:
+    @workflow.run
+    async def run(self, event: dict):
+        try:
+            await workflow.execute_activity(
+                "build_support_summary",
+                event,
+                start_to_close_timeout=timedelta(minutes=20),
+                schedule_to_close_timeout=timedelta(hours=1),
+                retry_policy=RetryPolicy(maximum_attempts=3, initial_interval=timedelta(seconds=10)),
+            )
+        except Exception:
+            await workflow.execute_activity(
+                "fail_support_summary",
+                event,
+                start_to_close_timeout=timedelta(minutes=1),
+                retry_policy=RetryPolicy(maximum_attempts=10),
+            )
+            raise

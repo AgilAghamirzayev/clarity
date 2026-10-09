@@ -164,8 +164,24 @@ class CallController {
           row.remove("audio_key");
           row.remove("sha256");
           row.remove("import_key");
-          for (String key : List.of("metadata", "transcript", "analysis"))
+          var metadata = db.decode(row.get("metadata"));
+          for (String key : List.of("transcript", "analysis"))
             if (row.get(key) != null) row.put(key, db.decode(row.get(key)));
+          row.put("reference", "CALL-" + row.get("display_number"));
+          metadata.put(
+              "customer",
+              "Customer "
+                  + db.sql.queryForObject(
+                      "select min(display_number) from calls where metadata->>'customer'=?",
+                      Long.class,
+                      metadata.get("customer")));
+          row.put("metadata", metadata);
+          row.put(
+              "issueIds",
+              db.sql.queryForList(
+                  "select issue_id::text from call_issues where call_id=? order by mentions desc",
+                  String.class,
+                  id));
           return row;
         });
   }

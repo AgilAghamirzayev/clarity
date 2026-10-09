@@ -3,7 +3,9 @@ import {
   callTitle,
   languageLabel,
 } from "../../domain/presentation";
-import { apiMode } from "../../data/api";
+import { useQuery } from "@tanstack/react-query";
+import type { Conversation } from "../../domain/models";
+import { api, apiMode } from "../../data/api";
 import { useIdentity } from "../platform/identity";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, AudioLines, FileText, ShieldCheck } from "lucide-react";
@@ -11,6 +13,8 @@ import { format } from "date-fns";
 import { WorkspaceView } from "../../components/WorkspaceView";
 import {
   Badge,
+  LoadingState,
+  ErrorState,
   EmptyState,
   PageHeader,
   Panel,
@@ -21,10 +25,54 @@ import { durationLabel } from "../../domain/analytics";
 export default function ConversationDetail() {
   const { id } = useParams();
   const user = useIdentity();
+  const detail = useQuery({
+    queryKey: ["conversation-detail", id],
+    enabled: apiMode && !!id,
+    queryFn: async (): Promise<Conversation> => {
+      const record = await api<{
+        id: string;
+        reference: string;
+        metadata: Pick<
+          Conversation,
+          "customer" | "title" | "agent" | "department" | "date" | "sample"
+        >;
+        issueIds: string[];
+        analysis: Pick<Conversation, "topic" | "summary" | "sentiment"> | null;
+        transcript: {
+          duration: number;
+          language: string;
+          segments: Conversation["transcript"];
+        } | null;
+      }>(`/calls/${id}`);
+      if (!record.analysis || !record.transcript)
+        throw new Error(
+          "This recording is still being processed. Return to the import history to check its progress.",
+        );
+      return {
+        ...record.metadata,
+        ...record.analysis,
+        id: record.id,
+        reference: record.reference,
+        issueId: record.issueIds[0] ?? null,
+        issueIds: record.issueIds,
+        duration: record.transcript.duration,
+        language: record.transcript.language,
+        transcript: record.transcript.segments,
+      };
+    },
+  });
   return (
     <WorkspaceView>
       {(data) => {
-        const call = data.conversations.find((c) => c.id === id);
+        if (apiMode && detail.isPending) return <LoadingState />;
+        if (apiMode && detail.isError)
+          return (
+            <ErrorState
+              error={detail.error}
+              retry={() => void detail.refetch()}
+            />
+          );
+        const call = detail.data ?? data.conversations.find((c) => c.id === id);
         if (!call)
           return (
             <EmptyState title="Conversation not found">

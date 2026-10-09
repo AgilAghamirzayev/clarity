@@ -133,3 +133,21 @@ The local model weights must be provisioned before starting an offline worker. K
 ## Documentation used
 
 Implementation was checked against [Spring Boot 3.5 documentation](https://docs.spring.io/spring-boot/3.5/), [Temporal Python SDK guidance](https://docs.temporal.io/develop/python), [Faster Whisper](https://github.com/SYSTRAN/faster-whisper), [SpeechBrain ECAPA](https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb), and Ollama's [chat](https://docs.ollama.com/api/chat) and [embedding](https://docs.ollama.com/api/embed) contracts. Library syntax was also checked through Context7 and installed package source.
+
+## Support performance summary
+
+The **Support summary** page compares 7, 30 or 90 days with the immediately preceding period. It reports completed calls, distinct customers, sentiment distribution, customers with multiple calls, average recording length and leading issue clusters. Both periods use the recording timestamp with a start-exclusive/end-inclusive window. The sample-data control applies to metrics and evidence together. Rates are unavailable when their denominators are zero. Sentiment is not CSAT; multiple calls are not a resolution failure; recording length excludes after-call work.
+
+`GET /api/v1/support-summary?days=7&includeSamples=false` reads the latest snapshot for that scope. If none exists, it returns current metrics with `NOT_GENERATED` status. `POST /api/v1/support-summary` accepts `{ "days": 7, "includeSamples": false }` plus an `Idempotency-Key` and CSRF token. Administrators, analysts and reviewers may generate; viewers may read. Reusing a request key with a different scope returns a conflict. Only one report per tenant/scope may be active; a different request key for an already-running scope receives a conflict. Stored snapshots are immutable; **Refresh analysis** captures newer calls and a new comparison window.
+
+A report request and outbox event commit together. Kafka dispatches a stable Temporal workflow to the local worker. Generation retries up to three times within an hour; final failure can be retried from the page with a new request. Tenant RLS protects snapshots and reports. Workflow histories contain identifiers and sanitized errors. Snapshot creation uses a repeatable-read database transaction so evidence and metrics see the same database state.
+
+The local model receives calculated aggregate metrics and the latest 40 eligible masked call summaries. The numerical overview is calculated directly from the snapshot; strengths cite positive call summaries. Every suggestion must cite references from that exact snapshot. Verification checklists and success measures are defined by category, so the model does not set service targets. The worker validates citations, masks generated text, stores the model/prompt version and records completion in the server audit. Metrics use all eligible calls; qualitative advice is limited to the visible evidence subset. Evidence links load the call directly, including records outside the workspace list limit. Sample recordings remain explicitly labeled.
+
+Advice covers policy and communication, product and engineering, and support operations when the calls support it. Each suggestion includes an observation, proposed action, validation step, success measure and links to supporting calls. This feature does not inspect source code or policy documents, does not estimate CSAT, SLA compliance or first-contact resolution, and does not create external tickets or change policies automatically.
+
+After importing the local samples, verify the complete generation path with:
+
+```sh
+python3 scripts/run.py uv run --project worker python scripts/smoke-summary.py
+```

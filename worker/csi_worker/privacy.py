@@ -64,6 +64,7 @@ def local_entities(text):
         {
             "model": os.environ.get("PII_MODEL", os.environ.get("LLM_MODEL", "qwen3:4b-instruct")),
             "stream": False,
+            "think": False,
             "format": Entities.model_json_schema(),
             "options": {"temperature": 0, "num_predict": 600, "num_ctx": 4096},
             "messages": [

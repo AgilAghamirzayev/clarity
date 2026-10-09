@@ -29,6 +29,18 @@ public class Database {
         });
   }
 
+  public <T> T tenantSnapshot(UUID tenant, Supplier<T> body) {
+    var snapshot = new TransactionTemplate(Objects.requireNonNull(tx.getTransactionManager()));
+    snapshot.setIsolationLevel(
+        org.springframework.transaction.TransactionDefinition.ISOLATION_REPEATABLE_READ);
+    return snapshot.execute(
+        s -> {
+          sql.queryForObject(
+              "select set_config('app.tenant_id',?,true)", String.class, tenant.toString());
+          return body.get();
+        });
+  }
+
   public String encode(Object value) {
     try {
       return json.writeValueAsString(value);
