@@ -27,3 +27,11 @@ dist-ssr
 !.env.example
 playwright-report/
 test-results/
+.tools/
+.models/
+server/target/
+worker/.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.runtime/

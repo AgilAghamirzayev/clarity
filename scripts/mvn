@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
+VERSION=3.9.11
+if [ ! -x "$ROOT/.tools/apache-maven-$VERSION/bin/mvn" ]; then
+  mkdir -p "$ROOT/.tools"
+  BASE="https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/$VERSION/apache-maven-$VERSION-bin.tar.gz"
+  curl -fLsS "$BASE" -o "$ROOT/.tools/maven.tar.gz"
+  curl -fLsS "$BASE.sha512" -o "$ROOT/.tools/maven.sha512"
+  python3 - "$ROOT/.tools" <<'PY'
+import hashlib, pathlib, sys
+p = pathlib.Path(sys.argv[1])
+assert hashlib.sha512((p/'maven.tar.gz').read_bytes()).hexdigest() == (p/'maven.sha512').read_text().strip().split()[0], 'Maven checksum mismatch'
+PY
+  tar -xzf "$ROOT/.tools/maven.tar.gz" -C "$ROOT/.tools"
+fi
+if [ -x /usr/libexec/java_home ]; then
+  JAVA_HOME=$(/usr/libexec/java_home -v 21)
+  export JAVA_HOME
+fi
+exec "$ROOT/.tools/apache-maven-$VERSION/bin/mvn" -f "$ROOT/server/pom.xml" "$@"

@@ -1,0 +1,10 @@
+.git
+node_modules
+.tools
+.models
+.runtime
+.env*
+server/target
+worker/.venv
+test-results
+playwright-report

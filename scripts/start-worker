@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+ROOT=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
+cd "$ROOT"
+export PYTHONPATH="$ROOT/worker"
+exec python3 scripts/run.py uv run --project worker --locked python -m csi_worker.main

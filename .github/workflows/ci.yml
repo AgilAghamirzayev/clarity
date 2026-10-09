@@ -1,12 +1,14 @@
-name: Frontend checks
+name: Platform checks
 on:
   push:
   pull_request:
 permissions:
   contents: read
 jobs:
-  verify:
+  frontend:
     runs-on: ubuntu-latest
+    env:
+      VITE_DATA_MODE: demo
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,3 +22,38 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: csi_owner
+          POSTGRES_PASSWORD: ci-owner-only
+          POSTGRES_DB: csi
+          DB_APP_PASSWORD: ci-app-only
+        ports: ["5546:5432"]
+        options: >-
+          --health-cmd "pg_isready -U csi_owner -d csi"
+          --health-interval 3s --health-retries 30
+    env:
+      DB_OWNER_PASSWORD: ci-owner-only
+      DB_APP_PASSWORD: ci-app-only
+      S3_ACCESS_KEY: ci-only
+      S3_SECRET_KEY: ci-only-not-a-live-credential
+      CSI_INTEGRATION_TESTS: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - run: docker exec -i ${{ job.services.postgres.id }} sh < infra/init-db.sh
+      - run: scripts/mvn -B verify
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --project worker --locked
+      - run: uv run --project worker ruff check --config worker/pyproject.toml worker scripts
+      - run: uv run --project worker pytest worker/tests -q
