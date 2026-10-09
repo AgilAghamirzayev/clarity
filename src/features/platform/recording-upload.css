@@ -1,0 +1,208 @@
+body:has(.recording-import-dialog) .dialog-overlay {
+  background: #22374b66;
+  backdrop-filter: blur(6px);
+}
+.recording-import-dialog {
+  max-width: 800px;
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 24px 80px #142b4133;
+}
+.recording-import-dialog > h2 {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-right: 44px;
+  margin-bottom: 12px;
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+}
+.recording-heading-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: #eaf7f5;
+  color: #087a73;
+}
+.recording-import-dialog > p {
+  margin: -8px 24px 28px 88px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.recording-import-dialog .dialog-close {
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface-tonal);
+}
+.recording-upload-form {
+  display: grid;
+  gap: 18px;
+}
+.recording-upload-field > label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.recording-upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 232px;
+  padding: 22px;
+  border: 1.5px dashed #91cbc7;
+  border-radius: 16px;
+  background: #f3faf9;
+  text-align: center;
+  transition:
+    background var(--motion-fast),
+    border-color var(--motion-fast);
+}
+.recording-upload-zone.is-dragging,
+.recording-upload-zone:focus-within {
+  background: #e5f5f2;
+  border-color: #087a73;
+}
+.recording-upload-art {
+  position: relative;
+  color: #8cc6c1;
+  margin-bottom: 4px;
+}
+.recording-upload-art > svg {
+  fill: #d5eeea;
+}
+.recording-upload-art > span {
+  position: absolute;
+  right: -6px;
+  bottom: 2px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  background: #008f80;
+  border: 2px solid #f3faf9;
+}
+.recording-upload-zone > strong {
+  font-size: 18px;
+  font-weight: 550;
+}
+.recording-upload-or,
+.recording-upload-selection {
+  color: var(--muted);
+  font-size: 14px;
+}
+.recording-upload-selection {
+  margin-top: 4px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.recording-choose,
+.recording-upload-submit {
+  background: linear-gradient(170deg, #128781, #006761);
+  color: white;
+  border: 1px solid #087a73;
+}
+.recording-choose:hover,
+.recording-upload-submit:hover {
+  background: #00655e;
+}
+.recording-choose {
+  min-width: 184px;
+  min-height: 46px;
+  border-radius: 12px;
+  font-size: 16px;
+  gap: 10px;
+}
+.recording-upload-formats {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.recording-upload-note {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: #eef7f6;
+  border-radius: 14px;
+  color: #485d70;
+}
+.recording-upload-note > span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: #075e58;
+  background: #dff1ee;
+}
+.recording-upload-note p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.recording-upload-submit {
+  min-height: 54px;
+  width: 100%;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 550;
+  gap: 12px;
+  box-shadow: 0 8px 20px #087a7317;
+}
+@media (max-width: 600px) {
+  .recording-import-dialog {
+    padding: 24px 20px;
+  }
+  .recording-import-dialog > h2 {
+    font-size: 24px;
+    gap: 12px;
+  }
+  .recording-heading-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+  .recording-heading-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+  .recording-import-dialog > p {
+    margin: 16px 0 24px;
+    font-size: 15px;
+  }
+  .recording-import-dialog .dialog-close {
+    top: 16px;
+    right: 12px;
+  }
+  .recording-upload-zone {
+    padding: 20px 12px;
+  }
+  .recording-upload-zone > strong {
+    font-size: 16px;
+  }
+  .recording-upload-note {
+    gap: 12px;
+    padding: 12px;
+  }
+  .recording-upload-note p {
+    font-size: 13px;
+  }
+  .recording-upload-submit {
+    font-size: 16px;
+  }
+}

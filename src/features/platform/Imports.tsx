@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api, guestMode } from "../../data/api";
-import {
-  recordingAccept,
-  recordingError,
-  prepareRecordingUpload,
-} from "../../domain/recordings";
+import { prepareRecordingUpload } from "../../domain/recordings";
+import { RecordingUploadForm } from "./RecordingUploadForm";
 import { useIdentity } from "./identity";
 import { Modal } from "../../components/Modal";
 import { AudioLines, CheckCircle2, Clock3, AlertCircle } from "lucide-react";
@@ -33,11 +30,7 @@ interface Job {
 }
 export function Imports() {
   const user = useIdentity();
-  const pendingUpload = useRef<ReturnType<
-    typeof prepareRecordingUpload
-  > | null>(null);
   const [open, setOpen] = useState(false);
-  const [fileError, setFileError] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const client = useQueryClient();
   const jobs = useQuery({
@@ -55,7 +48,6 @@ export function Imports() {
     onSuccess: () => {
       setOpen(false);
       setShowHistory(true);
-      pendingUpload.current = null;
       void client.invalidateQueries({ queryKey: ["imports"] });
     },
   });
@@ -108,20 +100,6 @@ export function Imports() {
     mutationFn: (id: string) => api(`/calls/${id}/retry`, { method: "POST" }),
     onSuccess: () => client.invalidateQueries({ queryKey: ["imports"] }),
   });
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const fields = new FormData(event.currentTarget);
-    const selectedFile = fields.get("audio") as File;
-    const error =
-      guestMode && selectedFile.size > 25 * 1024 * 1024
-        ? "Live demo files must be at most 25 MB."
-        : recordingError(selectedFile);
-    setFileError(error);
-    if (error) return;
-    // Keep the same timestamp and reference if the user retries a failed request.
-    pendingUpload.current ??= prepareRecordingUpload(selectedFile);
-    upload.mutate(pendingUpload.current);
-  }
   const canImport = user && ["ADMIN", "ANALYST", "DEMO"].includes(user.role);
   return (
     <>
@@ -185,8 +163,6 @@ export function Imports() {
               className="button"
               data-tour="import-recording"
               onClick={() => {
-                pendingUpload.current = null;
-                setFileError(null);
                 upload.reset();
                 setOpen(true);
               }}
@@ -257,45 +233,23 @@ export function Imports() {
       <Modal
         open={open}
         onOpenChange={setOpen}
-        title="Import a recording"
+        className="recording-import-dialog"
+        title={
+          <>
+            <span className="recording-heading-icon" aria-hidden="true">
+              <AudioLines size={34} />
+            </span>
+            Import a recording
+          </>
+        }
         description="Upload your audio. Clarity detects the language, creates a transcript and finds the key topics automatically."
       >
-        <form onSubmit={submit} className="platform-form">
-          <label>
-            Audio file (up to {guestMode ? "25" : "100"} MB)
-            <input
-              name="audio"
-              type="file"
-              accept={recordingAccept}
-              required
-              disabled={upload.isPending}
-              onChange={() => {
-                pendingUpload.current = null;
-                setFileError(null);
-                upload.reset();
-              }}
-            />
-            <small>
-              MP3, MP4, M4A, WAV or FLAC. MP4 recordings must contain audio.
-            </small>
-          </label>
-          <p className="panel-copy">
-            The upload time is saved automatically. No call details to fill in.
-          </p>
-          {fileError && (
-            <p role="alert" className="field-error">
-              {fileError}
-            </p>
-          )}
-          {upload.isError && (
-            <p role="alert" className="field-error">
-              {upload.error.message}
-            </p>
-          )}
-          <button className="button" disabled={upload.isPending}>
-            {upload.isPending ? "Uploading…" : "Import and analyze"}
-          </button>
-        </form>
+        <RecordingUploadForm
+          pending={upload.isPending}
+          error={upload.isError ? upload.error.message : null}
+          onUpload={(recording) => upload.mutate(recording)}
+          onReset={() => upload.reset()}
+        />
       </Modal>
     </>
   );
