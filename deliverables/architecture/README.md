@@ -24,14 +24,14 @@ Both diagrams preserve Clarity's cream and green palette and use English labels.
 
 ## Models and controls
 
-| Component | Current role | Important boundary |
-| --- | --- | --- |
-| Faster Whisper Small | Speech recognition with timestamps | Local weights, CPU INT8 configuration |
-| SpeechBrain ECAPA | Speaker embeddings for mono diarization | Stereo channel metadata can supply roles; unknown roles remain unknown |
-| Qwen3 4B Instruct via Ollama | Default local text analysis and local PII entity detection | AI output requires schema and evidence checks |
-| GLiNER multi-v2.1 | Optional alternative PII detector | Not an additional mandatory pipeline stage |
-| Nomic Embed Text via Ollama | 768-dimensional finding embeddings | Matching uses pgvector and a deterministic distance rule |
-| OpenAI-compatible endpoint | Optional configured text-analysis provider | Requires explicit opt-in; receives masked text plus configured context and instructions |
+| Component                    | Current role                                               | Important boundary                                                                      |
+| ---------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Faster Whisper Small         | Speech recognition with timestamps                         | Local weights, CPU INT8 configuration                                                   |
+| SpeechBrain ECAPA            | Speaker embeddings for mono diarization                    | Stereo channel metadata can supply roles; unknown roles remain unknown                  |
+| Qwen3 4B Instruct via Ollama | Default local text analysis and local PII entity detection | AI output requires schema and evidence checks                                           |
+| GLiNER multi-v2.1            | Optional alternative PII detector                          | Not an additional mandatory pipeline stage                                              |
+| Nomic Embed Text via Ollama  | 768-dimensional finding embeddings                         | Matching uses pgvector and a deterministic distance rule                                |
+| OpenAI-compatible endpoint   | Optional configured text-analysis provider                 | Requires explicit opt-in; receives masked text plus configured context and instructions |
 
 The grouping rule compares to a fixed first exemplar with cosine distance below 0.22. It is not an accuracy score or a moving centroid. Engineers can configure company context, rules, model, language and generation settings; each processing job uses a frozen profile. Compatible text endpoints are supported, not every possible AI provider or model.
 
@@ -41,19 +41,19 @@ The overview shows logical responsibilities, not separate microservices for ever
 
 ## Implementation evidence
 
-| Claim | Source |
-| --- | --- |
-| VPS topology, Caddy and persistence services | [compose.vps.yml](../../compose.vps.yml), [Caddyfile](../../infra/Caddyfile) |
-| REST polling | [queries.ts](../../src/data/queries.ts) |
-| Upload, profile snapshot and outbox | [CallController.java](../../server/src/main/java/az/csi/CallController.java), [AudioStore.java](../../server/src/main/java/az/csi/AudioStore.java) |
-| Kafka publishing | [OutboxPublisher.java](../../server/src/main/java/az/csi/OutboxPublisher.java) |
-| Event dispatch, workflow IDs and queue | [main.py](../../worker/csi_worker/main.py) |
-| Workflow order and retries | [workflows.py](../../worker/csi_worker/workflows.py) |
-| Storage and processing activities | [activities.py](../../worker/csi_worker/activities.py) |
-| Speech models and PII | [speech.py](../../worker/csi_worker/speech.py), [privacy.py](../../worker/csi_worker/privacy.py), [provision-models.py](../../scripts/provision-models.py) |
-| Structured analysis, embeddings and checks | [analysis.py](../../worker/csi_worker/analysis.py) |
-| Grouping policy | [grouping.py](../../worker/csi_worker/grouping.py) |
-| Configurable profiles and provider boundary | [agent_profile.py](../../worker/csi_worker/agent_profile.py), [AnalysisProfiles.java](../../server/src/main/java/az/csi/AnalysisProfiles.java) |
-| Summary workflow | [support_summary.py](../../worker/csi_worker/support_summary.py) |
-| Human decisions and delivery events | [DecisionController.java](../../server/src/main/java/az/csi/DecisionController.java) |
-| Automatic recording exporter | [ingest-recordings.py](../../scripts/ingest-recordings.py) |
+| Claim                                        | Source                                                                                                                                                     |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| VPS topology, Caddy and persistence services | [compose.vps.yml](../../compose.vps.yml), [Caddyfile](../../infra/Caddyfile)                                                                               |
+| REST polling                                 | [queries.ts](../../src/data/queries.ts)                                                                                                                    |
+| Upload, profile snapshot and outbox          | [CallController.java](../../server/src/main/java/az/csi/CallController.java), [AudioStore.java](../../server/src/main/java/az/csi/AudioStore.java)         |
+| Kafka publishing                             | [OutboxPublisher.java](../../server/src/main/java/az/csi/OutboxPublisher.java)                                                                             |
+| Event dispatch, workflow IDs and queue       | [main.py](../../worker/csi_worker/main.py)                                                                                                                 |
+| Workflow order and retries                   | [workflows.py](../../worker/csi_worker/workflows.py)                                                                                                       |
+| Storage and processing activities            | [activities.py](../../worker/csi_worker/activities.py)                                                                                                     |
+| Speech models and PII                        | [speech.py](../../worker/csi_worker/speech.py), [privacy.py](../../worker/csi_worker/privacy.py), [provision-models.py](../../scripts/provision-models.py) |
+| Structured analysis, embeddings and checks   | [analysis.py](../../worker/csi_worker/analysis.py)                                                                                                         |
+| Grouping policy                              | [grouping.py](../../worker/csi_worker/grouping.py)                                                                                                         |
+| Configurable profiles and provider boundary  | [agent_profile.py](../../worker/csi_worker/agent_profile.py), [AnalysisProfiles.java](../../server/src/main/java/az/csi/AnalysisProfiles.java)             |
+| Summary workflow                             | [support_summary.py](../../worker/csi_worker/support_summary.py)                                                                                           |
+| Human decisions and delivery events          | [DecisionController.java](../../server/src/main/java/az/csi/DecisionController.java)                                                                       |
+| Automatic recording exporter                 | [ingest-recordings.py](../../scripts/ingest-recordings.py)                                                                                                 |
