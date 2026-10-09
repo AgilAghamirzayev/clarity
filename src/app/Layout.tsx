@@ -38,6 +38,7 @@ function Navigation({ onNavigate }: { onNavigate?: () => void }) {
           <NavLink
             key={to}
             to={to}
+            data-section={to.split("/")[1] || "overview"}
             end={to === "/"}
             onClick={onNavigate}
             className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
@@ -80,7 +81,10 @@ export function Layout() {
     document.title = `${section} | Clarity`;
   }, [section]);
   return (
-    <div className="app-shell">
+    <div
+      className="app-shell"
+      data-section={location.pathname.split("/")[1] || "overview"}
+    >
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>

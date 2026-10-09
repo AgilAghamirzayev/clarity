@@ -249,7 +249,7 @@ function SummaryContent({
         {span} · Compared with the previous {summary.snapshot.days} days
       </p>
       <div className="summary-metrics">
-        <article className="panel">
+        <article className="panel" data-accent="blue">
           <span>Analyzed conversations</span>
           <strong>{current.calls}</strong>
           <small>
@@ -257,7 +257,7 @@ function SummaryContent({
             prior period
           </small>
         </article>
-        <article className="panel">
+        <article className="panel" data-accent="rose">
           <span>Negative sentiment</span>
           <strong>{rate(current.negativeRate)}</strong>
           <small>
@@ -271,7 +271,7 @@ function SummaryContent({
             )}
           </small>
         </article>
-        <article className="panel">
+        <article className="panel" data-accent="amber">
           <span>Repeat callers</span>
           <strong>{rate(current.repeatRate)}</strong>
           <small>
@@ -286,7 +286,7 @@ function SummaryContent({
             )}
           </small>
         </article>
-        <article className="panel">
+        <article className="panel" data-accent="violet">
           <span>Average recording length</span>
           <strong>
             {current.averageDuration == null
@@ -365,7 +365,12 @@ function SummaryContent({
           {report && (
             <div className="summary-areas">
               {areas.map(({ key, title, icon: Icon }) => (
-                <Panel key={key} title={title} action={<Icon size={19} />}>
+                <Panel
+                  key={key}
+                  title={title}
+                  className={`advice-area-${key.toLowerCase()}`}
+                  action={<Icon size={19} />}
+                >
                   {report.advice.filter((a) => a.area === key).length ? (
                     report.advice
                       .filter((a) => a.area === key)

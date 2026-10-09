@@ -91,30 +91,34 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
         {[
           {
             label: "Conversations analyzed",
+            accent: "blue",
             value: calls.length,
             detail: "From the selected period",
             icon: AudioLines,
           },
           {
             label: "Active issue groups",
+            accent: "amber",
             value: totalIssues,
             detail: "Linked to source conversations",
             icon: GitBranch,
           },
           {
             label: "Awaiting your review",
+            accent: "violet",
             value: pending.length,
             detail: "Across all recommendations",
             icon: Lightbulb,
           },
           {
             label: "Positive sentiment",
+            accent: "teal",
             value: `${calls.length ? Math.round((positive / calls.length) * 100) : 0}%`,
             detail: `${positive} positive conversations`,
             icon: Smile,
           },
-        ].map(({ label, value, detail, icon: Icon }) => (
-          <section className="stat-card" key={label}>
+        ].map(({ label, value, detail, accent, icon: Icon }) => (
+          <section className="stat-card" data-accent={accent} key={label}>
             <div className="stat-label">
               {label}
               <Icon size={18} />
@@ -152,8 +156,16 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
               >
                 <defs>
                   <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#176b58" stopOpacity={0.16} />
-                    <stop offset="100%" stopColor="#176b58" stopOpacity={0} />
+                    <stop
+                      offset="0%"
+                      stopColor="var(--accent-blue)"
+                      stopOpacity={0.16}
+                    />
+                    <stop
+                      offset="100%"
+                      stopColor="var(--accent-blue)"
+                      stopOpacity={0}
+                    />
                   </linearGradient>
                 </defs>
                 <CartesianGrid
@@ -186,7 +198,7 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                   type="monotone"
                   dataKey="calls"
                   name="All calls"
-                  stroke="#176b58"
+                  stroke="var(--accent-blue)"
                   strokeWidth={2.5}
                   fill="url(#chartFill)"
                   isAnimationActive={false}
@@ -195,7 +207,7 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                   type="monotone"
                   dataKey="complaints"
                   name="Negative sentiment"
-                  stroke="#74a58c"
+                  stroke="var(--accent-rose)"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   fill="transparent"

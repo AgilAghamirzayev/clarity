@@ -1,6 +1,6 @@
 # Clarity UI direction
 
-Keep the product recognizable: green accents, evidence-linked support insights, and one clear title per page. Use a quiet workspace shell, readable Roboto type, white cards, tonal selection states, and rounded controls. Preserve sample attribution and operational guidance.
+Keep the product recognizable: green accents, evidence-linked support insights, and one clear title per page. Use a quiet workspace shell, readable Roboto type, white cards with soft blue, lavender, amber, and teal accents, tonal selection states, and rounded controls. Preserve sample attribution and operational guidance.
 
 ## Interaction contract
 
