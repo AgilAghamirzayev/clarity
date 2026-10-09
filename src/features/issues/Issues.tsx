@@ -9,11 +9,7 @@ export default function Issues() {
   const query = params.get("q") ?? "";
   return (
     <>
-      <PageHeader
-        eyebrow="CONNECT THE SIGNALS"
-        title="Issue intelligence"
-        description="Find recurring problems, inspect the evidence, and understand what to investigate next."
-      />
+      <PageHeader title="Issue intelligence" />
       <WorkspaceView>
         {(data) => {
           const issues = data.issues.filter((i) =>

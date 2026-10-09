@@ -5,9 +5,7 @@ test("overview changes periods and opens evidence", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Listen closer. See the bigger picture.",
-  );
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Overview");
   await expect(page.locator(".stat-value").first()).toHaveText("34");
   await page.getByLabel("Overview period").selectOption("30");
   await expect(page.locator(".stat-value").first()).toHaveText("126");
@@ -184,9 +182,7 @@ test("invalid routes and missing records have recovery links", async ({
   ).toBeVisible();
   await page.goto("/unknown");
   await page.getByRole("link", { name: "Back to overview" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Listen closer. See the bigger picture.",
-  );
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Overview");
 });
 
 test("support summary changes period and distinguishes sample data", async ({

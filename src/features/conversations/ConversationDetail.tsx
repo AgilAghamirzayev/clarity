@@ -144,12 +144,7 @@ export default function ConversationDetail() {
                 </div>
               </Panel>
               <div className="stack">
-                <Panel
-                  title="Conversation summary"
-                  description={
-                    apiMode ? "Local model analysis" : "Sample analysis"
-                  }
-                >
+                <Panel title="Summary">
                   <p className="panel-copy">{call.summary}</p>
                   <div className="metadata-list">
                     <div>

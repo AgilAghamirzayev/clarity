@@ -147,7 +147,7 @@ svg {
   align-items: center;
   gap: 10px;
   padding: 16px 8px;
-  margin: 25px 0 29px;
+  margin: 25px 0 20px;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -167,14 +167,6 @@ svg {
   font-size: 10px;
   display: block;
   margin-top: 4px;
-}
-.nav-section-label {
-  color: #5b695f;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  padding: 0 13px;
-  margin-bottom: 14px;
 }
 nav {
   display: flex;
@@ -199,45 +191,9 @@ nav {
   background: #eaf2eb;
   font-weight: 700;
 }
-.nav-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 100%;
-  background: #be8639;
-  margin-left: auto;
-}
 .sidebar-bottom {
   margin-top: auto;
   padding-top: 50px;
-}
-.sidebar-note {
-  padding: 17px 13px;
-  background: #f6f8f4;
-  border: 1px solid #e9ede5;
-  border-radius: 8px;
-}
-.sidebar-note > svg {
-  color: var(--green);
-  margin-bottom: 9px;
-}
-.sidebar-note strong {
-  display: block;
-  font-size: 11px;
-}
-.sidebar-note p {
-  font-size: 11px;
-  color: var(--muted);
-  margin: 7px 0 15px;
-}
-.sidebar-note button {
-  background: none;
-  padding: 0;
-  border: 0;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 11px;
-  font-weight: 700;
 }
 .profile {
   display: flex;
@@ -256,10 +212,6 @@ nav {
   font-size: 10px;
   font-weight: 700;
   flex-shrink: 0;
-}
-.avatar.small {
-  width: 30px;
-  height: 30px;
 }
 .profile strong {
   font-size: 11px;
@@ -286,7 +238,7 @@ nav {
   min-height: 100vh;
 }
 .topbar {
-  height: 73px;
+  height: 52px;
   padding: 0 36px;
   border-bottom: 1px solid var(--border);
   background: #fff;
@@ -294,21 +246,12 @@ nav {
   align-items: center;
   justify-content: space-between;
 }
-.breadcrumb,
+.topbar-start,
 .topbar-right {
   display: flex;
   gap: 16px;
   align-items: center;
   font-size: 11px;
-}
-.breadcrumb > span:first-of-type {
-  color: var(--muted);
-}
-.breadcrumb strong {
-  font-weight: 500;
-}
-.slash {
-  color: #5b695f;
 }
 .demo-label {
   display: inline-flex;
@@ -322,10 +265,6 @@ nav {
   height: 6px;
   border-radius: 50%;
   background: #64947a;
-}
-.topbar-divider {
-  height: 19px;
-  border-right: 1px solid var(--border);
 }
 main {
   padding: 38px 36px 25px;
@@ -1496,12 +1435,8 @@ blockquote {
   .topbar {
     padding: 0 18px;
   }
-  .breadcrumb {
+  .topbar-start {
     gap: 10px;
-  }
-  .breadcrumb > span:first-of-type,
-  .slash {
-    display: none;
   }
   .topbar-right {
     gap: 10px;
@@ -1946,7 +1881,7 @@ button.text-link {
   gap: 24px;
   padding: 24px;
 }
-.summary-method h3 {
+.summary-method h2 {
   font-size: 13px;
   margin: 0 0 10px;
 }
@@ -1995,5 +1930,96 @@ button.text-link {
   }
   .summary-issues > a {
     align-items: start;
+  }
+}
+
+/* Keep the workspace shell quiet and the page title prominent. */
+.page-heading h1 {
+  margin-bottom: 0;
+}
+.page-heading p {
+  margin-top: 8px;
+}
+.mobile-brand {
+  display: none;
+  font-family: "Manrope Variable", sans-serif;
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: -0.8px;
+}
+.sidebar-help {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 0;
+  background: none;
+  border-radius: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.sidebar-help:hover {
+  background: var(--green-light);
+  color: var(--green);
+}
+.imports-panel .import-summary {
+  border-top: 0;
+  padding: 16px 20px;
+  gap: 12px 20px;
+}
+.imports-panel .import-summary > .button {
+  margin-left: 0;
+}
+.content-details {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+}
+.content-details > summary {
+  padding: 14px 0;
+  cursor: pointer;
+  color: var(--green);
+  font-weight: 600;
+}
+.content-details > summary:hover {
+  color: var(--green-dark);
+}
+.content-details > summary:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.summary-advice .summary-action {
+  margin-top: 16px;
+}
+.summary-method-details {
+  margin-top: 0;
+}
+.summary-method-details > summary {
+  padding: 18px 24px;
+}
+.summary-method-details .summary-method {
+  padding-top: 0;
+}
+.summary-strengths {
+  padding-top: 16px;
+  margin-top: 16px;
+}
+.summary-strengths > div {
+  margin-top: 12px;
+}
+@media (max-width: 1023px) {
+  .mobile-brand {
+    display: block;
+  }
+}
+@media (max-width: 600px) {
+  .imports-panel .import-summary {
+    padding: 16px;
+  }
+  .imports-panel .import-summary > .button {
+    width: 100%;
   }
 }

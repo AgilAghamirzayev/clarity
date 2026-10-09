@@ -5,7 +5,6 @@ import {
   ArrowRight,
   RefreshCw,
   Sparkles,
-  ShieldCheck,
   FileText,
   Code2,
   Headphones,
@@ -26,19 +25,16 @@ const areas = [
   {
     key: "Policy",
     title: "Policy & communication",
-    description: "Set clear expectations and explain customer-facing rules.",
     icon: FileText,
   },
   {
     key: "Product",
     title: "Product & engineering",
-    description: "Turn reported friction into focused investigations.",
     icon: Code2,
   },
   {
     key: "Operations",
     title: "Support operations",
-    description: "Improve handoffs, follow-ups and service consistency.",
     icon: Headphones,
   },
 ] as const;
@@ -50,8 +46,7 @@ function comparison(
   previous: number | null,
   suffix = "",
 ) {
-  if (current == null || previous == null)
-    return "No comparable previous-period data";
+  if (current == null || previous == null) return "No comparison available";
   const change = current - previous;
   return `${change > 0 ? "+" : ""}${change.toFixed(1)}${suffix} vs previous period`;
 }
@@ -88,14 +83,18 @@ function AdviceCard({
       <Badge tone={advice.priority}>{advice.priority} priority</Badge>
       <h3>{advice.title}</h3>
       <p className="summary-observation">{advice.observation}</p>
-      <h4>Suggested action</h4>
-      <p>{advice.recommendation}</p>
-      <h4>Verify before changing</h4>
-      <p>{advice.validation}</p>
-      <div className="summary-measure">
-        <strong>How to measure progress</strong>
-        <p>{advice.successMetric}</p>
-      </div>
+      <p className="summary-action">
+        <strong>Next step: </strong>
+        {advice.recommendation}
+      </p>
+      <details className="content-details">
+        <summary>Validation & measurement</summary>
+        <p>{advice.validation}</p>
+        <div className="summary-measure">
+          <strong>Measure progress</strong>
+          <p>{advice.successMetric}</p>
+        </div>
+      </details>
       <EvidenceLinks refs={advice.evidenceRefs} evidence={evidence} />
     </article>
   );
@@ -163,9 +162,7 @@ export default function SupportSummary() {
   return (
     <>
       <PageHeader
-        eyebrow="FROM CONVERSATIONS TO IMPROVEMENTS"
         title="Support summary"
-        description="See the patterns across your support calls and decide what to improve next."
         action={
           <label className="period-picker">
             <span>Period</span>
@@ -239,10 +236,7 @@ function SummaryContent({
       {current.samples > 0 && (
         <div className="sample-notice">
           <strong>Includes {current.samples} sample recordings</strong>
-          <span>
-            Generated scenarios demonstrate the analysis. They do not represent
-            real customer results.
-          </span>
+          <span>Fictional calls, not real customer results.</span>
         </div>
       )}
       {!apiMode && (
@@ -252,8 +246,7 @@ function SummaryContent({
         </p>
       )}
       <p className="summary-scope">
-        {span} · Compared with the preceding {summary.snapshot.days} days ·
-        Snapshot at {new Date(end).toLocaleString()}
+        {span} · Compared with the previous {summary.snapshot.days} days
       </p>
       <div className="summary-metrics">
         <article className="panel">
@@ -279,7 +272,7 @@ function SummaryContent({
           </small>
         </article>
         <article className="panel">
-          <span>Customers who called again</span>
+          <span>Repeat callers</span>
           <strong>{rate(current.repeatRate)}</strong>
           <small>
             {current.repeatCustomers} of {current.customers} customers had
@@ -304,26 +297,16 @@ function SummaryContent({
         </article>
       </div>
       {!current.calls ? (
-        <Panel title="No completed calls in this period">
+        <section className="panel">
           <EmptyState title="There is not enough evidence yet">
             Choose another period, include samples, or{" "}
             <Link to="/conversations">import recordings</Link> to begin.
           </EmptyState>
-        </Panel>
+        </section>
       ) : (
         <>
           <div className="summary-review-grid">
-            <Panel
-              title="Overall assessment"
-              description={
-                report
-                  ? apiMode
-                    ? "Calculated from this snapshot; advice generated locally"
-                    : "Illustrative assessment"
-                  : "A review of customer experiences across the selected period"
-              }
-              action={<Sparkles size={19} />}
-            >
+            <Panel title="Overall assessment" action={<Sparkles size={19} />}>
               <div className="panel-copy">
                 {busy ? (
                   <div role="status" className="summary-working">
@@ -357,10 +340,7 @@ function SummaryContent({
                 )}
               </div>
             </Panel>
-            <Panel
-              title="What customers are reporting"
-              description="Issue counts use all eligible completed calls"
-            >
+            <Panel title="Top customer issues">
               <div className="summary-issues">
                 {issues.length ? (
                   issues.map((issue) => (
@@ -384,13 +364,8 @@ function SummaryContent({
           </div>
           {report && (
             <div className="summary-areas">
-              {areas.map(({ key, title, description, icon: Icon }) => (
-                <Panel
-                  key={key}
-                  title={title}
-                  description={description}
-                  action={<Icon size={19} />}
-                >
+              {areas.map(({ key, title, icon: Icon }) => (
+                <Panel key={key} title={title} action={<Icon size={19} />}>
                   {report.advice.filter((a) => a.area === key).length ? (
                     report.advice
                       .filter((a) => a.area === key)
@@ -413,22 +388,20 @@ function SummaryContent({
           )}
         </>
       )}
-      <Panel
-        title="How to read this summary"
-        action={<ShieldCheck size={18} />}
-      >
+      <details className="panel content-details summary-method-details">
+        <summary>About this analysis</summary>
         <div className="summary-method">
           <div>
-            <h3>Coverage</h3>
+            <h2>Coverage</h2>
             <p>
               {current.calls} of {current.imported} imported calls in this
               period are complete; {current.failed} failed. Advice uses the
               latest {evidence.length} completed call summaries. Metrics cover
-              all eligible calls.
+              all eligible calls. Snapshot: {new Date(end).toLocaleString()}.
             </p>
           </div>
           <div>
-            <h3>Signals, not service scores</h3>
+            <h2>What the metrics mean</h2>
             <p>
               Sentiment describes the recorded experience. Multiple calls can
               have different reasons. Neither metric establishes satisfaction,
@@ -436,7 +409,7 @@ function SummaryContent({
             </p>
           </div>
           <div>
-            <h3>Before changing policy or code</h3>
+            <h2>Before changing policy or code</h2>
             <p>
               No policy documents, source code, SLA targets or resolution
               records were analyzed. Treat suggestions as investigation steps.
@@ -444,7 +417,7 @@ function SummaryContent({
             </p>
           </div>
         </div>
-      </Panel>
+      </details>
     </>
   );
 }

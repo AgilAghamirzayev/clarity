@@ -135,11 +135,7 @@ export default function LiveSettings() {
   }
   return (
     <>
-      <PageHeader
-        eyebrow="LOCAL PLATFORM"
-        title="Workspace settings"
-        description={`${user?.email} · ${roleLabels[user?.role ?? ""] ?? "Team member"} · Manage your team, notifications and connected tools`}
-      />
+      <PageHeader title="Workspace settings" />
       <div className="settings-grid">
         <Panel title="Notifications">
           <div className="integration-list">
@@ -170,30 +166,24 @@ export default function LiveSettings() {
         <Panel title="Processing and privacy">
           <div className="panel-copy">
             <p>
-              Your recordings are transcribed and analyzed on this computer. No
-              cloud AI account is used. Speaker labels help you follow the
-              conversation.
+              Recordings stay local. Personal details are masked before
+              analysis.
             </p>
-            <p>
-              Personal details are automatically masked before analysis. Review
-              the transcript before sharing it, especially when audio is
-              unclear.
-            </p>
-            <p>
-              Related customer problems are grouped into issues with supporting
-              evidence. A reviewer must approve a recommendation before it can
-              be sent to a connected tool.
-            </p>
+            <details className="content-details">
+              <summary>Review and sharing rules</summary>
+              <p>
+                Check transcript accuracy and masked details before sharing. A
+                reviewer must approve recommendations before they can be sent to
+                a connected tool.
+              </p>
+            </details>
           </div>
         </Panel>
       </div>
       {admin && (
         <>
           <div className="settings-grid">
-            <Panel
-              title="Integration configuration"
-              description="Jira, Slack and generic CRM webhooks"
-            >
+            <Panel title="Integration configuration">
               <div className="panel-copy">
                 {integrations.data?.map((i) => (
                   <p key={i.id}>
@@ -305,10 +295,7 @@ export default function LiveSettings() {
                 </form>
               </div>
             </Panel>
-            <Panel
-              title="Access management"
-              description="Create users in this tenant"
-            >
+            <Panel title="Access management">
               <form
                 className="platform-form panel-copy"
                 onSubmit={(e) => {

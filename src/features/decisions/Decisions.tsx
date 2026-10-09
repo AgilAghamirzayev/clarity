@@ -22,11 +22,7 @@ export default function Decisions() {
   const filter = params.get("status") ?? "All proposals";
   return (
     <>
-      <PageHeader
-        eyebrow="HUMAN JUDGMENT. BETTER OUTCOMES."
-        title="Decision center"
-        description="Review the evidence, choose a direction, and keep your team accountable."
-      />
+      <PageHeader title="Decision center" />
       <WorkspaceView>
         {(data) => {
           const recs = data.recommendations.filter(
@@ -89,7 +85,6 @@ export default function Decisions() {
                         </span>
                         <div>
                           <div className="decision-meta">
-                            <span>Recommended action</span>
                             <Badge tone={rec.priority}>
                               {rec.priority} priority
                             </Badge>

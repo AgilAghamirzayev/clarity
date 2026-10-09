@@ -54,13 +54,9 @@ function DemoSettings() {
   });
   return (
     <>
-      <PageHeader
-        eyebrow="YOUR WORKSPACE"
-        title="Workspace settings"
-        description="Understand what is connected and manage your local demo."
-      />
+      <PageHeader title="Workspace settings" />
       <div className="settings-grid">
-        <Panel title="Data & environment" description="Frontend foundation">
+        <Panel title="Data & environment">
           <dl className="settings-details">
             <div>
               <dt>Workspace</dt>
@@ -97,10 +93,7 @@ function DemoSettings() {
             </span>
           </div>
         </Panel>
-        <Panel
-          title="Reset demo workspace"
-          description="Start the review workflow again"
-        >
+        <Panel title="Reset demo workspace">
           <div className="panel-copy">
             <p>
               Remove the decisions saved in this browser. The sample

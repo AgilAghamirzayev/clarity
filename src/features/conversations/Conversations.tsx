@@ -71,11 +71,7 @@ export default function Conversations() {
   };
   return (
     <>
-      <PageHeader
-        eyebrow="VOICE OF THE CUSTOMER"
-        title="Conversations"
-        description="Go beyond the numbers. Understand the conversation behind every insight."
-      />
+      <PageHeader title="Conversations" />
       {apiMode && <Imports />}
       <WorkspaceView>
         {(data) => {
@@ -150,11 +146,6 @@ export default function Conversations() {
           );
         }}
       </WorkspaceView>
-      <p className="quiet-note">
-        {apiMode
-          ? "Open a conversation to read its transcript, review the findings or listen to the recording."
-          : "All transcripts are synthetic examples. No customer recordings are stored in this preview."}
-      </p>
     </>
   );
 }

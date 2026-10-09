@@ -10,7 +10,6 @@ import {
   stageLabels,
   errorLabels,
 } from "../../domain/presentation";
-import { Panel } from "../../components/ui";
 interface Job {
   id: string;
   reference: string;
@@ -96,17 +95,7 @@ export function Imports() {
   const canImport = user && ["ADMIN", "ANALYST"].includes(user.role);
   return (
     <>
-      <Panel
-        title="Recording imports"
-        description="Track uploaded recordings as they become searchable conversations."
-        action={
-          canImport ? (
-            <button className="button" onClick={() => setOpen(true)}>
-              Import recording
-            </button>
-          ) : undefined
-        }
-      >
+      <section className="panel imports-panel" aria-label="Recording imports">
         {jobs.isError && (
           <p role="alert" className="panel-copy">
             {jobs.error.message}
@@ -139,17 +128,24 @@ export function Imports() {
           )}
           <button
             className="text-link"
+            aria-expanded={showHistory}
+            aria-controls="upload-history"
             onClick={() => setShowHistory(!showHistory)}
           >
             {showHistory ? "Hide upload history" : "View upload history"}
           </button>
+          {canImport && (
+            <button className="button" onClick={() => setOpen(true)}>
+              Import recording
+            </button>
+          )}
         </div>
         {jobs.isPending && (
           <p className="panel-copy" role="status">
             Loading recordings…
           </p>
         )}
-        <div className="import-list">
+        <div className="import-list" id="upload-history">
           {jobs.data
             ?.filter((job) => showHistory || job.status !== "COMPLETED")
             .map((job) => (
@@ -202,7 +198,7 @@ export function Imports() {
             </p>
           )}
         </div>
-      </Panel>
+      </section>
       <Modal
         open={open}
         onOpenChange={setOpen}

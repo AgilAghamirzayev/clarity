@@ -20,9 +20,7 @@ test("sign in, inspect import and integration controls, and sign out", async ({
     .getByLabel("Password", { exact: true })
     .fill(process.env.BOOTSTRAP_PASSWORD!);
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Listen closer. See the bigger picture.",
-  );
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Overview");
   await page.getByRole("link", { name: "Conversations", exact: true }).click();
   await page.getByRole("button", { name: "Import recording" }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
@@ -41,7 +39,7 @@ test("sign in, inspect import and integration controls, and sign out", async ({
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "Listen closer. See the bigger picture.",
+      "Overview",
     );
     expect(
       await page.evaluate(
@@ -55,7 +53,7 @@ test("sign in, inspect import and integration controls, and sign out", async ({
     });
     await page.goto("/conversations");
     await expect(
-      page.getByRole("heading", { name: "Recording imports" }),
+      page.getByRole("region", { name: "Recording imports" }),
     ).toBeVisible();
     await expect(page.locator("tbody .table-link").first()).toBeVisible();
     expect(await page.locator("main").innerText()).not.toMatch(
@@ -113,12 +111,22 @@ test("support summary shows local advice, evidence and reporting boundaries", as
     page.getByRole("heading", { name: "Policy & communication" }),
   ).toBeVisible();
   await expect(page.locator(".summary-advice").first()).toBeVisible();
+  await page.getByText("About this analysis", { exact: true }).click();
   await expect(
     page.getByText(
       "No policy documents, source code, SLA targets or resolution records were analyzed.",
       { exact: false },
     ),
   ).toBeVisible();
+  await page.getByText("About this analysis", { exact: true }).click();
+  const adviceDetails = page.locator(".summary-advice details").first();
+  await expect(adviceDetails).not.toHaveAttribute("open");
+  await adviceDetails.locator("summary").focus();
+  await page.keyboard.press("Enter");
+  await expect(adviceDetails).toHaveAttribute("open", "");
+  await expect(adviceDetails.getByText("Measure progress")).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(adviceDetails).not.toHaveAttribute("open");
   await page.getByLabel("Include sample recordings").uncheck();
   await expect(
     page.getByRole("heading", { name: "There is not enough evidence yet" }),

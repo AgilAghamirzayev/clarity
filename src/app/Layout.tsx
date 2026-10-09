@@ -5,13 +5,11 @@ import {
   ChartNoAxesCombined,
   ArrowUpRight,
   AudioLines,
-  ChevronDown,
   GitBranch,
   LayoutDashboard,
   Lightbulb,
   Menu,
   Settings2,
-  ShieldCheck,
   X,
 } from "lucide-react";
 import { roleLabels } from "../domain/presentation";
@@ -41,7 +39,6 @@ function Navigation({ onNavigate }: { onNavigate?: () => void }) {
         >
           <Icon size={18} />
           <span>{title}</span>
-          {to === "/decisions" && <span className="nav-dot" />}
         </NavLink>
       ))}
     </nav>
@@ -81,19 +78,12 @@ export function Layout() {
             <strong>Customer Intelligence</strong>
             <small>{apiMode ? "Local AI workspace" : "Demo workspace"}</small>
           </div>
-          <ChevronDown size={14} aria-hidden />
         </div>
-        <div className="nav-section-label">WORKSPACE</div>
         <Navigation />
         <div className="sidebar-bottom">
-          <div className="sidebar-note">
-            <ShieldCheck size={19} />
-            <strong>Every insight has a source.</strong>
-            <p>Trace decisions back to the conversations that matter.</p>
-            <button onClick={() => setAbout(true)}>
-              How Clarity works <ArrowUpRight size={14} />
-            </button>
-          </div>
+          <button className="sidebar-help" onClick={() => setAbout(true)}>
+            How Clarity works <ArrowUpRight size={14} aria-hidden="true" />
+          </button>
           <div className="profile">
             <span className="avatar">
               {user ? user.email.slice(0, 2).toUpperCase() : "DR"}
@@ -108,7 +98,7 @@ export function Layout() {
       </aside>
       <div className="app-body">
         <header className="topbar">
-          <div className="breadcrumb">
+          <div className="topbar-start">
             <button
               className="icon-button mobile-menu"
               aria-label="Open navigation"
@@ -116,9 +106,9 @@ export function Layout() {
             >
               <Menu size={20} />
             </button>
-            <span>Workspace</span>
-            <span className="slash">/</span>
-            <strong>{section}</strong>
+            <NavLink to="/" className="mobile-brand" aria-label="Clarity home">
+              clarity.
+            </NavLink>
           </div>
           <div className="topbar-right">
             <span className="demo-label">
@@ -126,10 +116,6 @@ export function Layout() {
               {apiMode ? "Local models" : "Demo data"}
             </span>
             {apiMode && <SignOut />}
-            <span className="topbar-divider" />
-            <span className="avatar small">
-              {user ? user.email.slice(0, 2).toUpperCase() : "DR"}
-            </span>
           </div>
         </header>
         <main ref={main} tabIndex={-1} id="main-content">
@@ -156,7 +142,7 @@ export function Layout() {
         open={about}
         onOpenChange={setAbout}
         title="From conversations to better decisions"
-        description="The workflow behind this frontend foundation."
+        description="How your recordings become actionable insights."
       >
         <ol className="workflow-list">
           <li>Collect and transcribe customer conversations.</li>

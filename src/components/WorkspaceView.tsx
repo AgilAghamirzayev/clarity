@@ -23,11 +23,9 @@ export function WorkspaceView({
     <>
       {query.data.conversations.some((call) => call.sample) && (
         <div className="sample-notice">
-          <strong>Includes sample recordings</strong>
+          <strong>Sample data included</strong>
           <span>
-            Generated support scenarios are marked “Sample”. Insights from these
-            recordings illustrate the workflow and do not represent real
-            customer results.
+            Calls marked “Sample” are fictional, not real customer results.
           </span>
         </div>
       )}

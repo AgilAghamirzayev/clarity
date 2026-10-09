@@ -26,26 +26,30 @@ export default function Overview() {
   const [params, setParams] = useSearchParams();
   const days = params.get("period") === "30" ? 30 : 7;
   return (
-    <WorkspaceView>
-      {(data) => (
-        <OverviewContent
-          data={data}
-          days={days}
-          onPeriod={(value) => setParams({ period: value })}
-        />
-      )}
-    </WorkspaceView>
+    <>
+      <PageHeader
+        title="Overview"
+        action={
+          <label className="period-picker">
+            <span>Period</span>
+            <select
+              aria-label="Overview period"
+              value={days}
+              onChange={(e) => setParams({ period: e.target.value })}
+            >
+              <option value="7">Last 7 days</option>
+              <option value="30">Last 30 days</option>
+            </select>
+          </label>
+        }
+      />
+      <WorkspaceView>
+        {(data) => <OverviewContent data={data} days={days} />}
+      </WorkspaceView>
+    </>
   );
 }
-function OverviewContent({
-  data,
-  days,
-  onPeriod,
-}: {
-  data: Workspace;
-  days: number;
-  onPeriod: (value: string) => void;
-}) {
+function OverviewContent({ data, days }: { data: Workspace; days: number }) {
   const calls = inPeriod(data.conversations, days);
   const positive = calls.filter((c) => c.sentiment === "Positive").length;
   const pending = data.recommendations.filter(
@@ -63,24 +67,6 @@ function OverviewContent({
   ).size;
   return (
     <>
-      <PageHeader
-        eyebrow="THE BIG PICTURE"
-        title="Listen closer. See the bigger picture."
-        description="Turn customer conversations into your next best decision."
-        action={
-          <label className="period-picker">
-            <span>Period</span>
-            <select
-              aria-label="Overview period"
-              value={days}
-              onChange={(e) => onPeriod(e.target.value)}
-            >
-              <option value="7">Last 7 days</option>
-              <option value="30">Last 30 days</option>
-            </select>
-          </label>
-        }
-      />
       <div className="insight-banner">
         <div className="insight-icon">
           <Activity size={21} />
@@ -140,8 +126,7 @@ function OverviewContent({
       </div>
       <div className="overview-grid">
         <Panel
-          title="The voice of your customers"
-          description="Conversation volume and negative sentiment"
+          title="Conversation trends"
           action={
             <div className="chart-legend">
               <span>
@@ -247,8 +232,7 @@ function OverviewContent({
           </details>
         </Panel>
         <Panel
-          title="What needs attention"
-          description="Most reported issues"
+          title="Top issues"
           action={<TextLink to="/issues">View all</TextLink>}
         >
           <div className="issue-ranking">
@@ -279,8 +263,7 @@ function OverviewContent({
         </Panel>
       </div>
       <Panel
-        title="From insight to action"
-        description="Evidence-backed recommendations, ready for a human review"
+        title="Recommended actions"
         action={<TextLink to="/decisions">Decision center</TextLink>}
       >
         <div className="recommendation-grid">
@@ -288,7 +271,6 @@ function OverviewContent({
             <article className="recommendation-summary" key={rec.id}>
               <div className="split">
                 <Badge tone={rec.priority}>{rec.priority} priority</Badge>
-                <span>Recommended action</span>
               </div>
               <h3>{rec.title}</h3>
               <p>{rec.description}</p>
