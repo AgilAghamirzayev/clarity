@@ -547,128 +547,176 @@ tbody tr:focus-within {
   }
 }
 
-/* Color gives sections a recognizable identity without changing status meanings. */
+/* Semantic color: state and action, independent of the current page. */
 :root {
-  --accent-blue: #245bb0;
-  --accent-blue-soft: #eaf2ff;
-  --accent-blue-wash: #f4f8ff;
-  --accent-violet: #6946a2;
-  --accent-violet-soft: #f1eafe;
-  --accent-violet-wash: #faf6ff;
-  --accent-amber: #875808;
-  --accent-amber-soft: #fff2d8;
-  --accent-amber-wash: #fffbf0;
-  --accent-teal: #126b62;
-  --accent-teal-soft: #e0f3ed;
-  --accent-teal-wash: #f2faf7;
-  --accent-rose: #a24658;
-  --accent-rose-soft: #fcebf0;
-  --accent-rose-wash: #fff6f8;
-  --accent: var(--accent-teal);
-  --accent-soft: var(--accent-teal-soft);
-  --accent-wash: var(--accent-teal-wash);
+  --color-info: #285da8;
+  --surface-info: #edf3fc;
+  --color-warning: #855509;
+  --surface-warning: #fff5e2;
+  --color-danger: #a33836;
+  --surface-danger: #fceeed;
+  --color-success: #21664a;
+  --surface-success: #eaf5ef;
+  --color-neutral: #59636b;
+  --surface-neutral: #f2f4f5;
+  --intent: var(--color-neutral);
+  --intent-surface: var(--surface-neutral);
 }
-[data-section="overview"],
-[data-section="settings"],
-[data-accent="blue"],
-.advice-area-policy {
-  --accent: var(--accent-blue);
-  --accent-soft: var(--accent-blue-soft);
-  --accent-wash: var(--accent-blue-wash);
+[data-intent="info"] {
+  --intent: var(--color-info);
+  --intent-surface: var(--surface-info);
 }
-[data-section="summary"],
-[data-accent="violet"],
-.advice-area-product {
-  --accent: var(--accent-violet);
-  --accent-soft: var(--accent-violet-soft);
-  --accent-wash: var(--accent-violet-wash);
+[data-intent="warning"] {
+  --intent: var(--color-warning);
+  --intent-surface: var(--surface-warning);
 }
-[data-section="issues"],
-[data-accent="amber"],
-.advice-area-operations {
-  --accent: var(--accent-amber);
-  --accent-soft: var(--accent-amber-soft);
-  --accent-wash: var(--accent-amber-wash);
+[data-intent="danger"] {
+  --intent: var(--color-danger);
+  --intent-surface: var(--surface-danger);
 }
-[data-section="conversations"],
-[data-accent="teal"] {
-  --accent: var(--accent-teal);
-  --accent-soft: var(--accent-teal-soft);
-  --accent-wash: var(--accent-teal-wash);
+[data-intent="success"] {
+  --intent: var(--color-success);
+  --intent-surface: var(--surface-success);
 }
-[data-section="decisions"],
-[data-accent="rose"] {
-  --accent: var(--accent-rose);
-  --accent-soft: var(--accent-rose-soft);
-  --accent-wash: var(--accent-rose-wash);
-}
-.nav-link > svg,
-.nav-link.active {
-  color: var(--accent);
-}
-.nav-indicator,
-.nav-link:hover {
-  background: var(--accent-soft);
-}
-.nav-link.active {
-  background: transparent;
-}
-.workspace-avatar {
-  background: var(--accent-blue-soft);
-  color: var(--accent-blue);
+[data-intent="neutral"] {
+  --intent: var(--color-neutral);
+  --intent-surface: var(--surface-neutral);
 }
 .stat-card,
 .summary-metrics article {
-  background: var(--accent-soft);
-  border-color: transparent;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--intent);
+}
+.stat-card[data-intent="neutral"],
+.summary-metrics article[data-intent="neutral"] {
+  border-top-color: var(--border);
 }
 .stat-value,
-.summary-metrics article > strong,
-.stat-label svg {
-  color: var(--accent);
+.summary-metrics article > strong {
+  color: var(--ink);
+}
+[data-intent="danger"] > .stat-value,
+.summary-metrics [data-intent="danger"] > strong,
+[data-intent="success"] > .stat-value {
+  color: var(--intent);
 }
 .stat-label svg {
-  background: white;
+  color: var(--intent);
+  background: var(--intent-surface);
   box-sizing: content-box;
   padding: 6px;
   border-radius: 10px;
 }
 .panel-heading,
 .decision-heading {
-  background: var(--accent-wash);
+  background: var(--surface);
 }
-.panel-heading > svg {
-  color: var(--accent);
-}
-.category-icon {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
+.panel-heading > svg,
+.category-icon,
 .issue-card > .eyebrow {
-  color: var(--accent);
+  color: var(--color-neutral);
+}
+.category-icon,
+.workspace-avatar,
+.recording-placeholder {
+  background: var(--surface-neutral);
+}
+.workspace-avatar {
+  color: var(--color-neutral);
 }
 .insight-banner {
-  background: var(--accent-amber-soft);
+  background: var(--intent-surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--intent);
 }
 .insight-icon {
-  color: var(--accent-amber);
+  color: var(--intent);
 }
 .chart-legend i {
-  background: var(--accent-blue);
+  background: var(--color-info);
 }
-.chart-legend i.mint {
-  background: var(--accent-rose);
+.chart-legend i.negative {
+  background: var(--color-danger);
 }
+.sample-notice,
 .search-field,
-.recording-placeholder,
+.segmented,
 .transcript-segment.customer > div {
-  background: var(--accent-wash);
+  background: var(--surface-neutral);
 }
 .summary-evidence a,
 .import-icon {
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--surface-info);
+  color: var(--color-info);
 }
 .summary-evidence a:hover {
-  background: var(--accent-wash);
+  background: #dce9fb;
+}
+.badge {
+  font-size: 12px;
+  font-weight: 550;
+  background: var(--surface-neutral);
+  color: var(--color-neutral);
+}
+.badge-critical,
+.badge-negative,
+.badge-failed,
+.processing-state.failed {
+  background: var(--surface-danger);
+  color: var(--color-danger);
+}
+.badge-high,
+.badge-pending-review,
+.badge-retrying,
+.badge-retry-queued {
+  background: var(--surface-warning);
+  color: var(--color-warning);
+}
+.badge-in-progress,
+.badge-processing,
+.badge-queued,
+.badge-collecting,
+.processing-state.processing,
+.processing-state.queued {
+  background: var(--surface-info);
+  color: var(--color-info);
+}
+.badge-positive,
+.badge-approved,
+.badge-completed,
+.badge-delivered,
+.badge-sent,
+.badge-measured,
+.processing-state.completed {
+  background: var(--surface-success);
+  color: var(--color-success);
+}
+.badge-neutral,
+.badge-medium,
+.badge-low,
+.badge-rejected,
+.badge-pending,
+.badge-skipped {
+  background: var(--surface-neutral);
+  color: var(--color-neutral);
+}
+.notice {
+  background: var(--surface-info);
+  border-color: #dae4f0;
+  color: var(--color-info);
+}
+.notice.error {
+  background: var(--surface-danger);
+  border-color: #efcfcc;
+  color: var(--color-danger);
+}
+.field-error {
+  color: var(--color-danger);
+}
+.success-text {
+  color: var(--color-success);
+}
+.import-summary > [data-intent] > svg {
+  color: var(--intent);
 }

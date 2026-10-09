@@ -11,7 +11,7 @@ import { useState, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../data/api";
 import { useIdentity } from "./identity";
-import { PageHeader, Panel } from "../../components/ui";
+import { Badge, PageHeader, Panel } from "../../components/ui";
 interface Integration {
   id: string;
   kind: string;
@@ -352,9 +352,9 @@ export default function LiveSettings() {
               {deliveries.data?.map((d) => (
                 <div className="integration-row" key={d.id}>
                   <div>
-                    <strong>
+                    <Badge tone={d.status}>
                       {statusLabels[d.status] || readableKey(d.status)}
-                    </strong>
+                    </Badge>
                     <small>
                       {d.attempts} attempts ·{" "}
                       {d.external_id

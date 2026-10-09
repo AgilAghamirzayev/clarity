@@ -65,7 +65,7 @@ function DemoSettings() {
             <div>
               <dt>Environment</dt>
               <dd>
-                <Badge tone="positive">Local demo</Badge>
+                <Badge>Local demo</Badge>
               </dd>
             </div>
             <div>

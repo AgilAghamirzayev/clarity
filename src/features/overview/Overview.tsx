@@ -67,7 +67,10 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
   ).size;
   return (
     <>
-      <div className="insight-banner">
+      <div
+        className="insight-banner"
+        data-intent={ranked[0] ? "warning" : "info"}
+      >
         <div className="insight-icon">
           <Activity size={21} />
         </div>
@@ -91,34 +94,34 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
         {[
           {
             label: "Conversations analyzed",
-            accent: "blue",
+            intent: "info",
             value: calls.length,
             detail: "From the selected period",
             icon: AudioLines,
           },
           {
             label: "Active issue groups",
-            accent: "amber",
+            intent: totalIssues > 0 ? "warning" : "neutral",
             value: totalIssues,
             detail: "Linked to source conversations",
             icon: GitBranch,
           },
           {
             label: "Awaiting your review",
-            accent: "violet",
+            intent: pending.length > 0 ? "warning" : "neutral",
             value: pending.length,
             detail: "Across all recommendations",
             icon: Lightbulb,
           },
           {
             label: "Positive sentiment",
-            accent: "teal",
+            intent: positive > 0 ? "success" : "neutral",
             value: `${calls.length ? Math.round((positive / calls.length) * 100) : 0}%`,
             detail: `${positive} positive conversations`,
             icon: Smile,
           },
-        ].map(({ label, value, detail, accent, icon: Icon }) => (
-          <section className="stat-card" data-accent={accent} key={label}>
+        ].map(({ label, value, detail, intent, icon: Icon }) => (
+          <section className="stat-card" data-intent={intent} key={label}>
             <div className="stat-label">
               {label}
               <Icon size={18} />
@@ -138,7 +141,7 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                 All calls
               </span>
               <span>
-                <i className="mint" />
+                <i className="negative" />
                 Negative
               </span>
             </div>
@@ -158,12 +161,12 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                   <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
                     <stop
                       offset="0%"
-                      stopColor="var(--accent-blue)"
+                      stopColor="var(--color-info)"
                       stopOpacity={0.16}
                     />
                     <stop
                       offset="100%"
-                      stopColor="var(--accent-blue)"
+                      stopColor="var(--color-info)"
                       stopOpacity={0}
                     />
                   </linearGradient>
@@ -198,7 +201,7 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                   type="monotone"
                   dataKey="calls"
                   name="All calls"
-                  stroke="var(--accent-blue)"
+                  stroke="var(--color-info)"
                   strokeWidth={2.5}
                   fill="url(#chartFill)"
                   isAnimationActive={false}
@@ -207,7 +210,7 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                   type="monotone"
                   dataKey="complaints"
                   name="Negative sentiment"
-                  stroke="var(--accent-rose)"
+                  stroke="var(--color-danger)"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   fill="transparent"

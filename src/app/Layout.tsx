@@ -38,7 +38,6 @@ function Navigation({ onNavigate }: { onNavigate?: () => void }) {
           <NavLink
             key={to}
             to={to}
-            data-section={to.split("/")[1] || "overview"}
             end={to === "/"}
             onClick={onNavigate}
             className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
@@ -81,10 +80,7 @@ export function Layout() {
     document.title = `${section} | Clarity`;
   }, [section]);
   return (
-    <div
-      className="app-shell"
-      data-section={location.pathname.split("/")[1] || "overview"}
-    >
+    <div className="app-shell">
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
@@ -115,7 +111,6 @@ export function Layout() {
               <strong>{user?.email ?? "Demo reviewer"}</strong>
               <small>{user ? roleLabels[user.role] : "Local preview"}</small>
             </div>
-            <BadgeDot />
           </div>
         </div>
       </aside>
@@ -137,7 +132,6 @@ export function Layout() {
           </div>
           <div className="topbar-right">
             <span className="demo-label">
-              <span />
               {apiMode ? "Local models" : "Demo data"}
             </span>
             {apiMode && <SignOut />}
@@ -202,7 +196,4 @@ export function Layout() {
       </Modal>
     </div>
   );
-}
-function BadgeDot() {
-  return <span className="online-dot" aria-hidden="true" />;
 }

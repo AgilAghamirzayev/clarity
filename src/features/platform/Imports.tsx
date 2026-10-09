@@ -103,14 +103,14 @@ export function Imports() {
         )}
         {retry.isError && <p role="alert">{retry.error.message}</p>}
         <div className="import-summary">
-          <span>
+          <span data-intent="success">
             <CheckCircle2 size={16} />{" "}
             <strong>
               {jobs.data?.filter((j) => j.status === "COMPLETED").length ?? 0}
             </strong>{" "}
             ready
           </span>
-          <span>
+          <span data-intent="info">
             <Clock3 size={16} />{" "}
             <strong>
               {jobs.data?.filter((j) =>
@@ -120,7 +120,7 @@ export function Imports() {
             processing
           </span>
           {!!jobs.data?.some((j) => j.status === "FAILED") && (
-            <span>
+            <span data-intent="danger">
               <AlertCircle size={16} />{" "}
               {jobs.data.filter((j) => j.status === "FAILED").length} need
               attention

@@ -1,6 +1,19 @@
 # Clarity UI direction
 
-Keep the product recognizable: green accents, evidence-linked support insights, and one clear title per page. Use a quiet workspace shell, readable Roboto type, white cards with soft blue, lavender, amber, and teal accents, tonal selection states, and rounded controls. Preserve sample attribution and operational guidance.
+Keep the product recognizable: green accents, evidence-linked support insights, and one clear title per page. Use a quiet workspace shell, readable Roboto type, neutral white cards with restrained semantic accents, tonal selection states, and rounded controls. Preserve sample attribution and operational guidance.
+
+## Color meaning
+
+| Role                     | Color       | Use                                                                                           |
+| ------------------------ | ----------- | --------------------------------------------------------------------------------------------- |
+| Action and selection     | Brand green | Primary buttons, links, active navigation                                                     |
+| Information and progress | Blue        | Call volume, evidence links, queued or processing work                                        |
+| Needs attention          | Amber       | High priority, pending review, retries                                                        |
+| Problem                  | Red         | Critical priority, failed processing, negative sentiment                                      |
+| Positive or complete     | Green       | Positive sentiment, approved actions, completed work, successful delivery                     |
+| Context                  | Gray        | Neutral sentiment, medium or low priority, rejected proposals, durations, repeat-call metrics |
+
+Color follows the meaning of a value, never its page or position. A rejected proposal is a review outcome, not a processing failure. Repeat calls and recording duration do not establish poor service. Zero-count warning or negative metrics use neutral styling. Labels remain visible so color is never the only signal. Charts use the same information and negative-sentiment colors as the rest of the app, with a dashed negative series.
 
 ## Interaction contract
 

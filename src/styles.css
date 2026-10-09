@@ -231,13 +231,6 @@ nav {
   color: var(--muted);
   margin-top: 3px;
 }
-.online-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #408267;
-  margin-left: auto;
-}
 .app-body {
   width: calc(100% - 246px);
   margin-left: 246px;
@@ -267,12 +260,6 @@ nav {
   align-items: center;
   font-size: 10px;
   color: #52635b;
-}
-.demo-label > span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #64947a;
 }
 main {
   padding: 38px 36px 25px;
@@ -451,7 +438,7 @@ main {
   background: var(--green);
   border-radius: 50%;
 }
-.chart-legend i.mint {
+.chart-legend i.negative {
   background: #74a58c;
 }
 .chart-data {
@@ -496,17 +483,17 @@ main {
 }
 .rank-track {
   height: 4px;
-  background: #f0f3ed;
+  background: var(--surface-info);
   border-radius: 4px;
   overflow: hidden;
 }
 .rank-track > div {
   height: 100%;
-  background: #86a890;
+  background: var(--color-info);
   border-radius: 4px;
 }
 .rank-item:first-child .rank-track > div {
-  background: var(--green);
+  background: var(--color-info);
 }
 .recommendation-grid {
   display: grid;
@@ -548,29 +535,6 @@ main {
   background: #f0f2f0;
   color: #59675f;
   white-space: nowrap;
-}
-.badge-critical,
-.badge-negative,
-.badge-rejected {
-  background: #fcece8;
-  color: #a34431;
-}
-.badge-high,
-.badge-pending-review {
-  background: #faf0db;
-  color: #8a631b;
-}
-.badge-medium,
-.badge-neutral,
-.badge-in-progress {
-  background: #edf1f8;
-  color: #4c6592;
-}
-.badge-positive,
-.badge-approved,
-.badge-completed {
-  background: #eaf3eb;
-  color: #336c46;
 }
 .recommendation-bottom {
   display: flex;
@@ -1655,10 +1619,6 @@ blockquote {
   color: var(--green-dark);
   font-size: 11px;
   font-weight: 600;
-}
-.processing-state.failed {
-  background: #fbece7;
-  color: #a13e2d;
 }
 .active-filter {
   display: flex;
