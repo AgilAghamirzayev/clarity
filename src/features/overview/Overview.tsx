@@ -1,4 +1,5 @@
-import { apiMode } from "../../data/api";
+import { Select } from "../../components/Select";
+import { apiMode, guestMode } from "../../data/api";
 import { useSearchParams } from "react-router-dom";
 import {
   Activity,
@@ -29,17 +30,19 @@ export default function Overview() {
     <>
       <PageHeader
         title="Overview"
+        description="Understand support quality. Find the next action that matters."
         action={
           <label className="period-picker">
             <span>Period</span>
-            <select
+            <Select
               aria-label="Overview period"
-              value={days}
-              onChange={(e) => setParams({ period: e.target.value })}
-            >
-              <option value="7">Last 7 days</option>
-              <option value="30">Last 30 days</option>
-            </select>
+              value={String(days)}
+              onValueChange={(value) => setParams({ period: value })}
+              options={[
+                { value: "7", label: "Last 7 days" },
+                { value: "30", label: "Last 30 days" },
+              ]}
+            />
           </label>
         }
       />
@@ -67,29 +70,28 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
   ).size;
   return (
     <>
-      <div
-        className="insight-banner"
-        data-intent={ranked[0] ? "warning" : "info"}
-      >
-        <div className="insight-icon">
-          <Activity size={21} />
+      {guestMode && (
+        <div className="demo-context">
+          <span className="demo-context-icon">
+            <AudioLines size={20} aria-hidden="true" />
+          </span>
+          <div>
+            <strong>Sample workspace</strong>
+            <p>
+              Generated recordings with real transcripts and local AI insights.
+            </p>
+          </div>
+          <TextLink
+            to={
+              data.conversations[0]
+                ? `/conversations/${data.conversations[0].id}`
+                : "/conversations"
+            }
+          >
+            Listen to a call
+          </TextLink>
         </div>
-        <div>
-          <strong>
-            {ranked[0]?.title ?? "Ready for your first recording"}
-          </strong>
-          <p>
-            {ranked[0]
-              ? `${ranked[0].count} conversations mention this issue in the selected period. Review the evidence before taking action.`
-              : "Import a recording to start local analysis and build your evidence base."}
-          </p>
-        </div>
-        {ranked[0] ? (
-          <TextLink to={`/issues/${ranked[0].id}`}>Explore issue</TextLink>
-        ) : (
-          <TextLink to="/conversations">Import recording</TextLink>
-        )}
-      </div>
+      )}
       <div className="stats-grid">
         {[
           {
@@ -130,6 +132,29 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
             <div className="stat-detail">{detail}</div>
           </section>
         ))}
+      </div>
+      <div
+        className="insight-banner"
+        data-intent={ranked[0] ? "warning" : "info"}
+      >
+        <div className="insight-icon">
+          <Activity size={21} />
+        </div>
+        <div>
+          <strong>
+            {ranked[0]?.title ?? "Ready for your first recording"}
+          </strong>
+          <p>
+            {ranked[0]
+              ? `${ranked[0].count} conversations mention this issue in the selected period. Review the evidence before taking action.`
+              : "Import a recording to start local analysis and build your evidence base."}
+          </p>
+        </div>
+        {ranked[0] ? (
+          <TextLink to={`/issues/${ranked[0].id}`}>Explore issue</TextLink>
+        ) : (
+          <TextLink to="/conversations">Import recording</TextLink>
+        )}
       </div>
       <div className="overview-grid">
         <Panel
@@ -174,13 +199,13 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                 <CartesianGrid
                   strokeDasharray="3 5"
                   vertical={false}
-                  stroke="#e9eeeb"
+                  stroke="var(--border)"
                 />
                 <XAxis
                   dataKey="label"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#64716b", fontSize: 11 }}
+                  tick={{ fill: "var(--muted)", fontSize: 11 }}
                   minTickGap={30}
                   dy={10}
                 />
@@ -188,12 +213,12 @@ function OverviewContent({ data, days }: { data: Workspace; days: number }) {
                   allowDecimals={false}
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#64716b", fontSize: 11 }}
+                  tick={{ fill: "var(--muted)", fontSize: 11 }}
                 />
                 <Tooltip
                   contentStyle={{
                     borderRadius: 8,
-                    borderColor: "#dce5df",
+                    borderColor: "var(--border)",
                     fontSize: 12,
                   }}
                 />

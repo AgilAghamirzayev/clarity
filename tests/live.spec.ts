@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-fixture";
 import AxeBuilder from "@axe-core/playwright";
 
 test("sign in, inspect import and integration controls, and sign out", async ({
@@ -127,14 +127,7 @@ test("support summary shows local advice, evidence and reporting boundaries", as
   await expect(adviceDetails.getByText("Measure progress")).toBeVisible();
   await page.keyboard.press("Enter");
   await expect(adviceDetails).not.toHaveAttribute("open");
-  await page.getByLabel("Include sample recordings").uncheck();
-  await expect(
-    page.getByRole("heading", { name: "There is not enough evidence yet" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Generate analysis" }),
-  ).toBeDisabled();
-  await page.getByLabel("Include sample recordings").check();
+  await expect(page.getByLabel("Include sample recordings")).toHaveCount(0);
   for (const width of [1440, 1024, 768, 320]) {
     await page.setViewportSize({ width, height: 1000 });
     await expect(page.locator(".summary-advice").first()).toBeVisible();

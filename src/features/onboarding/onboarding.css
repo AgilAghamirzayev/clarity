@@ -1,0 +1,312 @@
+.onboarding-welcome {
+  max-width: 680px;
+  padding: 36px;
+}
+.onboarding-welcome > h2 {
+  font-size: 28px;
+}
+.welcome-intro {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+}
+.welcome-mark,
+.tour-complete-mark {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: var(--selected);
+  color: var(--green-dark);
+  flex-shrink: 0;
+}
+.tour-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green-dark);
+}
+.onboarding-welcome .welcome-lead {
+  color: var(--ink);
+  font-size: clamp(25px, 3vw, 36px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin: 24px 0;
+}
+.welcome-lead span {
+  color: var(--green);
+}
+.welcome-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.welcome-flow > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 18px 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--canvas);
+}
+.welcome-flow svg {
+  color: var(--green);
+}
+.welcome-flow strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+.welcome-flow span {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.welcome-context {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 24px 0;
+}
+.welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.welcome-actions .button {
+  flex: 1;
+}
+.welcome-footnote {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.welcome-footnote a {
+  color: var(--green-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  min-height: 32px;
+}
+.guide-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  padding: 36px;
+}
+.guide-hero h2 {
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.2;
+  margin: 18px 0;
+  letter-spacing: -0.6px;
+}
+.guide-hero p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 24px;
+}
+.guide-duration {
+  display: block;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.guide-pipeline {
+  display: grid;
+  gap: 12px;
+}
+.guide-pipeline > div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 16px;
+  background: var(--canvas);
+}
+.guide-pipeline > div > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.guide-pipeline svg {
+  color: var(--green);
+}
+.guide-pipeline strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+.guide-pipeline p {
+  margin: 4px 0 0;
+  font-size: 12px;
+}
+.guide-section {
+  margin-block: 36px;
+}
+.guide-section-heading {
+  margin-bottom: 22px;
+}
+.guide-section-heading h2 {
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+.guide-section-heading p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+.guide-step-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.guide-step-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  transition:
+    border-color 150ms,
+    box-shadow 150ms;
+}
+.guide-step-card:hover {
+  border-color: var(--green);
+  box-shadow: 0 4px 16px #182a350d;
+}
+.guide-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.guide-card-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--selected);
+  color: var(--green);
+}
+.guide-card-section {
+  color: var(--muted);
+  font-size: 12px;
+}
+.guide-step-card h3 {
+  font-size: 17px;
+  line-height: 1.4;
+  margin: 8px 0;
+}
+.guide-step-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0 0 16px;
+}
+.guide-step-card .text-link {
+  margin-top: auto;
+}
+.guide-scope {
+  padding: 28px;
+}
+.guide-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.guide-scope-grid svg {
+  color: var(--green);
+}
+.guide-scope-grid h3 {
+  margin: 14px 0 8px;
+  font-size: 15px;
+}
+.guide-scope-grid p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.guide-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 28px;
+  margin-top: 24px;
+}
+.guide-next p {
+  max-width: 700px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.guide-next .guide-limit {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.guide-next .button {
+  flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .onboarding-welcome {
+    padding: 24px;
+  }
+  .welcome-intro {
+    margin-top: 18px;
+  }
+  .welcome-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+  .welcome-flow {
+    gap: 6px;
+  }
+  .welcome-flow > div {
+    padding: 12px 8px;
+  }
+  .welcome-flow strong {
+    font-size: 12px;
+  }
+  .welcome-flow span {
+    font-size: 11px;
+  }
+  .welcome-actions {
+    flex-direction: column;
+  }
+  .guide-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 24px;
+  }
+  .guide-step-grid {
+    grid-template-columns: 1fr;
+  }
+  .guide-scope-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .guide-next {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 24px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  .guide-step-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

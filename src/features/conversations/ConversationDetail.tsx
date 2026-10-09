@@ -4,6 +4,7 @@ import {
   languageLabel,
 } from "../../domain/presentation";
 import { useQuery } from "@tanstack/react-query";
+import { useRef, useState } from "react";
 import type { Conversation } from "../../domain/models";
 import { api, apiMode } from "../../data/api";
 import { useIdentity } from "../platform/identity";
@@ -25,6 +26,8 @@ import { durationLabel } from "../../domain/analytics";
 export default function ConversationDetail() {
   const { id } = useParams();
   const user = useIdentity();
+  const recording = useRef<HTMLAudioElement>(null);
+  const [playback, setPlayback] = useState(-1);
   const detail = useQuery({
     queryKey: ["conversation-detail", id],
     enabled: apiMode && !!id,
@@ -37,7 +40,17 @@ export default function ConversationDetail() {
           "customer" | "title" | "agent" | "department" | "date" | "sample"
         >;
         issueIds: string[];
-        analysis: Pick<Conversation, "topic" | "summary" | "sentiment"> | null;
+        analysis: Pick<
+          Conversation,
+          | "topic"
+          | "summary"
+          | "sentiment"
+          | "reviewRequired"
+          | "roleUncertainty"
+          | "summaryMode"
+          | "rejectedFindings"
+          | "duplicatesMerged"
+        > | null;
         transcript: {
           duration: number;
           language: string;
@@ -101,13 +114,17 @@ export default function ConversationDetail() {
                 action={<FileText size={18} />}
               >
                 {apiMode ? (
-                  user && ["ADMIN", "ANALYST"].includes(user.role) ? (
+                  user && ["ADMIN", "ANALYST", "DEMO"].includes(user.role) ? (
                     <audio
+                      ref={recording}
                       className="recording-player"
                       controls
                       preload="none"
                       src={`/api/v1/calls/${call.id}/audio`}
                       aria-label="Call recording"
+                      onTimeUpdate={(event) =>
+                        setPlayback(event.currentTarget.currentTime)
+                      }
                     />
                   ) : (
                     <p className="panel-copy">
@@ -130,11 +147,34 @@ export default function ConversationDetail() {
                   {call.transcript.map((segment, index) => (
                     <div
                       className={`transcript-segment ${segment.speaker.toLowerCase()}`}
+                      data-active={
+                        playback >= segment.seconds &&
+                        playback <
+                          (call.transcript[index + 1]?.seconds ?? call.duration)
+                      }
                       key={index}
                     >
-                      <span className="mono timestamp">
-                        {durationLabel(segment.seconds)}
-                      </span>
+                      {apiMode &&
+                      user &&
+                      ["ADMIN", "ANALYST", "DEMO"].includes(user.role) ? (
+                        <button
+                          type="button"
+                          className="mono timestamp transcript-seek"
+                          aria-label={`Play recording from ${durationLabel(segment.seconds)}`}
+                          onClick={() => {
+                            if (recording.current) {
+                              recording.current.currentTime = segment.seconds;
+                              void recording.current.play().catch(() => {});
+                            }
+                          }}
+                        >
+                          {durationLabel(segment.seconds)}
+                        </button>
+                      ) : (
+                        <span className="mono timestamp">
+                          {durationLabel(segment.seconds)}
+                        </span>
+                      )}
                       <div>
                         <strong>{segment.speaker}</strong>
                         <p>{segment.text}</p>
@@ -144,8 +184,37 @@ export default function ConversationDetail() {
                 </div>
               </Panel>
               <div className="stack">
-                <Panel title="Summary">
+                <Panel title="Summary" className="call-summary-panel">
+                  {call.reviewRequired && (
+                    <div
+                      className="notice analysis-review-notice"
+                      role="status"
+                    >
+                      <strong>Evidence review needed</strong>
+                      {!!call.rejectedFindings?.length && (
+                        <p>
+                          {call.rejectedFindings.length} proposed finding(s)
+                          failed validation and were excluded. Accepted findings
+                          remain available. No accepted finding does not mean no
+                          problem occurred.
+                        </p>
+                      )}
+                      {call.roleUncertainty && (
+                        <p>
+                          Speaker roles are unverified. Source excerpts replace
+                          the generated summary; check the transcript before
+                          attributing a statement to a customer or agent.
+                        </p>
+                      )}
+                    </div>
+                  )}
                   <p className="panel-copy">{call.summary}</p>
+                  {!!call.duplicatesMerged && (
+                    <p className="panel-copy">
+                      {call.duplicatesMerged} duplicate finding(s) combined with
+                      their supporting evidence.
+                    </p>
+                  )}
                   <div className="metadata-list">
                     <div>
                       <span>Department</span>
@@ -179,7 +248,9 @@ export default function ConversationDetail() {
                     </div>
                   ) : (
                     <p className="panel-copy">
-                      No issue identified in this sample conversation.
+                      {call.reviewRequired
+                        ? "No accepted issue is linked. Review the transcript and validation notice before concluding that no problem occurred."
+                        : "No issue identified in this conversation."}
                     </p>
                   )}
                 </Panel>

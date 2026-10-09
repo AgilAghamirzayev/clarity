@@ -1,7 +1,9 @@
-import { useState, type FormEvent } from "react";
+import { Select } from "../../components/Select";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "../../data/api";
+import { api, guestMode } from "../../data/api";
+import { recordingAccept, recordingError } from "../../domain/recordings";
 import { useIdentity } from "./identity";
 import { Modal } from "../../components/Modal";
 import { AudioLines, CheckCircle2, Clock3, AlertCircle } from "lucide-react";
@@ -35,6 +37,7 @@ export function Imports() {
   );
   const [importKey, setImportKey] = useState(() => crypto.randomUUID());
   const [open, setOpen] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const client = useQueryClient();
   const jobs = useQuery({
@@ -51,7 +54,53 @@ export function Imports() {
       }),
     onSuccess: () => {
       setOpen(false);
+      setShowHistory(true);
       setImportKey(crypto.randomUUID());
+      void client.invalidateQueries({ queryKey: ["imports"] });
+    },
+  });
+  const completed =
+    jobs.data
+      ?.filter((job) => job.status === "COMPLETED")
+      .map((job) => job.id)
+      .join(",") ?? "";
+  useEffect(() => {
+    void client.invalidateQueries({ queryKey: ["workspace"] });
+  }, [completed, client]);
+  const sampleImport = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/samples/support-call.wav");
+      if (!response.ok)
+        throw new Error("The sample recording could not be loaded.");
+      const form = new FormData();
+      form.set("audio", await response.blob(), "support-call.wav");
+      form.set(
+        "metadata",
+        new Blob(
+          [
+            JSON.stringify({
+              title: "Card payment declined at checkout",
+              sample: true,
+              customerId: "sample-customer",
+              agent: "Sample support agent",
+              department: "Payments",
+              recordedAt: new Date().toISOString(),
+              language: "en",
+              speakers: 2,
+              customerChannel: 0,
+            }),
+          ],
+          { type: "application/json" },
+        ),
+      );
+      return api("/calls/import", {
+        method: "POST",
+        headers: { "Idempotency-Key": "live-demo-sample-v1" },
+        body: form,
+      });
+    },
+    onSuccess: () => {
+      setShowHistory(true);
       void client.invalidateQueries({ queryKey: ["imports"] });
     },
   });
@@ -62,6 +111,13 @@ export function Imports() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const fields = new FormData(event.currentTarget);
+    const selectedFile = fields.get("audio") as File;
+    const error =
+      guestMode && selectedFile.size > 25 * 1024 * 1024
+        ? "Live demo files must be at most 25 MB."
+        : recordingError(selectedFile);
+    setFileError(error);
+    if (error) return;
     const form = new FormData();
     form.set("audio", fields.get("audio")!);
     form.set(
@@ -69,7 +125,9 @@ export function Imports() {
       new Blob(
         [
           JSON.stringify({
-            title: fields.get("title"),
+            title:
+              fields.get("title") ||
+              selectedFile.name.replace(/\.[^.]+$/, "").slice(0, 120),
             sample: fields.get("sample") === "on",
             customerId: fields.get("customerId"),
             agent: fields.get("agent"),
@@ -77,12 +135,15 @@ export function Imports() {
             recordedAt: new Date(
               String(fields.get("recordedAt")),
             ).toISOString(),
-            language: fields.get("language") || null,
+            language:
+              fields.get("language") === "auto"
+                ? null
+                : fields.get("language") || null,
             speakers: fields.get("speakers")
               ? Number(fields.get("speakers"))
               : null,
             customerChannel:
-              fields.get("channel") === ""
+              !fields.get("channel") || fields.get("channel") === "auto"
                 ? null
                 : Number(fields.get("channel")),
           }),
@@ -92,13 +153,18 @@ export function Imports() {
     );
     upload.mutate(form);
   }
-  const canImport = user && ["ADMIN", "ANALYST"].includes(user.role);
+  const canImport = user && ["ADMIN", "ANALYST", "DEMO"].includes(user.role);
   return (
     <>
       <section className="panel imports-panel" aria-label="Recording imports">
         {jobs.isError && (
           <p role="alert" className="panel-copy">
             {jobs.error.message}
+          </p>
+        )}
+        {sampleImport.isError && (
+          <p role="alert" className="panel-copy field-error">
+            {sampleImport.error.message}
           </p>
         )}
         {retry.isError && <p role="alert">{retry.error.message}</p>}
@@ -134,8 +200,23 @@ export function Imports() {
           >
             {showHistory ? "Hide upload history" : "View upload history"}
           </button>
+          {guestMode && (
+            <button
+              className="button secondary"
+              disabled={sampleImport.isPending}
+              onClick={() => sampleImport.mutate()}
+            >
+              {sampleImport.isPending
+                ? "Uploading sample…"
+                : "Analyze sample call"}
+            </button>
+          )}
           {canImport && (
-            <button className="button" onClick={() => setOpen(true)}>
+            <button
+              className="button"
+              data-tour="import-recording"
+              onClick={() => setOpen(true)}
+            >
               Import recording
             </button>
           )}
@@ -207,8 +288,11 @@ export function Imports() {
       >
         <form onSubmit={submit} className="platform-form">
           <label>
-            Audio file (up to 100 MB)
-            <input name="audio" type="file" accept=".wav,.flac,.mp3" required />
+            Audio file (up to {guestMode ? "25" : "100"} MB)
+            <input name="audio" type="file" accept={recordingAccept} required />
+            <small>
+              MP3, MP4, M4A, WAV or FLAC. MP4 recordings must contain audio.
+            </small>
           </label>
           <label>
             Conversation title
@@ -226,6 +310,7 @@ export function Imports() {
             Customer reference
             <input
               name="customerId"
+              defaultValue={guestMode ? "demo-customer" : undefined}
               required
               maxLength={128}
               placeholder="e.g. CUST-1042"
@@ -239,6 +324,7 @@ export function Imports() {
             Support agent
             <input
               name="agent"
+              defaultValue={guestMode ? "Not provided" : undefined}
               required
               maxLength={80}
               placeholder="e.g. Support advisor 12"
@@ -248,6 +334,7 @@ export function Imports() {
             Department
             <input
               name="department"
+              defaultValue={guestMode ? "Customer support" : undefined}
               required
               maxLength={80}
               placeholder="e.g. Cards and payments"
@@ -264,13 +351,18 @@ export function Imports() {
           </label>
           <label>
             Language
-            <select name="language">
-              <option value="">Detect automatically</option>
-              <option value="az">Azerbaijani</option>
-              <option value="en">English</option>
-              <option value="tr">Turkish</option>
-              <option value="ru">Russian</option>
-            </select>
+            <Select
+              name="language"
+              aria-label="Language"
+              defaultValue="auto"
+              options={[
+                { value: "auto", label: "Detect automatically" },
+                { value: "az", label: "Azerbaijani" },
+                { value: "en", label: "English" },
+                { value: "tr", label: "Turkish" },
+                { value: "ru", label: "Russian" },
+              ]}
+            />
           </label>
           <label>
             Number of speakers (optional)
@@ -284,15 +376,28 @@ export function Imports() {
           </label>
           <label>
             Customer audio channel (stereo recordings)
-            <select name="channel">
-              <option value="">Detect speakers without assigning roles</option>
-              <option value="0">Left channel</option>
-              <option value="1">Right channel</option>
-            </select>
+            <Select
+              name="channel"
+              aria-label="Customer audio channel (stereo recordings)"
+              defaultValue="auto"
+              options={[
+                {
+                  value: "auto",
+                  label: "Detect speakers without assigning roles",
+                },
+                { value: "0", label: "Left channel" },
+                { value: "1", label: "Right channel" },
+              ]}
+            />
           </label>
           <label className="checkbox-label">
             <input name="sample" type="checkbox" /> This is a sample recording
           </label>
+          {fileError && (
+            <p role="alert" className="field-error">
+              {fileError}
+            </p>
+          )}
           {upload.isError && (
             <p role="alert" className="field-error">
               {upload.error.message}

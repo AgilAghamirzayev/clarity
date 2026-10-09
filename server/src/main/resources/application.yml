@@ -1,4 +1,5 @@
 server:
+  forward-headers-strategy: ${FORWARD_HEADERS_STRATEGY:none}
   port: ${API_PORT:8086}
   address: ${API_BIND:127.0.0.1}
   servlet:

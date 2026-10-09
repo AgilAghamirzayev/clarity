@@ -4,6 +4,7 @@ import jakarta.servlet.http.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.*;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Configuration
 public class Security {
-  public record Identity(UUID id, UUID tenant, String email, String role)
+  public record Identity(UUID id, UUID tenant, String email, String role, Instant expiresAt)
       implements Serializable, java.security.Principal {
+    public Identity(UUID id, UUID tenant, String email, String role) {
+      this(id, tenant, email, role, null);
+    }
+
     @Override
     public String getName() {
       return id.toString();
@@ -35,10 +40,19 @@ public class Security {
   }
 
   @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.authorizeHttpRequests(
+  SecurityFilterChain securityFilterChain(HttpSecurity http, Database db) throws Exception {
+    return http.addFilterBefore(
+            new IngestionAuthenticationFilter(db),
+            org.springframework.security.web.authentication.AnonymousAuthenticationFilter.class)
+        .csrf(c -> c.ignoringRequestMatchers("/api/v1/ingestion/recordings"))
+        .authorizeHttpRequests(
             a ->
-                a.requestMatchers("/api/v1/auth/csrf", "/api/v1/auth/login", "/health")
+                a.dispatcherTypeMatchers(jakarta.servlet.DispatcherType.ERROR)
+                    .permitAll()
+                    .requestMatchers("/api/v1/ingestion/recordings")
+                    .hasRole("INGEST")
+                    .requestMatchers(
+                        "/api/v1/auth/csrf", "/api/v1/auth/login", "/api/v1/auth/demo", "/health")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
@@ -58,7 +72,10 @@ public class Security {
   }
 
   static Identity identity(Authentication auth) {
-    return (Identity) auth.getPrincipal();
+    var user = (Identity) auth.getPrincipal();
+    if (user.expiresAt() != null && !user.expiresAt().isAfter(Instant.now()))
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Demo session expired");
+    return user;
   }
 
   static void require(Identity u, String... roles) {

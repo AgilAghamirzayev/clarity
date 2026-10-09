@@ -7,8 +7,6 @@ permissions:
 jobs:
   frontend:
     runs-on: ubuntu-latest
-    env:
-      VITE_DATA_MODE: demo
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,6 +16,7 @@ jobs:
       - run: npm ci
       - run: npm run format:check
       - run: npm run lint
+      - run: npm audit --audit-level=high
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
@@ -57,3 +56,12 @@ jobs:
       - run: uv sync --project worker --locked
       - run: uv run --project worker ruff check --config worker/pyproject.toml worker scripts
       - run: uv run --project worker pytest worker/tests -q
+      - run: PYTHONPATH=worker uv run --project worker python -m csi_worker.evaluation.validate
+
+  containers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/setup-vps.py demo.example.test
+      - run: docker compose --env-file .env.vps -f compose.vps.yml config --quiet
+      - run: docker compose --env-file .env.vps -f compose.vps.yml build api web worker

@@ -28,7 +28,7 @@ class DecisionController {
   @PostMapping("/recommendations/{id}/decisions")
   Object review(Authentication auth, @PathVariable UUID id, @Valid @RequestBody Review input) {
     var u = Security.identity(auth);
-    Security.require(u, "ADMIN", "REVIEWER");
+    Security.require(u, "ADMIN", "REVIEWER", "DEMO");
     return db.tenant(
         u.tenant(),
         () -> {
@@ -67,7 +67,7 @@ class DecisionController {
               id,
               db.encode(data));
           db.audit(u, "decision." + input.action(), decision.toString());
-          if (input.action().equals("Approved"))
+          if (input.action().equals("Approved") && !u.role().equals("DEMO"))
             db.event(u.tenant(), "decision.approved", decision, 1);
           return data;
         });
@@ -76,7 +76,7 @@ class DecisionController {
   @PostMapping("/recommendations/{id}/advance")
   Object advance(Authentication auth, @PathVariable UUID id, @Valid @RequestBody Advance input) {
     var u = Security.identity(auth);
-    Security.require(u, "ADMIN", "REVIEWER");
+    Security.require(u, "ADMIN", "REVIEWER", "DEMO");
     return db.tenant(
         u.tenant(),
         () -> {

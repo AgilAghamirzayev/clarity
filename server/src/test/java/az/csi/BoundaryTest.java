@@ -28,6 +28,30 @@ class BoundaryTest {
   }
 
   @Test
+  void acceptsMp4AndM4aContainers() {
+    for (String brand : new String[] {"isom", "mp42", "M4A "}) {
+      var header =
+          java.nio.ByteBuffer.allocate(16)
+              .putInt(24)
+              .put("ftyp".getBytes())
+              .put(brand.getBytes())
+              .putInt(0)
+              .array();
+      assertEquals("video/mp4", AudioStore.mediaType(header));
+    }
+  }
+
+  @Test
+  void rejectsInvalidMp4Header() {
+    var header =
+        java.nio.ByteBuffer.allocate(16).putInt(4).put("ftypisom".getBytes()).putInt(0).array();
+    assertThrows(IllegalArgumentException.class, () -> AudioStore.mediaType(header));
+    header[3] = 24;
+    header[8] = 'x';
+    assertThrows(IllegalArgumentException.class, () -> AudioStore.mediaType(header));
+  }
+
+  @Test
   void viewerCannotImportOrReview() {
     var user =
         new Security.Identity(

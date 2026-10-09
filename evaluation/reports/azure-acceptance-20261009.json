@@ -1,0 +1,62 @@
+{
+  "guestStatus": 200,
+  "conversations": 8,
+  "issues": 5,
+  "recommendations": 5,
+  "processing": {
+    "api": "ready",
+    "processing": "ready",
+    "demo": true,
+    "catalogVersion": "support-catalog-v1",
+    "maxFiles": 5,
+    "maxFileMb": 25,
+    "maxMinutes": 5
+  },
+  "crossVisitorAccess": 404,
+  "csrfRejected": 403,
+  "sampleAudio": {
+    "status": 200,
+    "bytes": 2725516
+  },
+  "httpsVerified": true,
+  "freshAnalysis": {
+    "status": "COMPLETED",
+    "duration": "22",
+    "segments": 9,
+    "issues": 1,
+    "elapsedSeconds": 205.2,
+    "stages": [
+      {
+        "stage": "transcription",
+        "status": "SUCCEEDED",
+        "seconds": 30.5
+      },
+      {
+        "stage": "analysis",
+        "status": "SUCCEEDED",
+        "seconds": 172.6
+      },
+      {
+        "stage": "clustering",
+        "status": "SUCCEEDED",
+        "seconds": 0.7
+      }
+    ]
+  },
+  "freshCallCrossVisitorAccess": 404,
+  "audioPlayback": {
+    "durationSeconds": 22.150563,
+    "playedFromTranscript": true,
+    "mediaError": null
+  },
+  "refreshedSummary": {
+    "status": "COMPLETED",
+    "elapsedSeconds": 241.7,
+    "adviceCount": 3,
+    "calls": 9,
+    "model": "qwen3:4b-instruct"
+  },
+  "verifiedAt": "2026-10-09",
+  "publicDemo": "https://clarity.eastus.cloudapp.azure.com",
+  "measurementScope": "One fresh synthetic stereo recording and one refreshed report on the deployed Azure CPU server; hostname was shortened after the processing run."
+}

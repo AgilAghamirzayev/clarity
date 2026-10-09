@@ -1,6 +1,8 @@
 # Local customer intelligence platform
 
-The existing React demo remains available with `VITE_DATA_MODE=demo`. The API mode uses a Java 21 / Spring Boot 3.5 backend, PostgreSQL with pgvector, MinIO, Kafka, Temporal and a Python worker. All speech and language inference runs locally.
+The React app defaults to a real, login-free demo with `npm run dev` or `npm run build`. Enable `DEMO_ENABLED=true` on its API. Each guest gets a separate, expiring tenant. Use `npm run dev:api` or `npm run build:api` for the authenticated platform, or `npm run dev:fixture` for the offline UI. [The VPS guide](DEPLOYMENT.md) covers the complete Docker deployment.
+
+The API uses Java 21 / Spring Boot 3.5, PostgreSQL with pgvector, MinIO, Kafka, Temporal and a Python worker. Speech, privacy processing and embeddings run locally. Analysis defaults to local Ollama and can use an approved company gateway; see [Automation and AI](AUTOMATION_AI.md).
 
 ## Start locally
 
@@ -21,7 +23,7 @@ In separate terminals:
 
 ```sh
 scripts/start-worker
-npm run dev -- --host 127.0.0.1 --port 4173
+npm run dev:api -- --host 127.0.0.1 --port 4173
 ```
 
 Open `http://127.0.0.1:4173`. The initial tenant is `local`, email `admin@csi.local`, and password is the generated `BOOTSTRAP_PASSWORD` in `.env.local`. The setup file has mode 0600 and is ignored by Git. Setup never overwrites existing credentials. Remove bootstrap variables from the API environment after creating the first administrator. Use a password manager to distribute accounts.
@@ -30,7 +32,7 @@ The application uses ports 8086 (API), 5546 (PostgreSQL), 9100/9101 (MinIO), 190
 
 ## Processing contract
 
-1. An analyst imports WAV, FLAC or MP3 audio with metadata and an `Idempotency-Key`. The API checks byte signatures and a 100 MB limit, pseudonymizes the customer reference, uploads a private object, and commits the call plus outbox event atomically. A failed database insert removes its uploaded object.
+1. A recording connector automatically submits, or an analyst manually imports, WAV, FLAC, MP3, MP4 or M4A audio with metadata and an `Idempotency-Key`. MP4 and M4A containers must contain a mono or stereo audio stream; the local worker extracts and resamples it to 16 kHz with PyAV while enforcing the one-hour duration limit. The API checks byte signatures and a 100 MB limit, pseudonymizes the customer reference, uploads a private object, and commits the call plus outbox event atomically. A failed database insert removes its uploaded object.
 2. An outbox publisher sends only event/resource/tenant identifiers to Kafka. Unsent rows retry with capped backoff. Delivery is at least once.
 3. A Kafka consumer starts a stable Temporal workflow for each call generation, then commits the Kafka offset. Replayed messages cannot start another workflow. Malformed events go to a dead-letter topic with source coordinates, not raw content.
 4. Faster Whisper transcribes locally. Stereo channel metadata can identify customer and agent. Mono audio uses SpeechBrain ECAPA embeddings and agglomerative clustering; speaker identity is separate from role attribution. Short fragments remain unknown. Overlapping speech and incorrect speaker counts need manual review.
@@ -69,7 +71,7 @@ Only human-approved actions generate external delivery events. No raw recording 
 
 ## API
 
-All application endpoints start with `/api/v1` and require a session except `/auth/csrf` and `/auth/login`.
+All application endpoints start with `/api/v1` and require a session except `/auth/csrf`, `/auth/login` and the explicitly enabled `/auth/demo` endpoint. Demo creation is still protected by CSRF and rate limits.
 
 | Endpoint                                          | Purpose                                                |
 | ------------------------------------------------- | ------------------------------------------------------ |
@@ -109,7 +111,7 @@ This imports seven generated stereo conversations through the real audio and AI 
 ## Verification
 
 ```sh
-VITE_DATA_MODE=demo npm test
+npm test
 npm run build
 npm run lint
 PLAYWRIGHT_CHANNEL=chrome npm run test:e2e

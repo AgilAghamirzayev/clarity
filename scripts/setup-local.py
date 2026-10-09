@@ -21,6 +21,7 @@ values = {
 values.update(
     S3_ACCESS_KEY="csi-local",
     COOKIE_SECURE="false",
+    DEMO_ENABLED="true",
     BOOTSTRAP_TENANT="local",
     BOOTSTRAP_EMAIL="admin@csi.local",
     S3_ENDPOINT="http://localhost:9100",
@@ -32,7 +33,6 @@ values.update(
     WHISPER_MODEL=str(root / ".models/whisper-small"),
     SPEAKER_MODEL=str(root / ".models/ecapa"),
     GLINER_MODEL=str(root / ".models/gliner"),
-    VITE_DATA_MODE="api",
 )
 fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
 with os.fdopen(fd, "w") as file:

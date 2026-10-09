@@ -1,0 +1,271 @@
+[
+  {
+    "key": "checkout-declined",
+    "title": "Payment declined during checkout",
+    "department": "Payments",
+    "agent": "Emma Wilson",
+    "customer": "demo-customer-01",
+    "daysAgo": 1,
+    "dialogue": [
+      [
+        "Customer",
+        "I have tried to pay for my order three times this morning. Each time the checkout says something went wrong. My card works on other websites, so this is very frustrating."
+      ],
+      [
+        "Agent",
+        "I understand. Can you tell me whether the error appears before or after you confirm the payment in your banking app?"
+      ],
+      [
+        "Customer",
+        "After I approve it. Then the checkout sends me back to the basket. I do not know if I have been charged, and I am worried about trying again."
+      ],
+      [
+        "Agent",
+        "Please do not make another attempt yet. I will check the payment status with our payments team and keep this case open until we confirm it."
+      ],
+      [
+        "Customer",
+        "Thank you. It would help if the error message told me whether the payment went through instead of just saying something went wrong."
+      ],
+      [
+        "Agent",
+        "I will include that feedback in the escalation. You will receive a case update once the team has checked the transaction."
+      ]
+    ]
+  },
+  {
+    "key": "checkout-follow-up",
+    "title": "Repeat contact about a failed card payment",
+    "department": "Payments",
+    "agent": "James Miller",
+    "customer": "demo-customer-01",
+    "daysAgo": 0,
+    "dialogue": [
+      [
+        "Customer",
+        "I called yesterday because my card payment failed. I still have not received an update and my order is waiting. I should not have to explain the same problem again."
+      ],
+      [
+        "Agent",
+        "I can see the open case. The payment team has not recorded a resolution yet. I will take ownership of the follow-up so you have one contact."
+      ],
+      [
+        "Customer",
+        "The checkout still shows the same generic error. Can you at least confirm whether the money left my account?"
+      ],
+      [
+        "Agent",
+        "I cannot confirm that from this screen. I will request the transaction status and send you an update through your existing case."
+      ],
+      [
+        "Customer",
+        "Please do. The lack of updates is just as frustrating as the payment failure."
+      ],
+      [
+        "Agent",
+        "I understand. I have recorded both the payment error and the missing update in the case notes."
+      ]
+    ]
+  },
+  {
+    "key": "refund-status",
+    "title": "Refund timeline is unclear after a return",
+    "department": "Returns & refunds",
+    "agent": "Olivia Carter",
+    "customer": "demo-customer-02",
+    "daysAgo": 2,
+    "dialogue": [
+      [
+        "Customer",
+        "My returned item was received last week, but I still do not understand when I should expect the refund. The email says processing, and the help page gives a different explanation."
+      ],
+      [
+        "Agent",
+        "I will check the return status. The refund has been requested, but the case does not show that it has reached your payment method yet."
+      ],
+      [
+        "Customer",
+        "One advisor told me the refund had already been sent. Now you are saying it is only requested. Which information should I trust?"
+      ],
+      [
+        "Agent",
+        "I am sorry the explanations were inconsistent. I will ask the refunds team to confirm the current stage and update the case with a clear explanation."
+      ],
+      [
+        "Customer",
+        "I do not need a promise you cannot keep. I just want the same accurate information from the email, the website and your team."
+      ],
+      [
+        "Agent",
+        "That is fair. I have recorded the conflicting messages and will send the confirmed status rather than guessing at a date."
+      ]
+    ]
+  },
+  {
+    "key": "refund-follow-up",
+    "title": "Customer asks for a clear refund update",
+    "department": "Returns & refunds",
+    "agent": "Emma Wilson",
+    "customer": "demo-customer-02",
+    "daysAgo": 9,
+    "dialogue": [
+      [
+        "Customer",
+        "I have returned my order and would like to understand the next steps for my refund. The confirmation email does not say what processing means."
+      ],
+      [
+        "Agent",
+        "Processing means the return has been recorded, but I need to check the refund request before I can tell you its current status."
+      ],
+      [
+        "Customer",
+        "Can that explanation be included in the email? I would not have needed to call if the message had been clearer."
+      ],
+      [
+        "Agent",
+        "That is useful feedback. I will send it to the team that maintains our return messages and check your refund status now."
+      ],
+      [
+        "Customer",
+        "Thank you. A short explanation of each stage would make the process easier to follow."
+      ],
+      [
+        "Agent",
+        "I agree. I will record that request and keep the reply linked to this return case."
+      ]
+    ]
+  },
+  {
+    "key": "verification-upload",
+    "title": "Identity document upload keeps failing",
+    "department": "Account verification",
+    "agent": "Daniel Brooks",
+    "customer": "demo-customer-03",
+    "daysAgo": 3,
+    "dialogue": [
+      [
+        "Customer",
+        "The identity verification screen keeps rejecting my document photo. I have tried a clear image twice, but the app only says upload failed. I cannot finish opening my account."
+      ],
+      [
+        "Agent",
+        "Does the message explain whether the file format, image quality or connection caused the failure?"
+      ],
+      [
+        "Customer",
+        "No. It does not give me any instructions. I also tried switching from mobile data to wireless internet and got the same result."
+      ],
+      [
+        "Agent",
+        "I will escalate the upload failure with the device and app version details. Please do not send your identity document through this support conversation."
+      ],
+      [
+        "Customer",
+        "I appreciate that. I need a way to complete verification, and a useful error message would save everyone time."
+      ],
+      [
+        "Agent",
+        "I have recorded the steps you tried and the missing guidance. The verification team will review the secure upload process."
+      ]
+    ]
+  },
+  {
+    "key": "password-reset",
+    "title": "Password reset link expires before it opens",
+    "department": "Account access",
+    "agent": "James Miller",
+    "customer": "demo-customer-04",
+    "daysAgo": 12,
+    "dialogue": [
+      [
+        "Customer",
+        "I requested a password reset twice. Both emails arrived, but each link said it had expired when I opened it. I am locked out of my account."
+      ],
+      [
+        "Agent",
+        "Thank you for explaining. Please use only the most recent reset email and tell me whether the same message appears."
+      ],
+      [
+        "Customer",
+        "I have done that. It still says the link has expired. I cannot see another way to get back in."
+      ],
+      [
+        "Agent",
+        "I will record the repeated reset failure and ask the account access team to review the flow. We will never ask you to share your password."
+      ],
+      [
+        "Customer",
+        "Thank you. I hope the team can check why a new link is already expired."
+      ],
+      [
+        "Agent",
+        "I have included that detail in the case so the team can reproduce the reported behavior."
+      ]
+    ]
+  },
+  {
+    "key": "notification-guidance",
+    "title": "Notification preferences explained clearly",
+    "department": "General support",
+    "agent": "Olivia Carter",
+    "customer": "demo-customer-05",
+    "daysAgo": 4,
+    "dialogue": [
+      [
+        "Customer",
+        "I want to keep security alerts but turn off marketing notifications. I am not sure which settings to change."
+      ],
+      [
+        "Agent",
+        "Open Settings, then Notifications. Marketing messages and account security alerts have separate controls. Leave security alerts enabled and turn off the marketing preference."
+      ],
+      [
+        "Customer",
+        "I can see both controls now. I have turned off marketing, and the security setting is still on."
+      ],
+      [
+        "Agent",
+        "That is the right configuration. You can return to the same screen whenever you want to update your preferences."
+      ],
+      [
+        "Customer",
+        "Perfect. That was easy once you explained it. Thank you for walking me through it."
+      ],
+      ["Agent", "You are welcome. I am glad the settings are clear now."]
+    ]
+  },
+  {
+    "key": "support-appreciation",
+    "title": "Customer praises clear and helpful support",
+    "department": "General support",
+    "agent": "Daniel Brooks",
+    "customer": "demo-customer-06",
+    "daysAgo": 6,
+    "dialogue": [
+      [
+        "Customer",
+        "I am calling to say thank you. Your team helped me understand the account settings yesterday, and everything is working well now."
+      ],
+      [
+        "Agent",
+        "Thank you for sharing that feedback. Was there anything in the explanation that you found especially helpful?"
+      ],
+      [
+        "Customer",
+        "The advisor used simple language, explained each step and checked that I could see the right screen. I felt listened to."
+      ],
+      [
+        "Agent",
+        "That is good to hear. I will share the feedback with our support team."
+      ],
+      [
+        "Customer",
+        "Please do. I have no issue to report. I just wanted the team to know they made the experience easy."
+      ],
+      [
+        "Agent",
+        "We appreciate your feedback. Thank you for taking the time to call."
+      ]
+    ]
+  }
+]

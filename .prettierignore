@@ -3,3 +3,11 @@ dist
 playwright-report
 test-results
 package-lock.json
+
+# Generated evaluation artifacts and frozen JSON fixtures
+evaluation/reports
+evaluation/baselines
+evaluation/cases
+
+# Frozen judging evidence retains its recorded bytes
+deliverables/judge-pitch/evidence/

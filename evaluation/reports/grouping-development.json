@@ -1,0 +1,559 @@
+{
+  "kind": "embedding-grouping",
+  "split": "development",
+  "synthetic": true,
+  "provenance": {
+    "timestamp": "2026-10-09T13:40:18Z",
+    "gitCommit": "11ab209365e787a5ce871c4f40697e64df89ae0c",
+    "workingTreeDirty": true,
+    "python": "3.12.13",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu": "Apple M4 Pro",
+    "logicalCPUs": 14,
+    "memoryBytes": 25769803776,
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.14.0",
+      "faster-whisper": "1.2.1",
+      "speechbrain": "1.0.3",
+      "torch": "2.6.0",
+      "numpy": "2.5.3"
+    },
+    "models": [
+      {
+        "name": "qwen3:4b-instruct",
+        "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+      },
+      {
+        "name": "qwen3:4b",
+        "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+      },
+      {
+        "name": "llama3.2:latest",
+        "digest": "a80c4f17acd55265feec403c7aef86be0c25983ab279d83f3bcd3abbcb5b8b72"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      },
+      {
+        "name": "gemma3:1b",
+        "digest": "8648f39daa8fbf5b18c7b4e6a8fb4990c692751d49917417b8842ca5758e7ffc"
+      }
+    ],
+    "analysisModel": "qwen3:4b-instruct",
+    "embeddingModel": "nomic-embed-text:latest",
+    "piiBackend": "ollama",
+    "piiModel": "qwen3:4b-instruct",
+    "skillVersion": "4",
+    "promptVersion": "call-analysis-v4-speakers",
+    "profile": {
+      "providerId": "local",
+      "context": "",
+      "rules": "",
+      "language": "English",
+      "temperature": 0,
+      "maxOutputTokens": 1800,
+      "externalAllowed": false,
+      "version": 0
+    },
+    "hashes": {
+      "worker/uv.lock": "9e8456ebfa3c3d36b9df1a0d9e8d43339df68491ee52d4d05e2c0bff20e9aa10",
+      "server/src/main/resources/agent/skill.json": "d3af9e7cddc04aaa8d2c4d938f8b93de36377d0b987dadf406f8cc371cd68f86",
+      "worker/csi_worker/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "worker/csi_worker/activities.py": "f30df894e2c310bc2de886e0905f952dad848788805cc5a273122e083ef8ba85",
+      "worker/csi_worker/agent_profile.py": "24118aa5568103f879d5cb751587b828ec173958eabc42c29edbc580519af727",
+      "worker/csi_worker/analysis.py": "ad341bf1280a6b7547bed6116a4e23adfdf35f150739722ace3d835eb6d11d1c",
+      "worker/csi_worker/events.py": "a57b4c55f001815a5a0896dce7f47d0718bd91ec31ce746c7f9b35a71f3519ae",
+      "worker/csi_worker/grouping.py": "c6aa0c7b02464a8bc12572d8d6741acf10d8eb3b621b8368d3ece9430906bcc0",
+      "worker/csi_worker/health.py": "9baf3554e1a1866d93f30bb319204d89e0025c9eb21a76698dfe58b1fb9926e3",
+      "worker/csi_worker/integrations.py": "c3ddd29f128b305e6250c977c5919d927f0de8654b0fa3b0cb93b47916bbe248",
+      "worker/csi_worker/main.py": "06f9e804b651a5a7b697a43565b0564243acaa1fa7214fe478e8a5170b22705d",
+      "worker/csi_worker/media.py": "8a5d35d52c07ee9c967de9da02fa600e03e88ab32efc5ffcda026a56cc76b025",
+      "worker/csi_worker/privacy.py": "b0744178557eb7e1c9caa54da6be6b991e727d62e16506f58cc834e5126a5e1b",
+      "worker/csi_worker/speech.py": "e08fb21ff8a645a2043ac924b7a6da80795637fe1b4b58bf99c10867c479d3d2",
+      "worker/csi_worker/storage.py": "61cd81825c1a6dc38a9d9b9119c1b83481ff92715acdb7b4586743f6e423d484",
+      "worker/csi_worker/support_summary.py": "f889fb1cd1ec115f2108d0d486870dce669c47a8a08d347bc4b809999ad7e656",
+      "worker/csi_worker/workflows.py": "db860aa23a4bd73012915d670b715c83f6c5b0278070fa5c8800cbb58e20df12",
+      "evaluation/cases/grouping.json": "3b6f0cd77a60f0df60e041111a95811cf93943a43f2e4eb1eb4006fae80f643c",
+      "evaluation/cases/recordings.json": "014025a03ed3ad34a982551684bd55a0d78f3c76755a4717f37187466017e616",
+      "evaluation/cases/transcripts.json": "6efe89dff61a604597ea2c50cd41e971ba9c5f7903c3690947dcf2190714d69b"
+    }
+  },
+  "policy": "first-exemplar-cosine-v1",
+  "threshold": 0.22,
+  "cases": [
+    {
+      "id": "development-0",
+      "split": "development",
+      "group": "checkout",
+      "title": "Payment declined",
+      "description": "Card payment fails at checkout after bank approval",
+      "synthetic": true
+    },
+    {
+      "id": "development-1",
+      "split": "development",
+      "group": "checkout",
+      "title": "Checkout transaction fails",
+      "description": "Payment attempt returns an error after authorization",
+      "synthetic": true
+    },
+    {
+      "id": "development-2",
+      "split": "development",
+      "group": "refund",
+      "title": "Unclear refund status",
+      "description": "Return refund email does not explain the processing stage",
+      "synthetic": true
+    },
+    {
+      "id": "development-3",
+      "split": "development",
+      "group": "refund",
+      "title": "Confusing refund email",
+      "description": "Customer cannot understand what processing means for a refund",
+      "synthetic": true
+    },
+    {
+      "id": "development-4",
+      "split": "development",
+      "group": "password",
+      "title": "Password reset expired",
+      "description": "Reset link expires before customer can use it",
+      "synthetic": true
+    },
+    {
+      "id": "development-5",
+      "split": "development",
+      "group": "password",
+      "title": "Reset link invalid",
+      "description": "Emailed password recovery link is already expired",
+      "synthetic": true
+    }
+  ],
+  "pairDistances": [
+    {
+      "a": "development-1",
+      "b": "development-0",
+      "sameLabel": true,
+      "distance": 0.15257549156047057
+    },
+    {
+      "a": "development-2",
+      "b": "development-0",
+      "sameLabel": false,
+      "distance": 0.36618827424181055
+    },
+    {
+      "a": "development-2",
+      "b": "development-1",
+      "sameLabel": false,
+      "distance": 0.3383685658545029
+    },
+    {
+      "a": "development-3",
+      "b": "development-0",
+      "sameLabel": false,
+      "distance": 0.3769827836841848
+    },
+    {
+      "a": "development-3",
+      "b": "development-1",
+      "sameLabel": false,
+      "distance": 0.3459458781161012
+    },
+    {
+      "a": "development-3",
+      "b": "development-2",
+      "sameLabel": true,
+      "distance": 0.11812239894141785
+    },
+    {
+      "a": "development-4",
+      "b": "development-0",
+      "sameLabel": false,
+      "distance": 0.4003563406076457
+    },
+    {
+      "a": "development-4",
+      "b": "development-1",
+      "sameLabel": false,
+      "distance": 0.354420358696658
+    },
+    {
+      "a": "development-4",
+      "b": "development-2",
+      "sameLabel": false,
+      "distance": 0.39508336217972084
+    },
+    {
+      "a": "development-4",
+      "b": "development-3",
+      "sameLabel": false,
+      "distance": 0.4115229248796869
+    },
+    {
+      "a": "development-5",
+      "b": "development-0",
+      "sameLabel": false,
+      "distance": 0.42519315851947026
+    },
+    {
+      "a": "development-5",
+      "b": "development-1",
+      "sameLabel": false,
+      "distance": 0.34643239112779645
+    },
+    {
+      "a": "development-5",
+      "b": "development-2",
+      "sameLabel": false,
+      "distance": 0.33676516773834075
+    },
+    {
+      "a": "development-5",
+      "b": "development-3",
+      "sameLabel": false,
+      "distance": 0.38306929435319914
+    },
+    {
+      "a": "development-5",
+      "b": "development-4",
+      "sameLabel": true,
+      "distance": 0.1028323125506293
+    }
+  ],
+  "orders": [
+    {
+      "seed": 0,
+      "order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assignments": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "order": [
+        2,
+        3,
+        5,
+        0,
+        4,
+        1
+      ],
+      "assignments": [
+        2,
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "order": [
+        2,
+        3,
+        1,
+        4,
+        5,
+        0
+      ],
+      "assignments": [
+        1,
+        1,
+        0,
+        0,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "order": [
+        0,
+        2,
+        3,
+        5,
+        4,
+        1
+      ],
+      "assignments": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "order": [
+        3,
+        5,
+        4,
+        0,
+        2,
+        1
+      ],
+      "assignments": [
+        2,
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "order": [
+        1,
+        0,
+        3,
+        5,
+        2,
+        4
+      ],
+      "assignments": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 6,
+      "order": [
+        2,
+        5,
+        1,
+        3,
+        0,
+        4
+      ],
+      "assignments": [
+        2,
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 7,
+      "order": [
+        4,
+        0,
+        5,
+        3,
+        1,
+        2
+      ],
+      "assignments": [
+        1,
+        1,
+        2,
+        2,
+        0,
+        0
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 8,
+      "order": [
+        5,
+        4,
+        0,
+        3,
+        2,
+        1
+      ],
+      "assignments": [
+        1,
+        1,
+        2,
+        2,
+        0,
+        0
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 9,
+      "order": [
+        5,
+        0,
+        1,
+        2,
+        4,
+        3
+      ],
+      "assignments": [
+        1,
+        1,
+        2,
+        2,
+        0,
+        0
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    }
+  ],
+  "developmentThresholdSweep": [
+    {
+      "threshold": 0.15,
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 1,
+        "falseMerges": 0,
+        "falseSplitRate": 0.3333333333333333,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "threshold": 0.18,
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "threshold": 0.22,
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "threshold": 0.26,
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "threshold": 0.3,
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    }
+  ],
+  "status": "passed",
+  "seconds": 0.653258458012715
+}

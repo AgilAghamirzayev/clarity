@@ -15,7 +15,7 @@ import { ReviewDialog } from "./ReviewDialog";
 export default function Decisions() {
   const user = useIdentity();
   const canReview =
-    !apiMode || (user && ["ADMIN", "REVIEWER"].includes(user.role));
+    !apiMode || (user && ["ADMIN", "REVIEWER", "DEMO"].includes(user.role));
   const [params, setParams] = useSearchParams();
   const [review, setReview] = useState<Recommendation | null>(null);
   const advance = useAdvance();

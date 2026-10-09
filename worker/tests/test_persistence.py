@@ -108,3 +108,40 @@ def test_external_delivery_retry_reuses_persisted_identity(monkeypatch):
     with database(tenant) as conn:
         row = conn.execute("select status,attempts,external_id from deliveries").fetchone()
         assert row == {"status": "SENT", "attempts": 2, "external_id": "test-external-1"}
+
+
+def test_stage_measurements_record_failures_retries_and_tenant_isolation(monkeypatch):
+    from types import SimpleNamespace
+
+    from csi_worker.activities import safe_stage
+    from temporalio.exceptions import ApplicationError
+
+    tenant, other, call = str(uuid4()), str(uuid4()), str(uuid4())
+    event = dict(tenant=tenant, resource=call, generation=1)
+    with database(tenant) as conn:
+        conn.execute(
+            "insert into tenants(id,slug) values (%s,%s),(%s,%s)",
+            (tenant, "metrics-" + tenant, other, "metrics-" + other),
+        )
+        conn.execute(
+            "insert into calls(id,tenant_id,import_key,audio_key,sha256,content_type,metadata) values(%s,%s,%s,'test','hash','audio/wav','{}')",
+            (call, tenant, call),
+        )
+    monkeypatch.setattr("csi_worker.activities.activity.info", lambda: SimpleNamespace(attempt=1))
+
+    def fail(event, row):
+        raise RuntimeError("Private transcript must not appear in error_code")
+
+    with pytest.raises(ApplicationError):
+        safe_stage("analysis", fail, event)
+    monkeypatch.setattr("csi_worker.activities.activity.info", lambda: SimpleNamespace(attempt=2))
+    safe_stage("analysis", lambda event, row: None, event)
+    with database(tenant) as conn:
+        rows = conn.execute(
+            "select attempt,status,error_code,elapsed_ms from call_stage_attempts order by attempt"
+        ).fetchall()
+        assert [r["status"] for r in rows] == ["FAILED", "SUCCEEDED"]
+        assert rows[0]["error_code"] == "ANALYSIS_FAILED"
+        assert all(r["elapsed_ms"] >= 0 for r in rows)
+    with database(other) as conn:
+        assert conn.execute("select count(*) as n from call_stage_attempts").fetchone()["n"] == 0

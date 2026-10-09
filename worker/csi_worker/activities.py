@@ -1,15 +1,20 @@
 import os
 import tempfile
+import time
 from uuid import UUID, uuid4, uuid5
 
 from psycopg.types.json import Jsonb
 from temporalio import activity
 from temporalio.exceptions import ApplicationError
 
+from .grouping import should_merge
 from .storage import bucket, database, objects
 
 
 def safe_stage(name, operation, event):
+    started = time.perf_counter()
+    attempt = activity.info().attempt
+    recorded = False
     try:
         with database(event["tenant"]) as conn:
             row = conn.execute("select * from calls where id=%s", (event["resource"],)).fetchone()
@@ -19,10 +24,39 @@ def safe_stage(name, operation, event):
                 "update calls set status='PROCESSING',stage=%s,attempts=attempts+1,updated_at=now() where id=%s and status<>'COMPLETED'",
                 (name, event["resource"]),
             )
+            conn.execute(
+                "insert into call_stage_attempts(tenant_id,call_id,generation,stage,attempt,status) "
+                "values (%s,%s,%s,%s,%s,'RUNNING') on conflict do nothing",
+                (event["tenant"], event["resource"], event["generation"], name, attempt),
+            )
+        recorded = True
         operation(event, row)
+        finish_stage(event, name, attempt, started, "SUCCEEDED")
     except Exception:
+        if recorded:
+            try:
+                finish_stage(event, name, attempt, started, "FAILED")
+            except Exception:
+                pass  # The RUNNING measurement remains visible if the database is unavailable.
         # Provider exceptions may contain transcript fragments. Keep them out of workflow history.
         raise ApplicationError(f"{name.upper()}_FAILED", type=f"{name.upper()}_FAILED") from None
+
+
+def finish_stage(event, name, attempt, started, status):
+    with database(event["tenant"]) as conn:
+        conn.execute(
+            "update call_stage_attempts set finished_at=clock_timestamp(),elapsed_ms=%s,status=%s,error_code=%s "
+            "where call_id=%s and generation=%s and stage=%s and attempt=%s",
+            (
+                (time.perf_counter() - started) * 1000,
+                status,
+                name.upper() + "_FAILED" if status == "FAILED" else None,
+                event["resource"],
+                event["generation"],
+                name,
+                attempt,
+            ),
+        )
 
 
 @activity.defn
@@ -55,7 +89,11 @@ def analyze_call(event):
         from .analysis import analyze
         from .privacy import redact
 
-        result = analyze(row["transcript"]["segments"])
+        result = analyze(
+            row["transcript"]["segments"],
+            row["metadata"].get("analysisProfile"),
+            role_attribution=row["transcript"].get("roleAttribution", "unknown"),
+        )
         result["summary"] = redact(result["summary"])
         for finding in result["issues"]:
             for key in ["title", "description", "proposedAction", "expectedOutcome"]:
@@ -90,8 +128,8 @@ def persist(event, row):
                 "select id,centroid <=> %s::vector as distance from issues where model=%s order by centroid <=> %s::vector limit 1",
                 (str(vector), model, str(vector)),
             ).fetchone()
-            issue_id = nearest["id"] if nearest and nearest["distance"] < 0.22 else uuid4()
-            new_issue = not nearest or nearest["distance"] >= 0.22
+            new_issue = not nearest or not should_merge(nearest["distance"])
+            issue_id = uuid4() if new_issue else nearest["id"]
             if new_issue:
                 issue = dict(
                     id=str(issue_id),
@@ -130,6 +168,8 @@ def persist(event, row):
                     evidenceSegments=indices,
                     model=row["analysis"]["model"],
                     promptVersion=row["analysis"]["promptVersion"],
+                    profileVersion=row["analysis"].get("profileVersion", 0),
+                    providerId=row["analysis"].get("providerId", "local"),
                 )
                 conn.execute(
                     "insert into recommendations(id,tenant_id,issue_id,data) values (%s,%s,%s,%s)",

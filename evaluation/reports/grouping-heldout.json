@@ -1,0 +1,509 @@
+{
+  "kind": "embedding-grouping",
+  "split": "heldout",
+  "synthetic": true,
+  "provenance": {
+    "timestamp": "2026-10-09T13:43:30Z",
+    "gitCommit": "11ab209365e787a5ce871c4f40697e64df89ae0c",
+    "workingTreeDirty": true,
+    "python": "3.12.13",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu": "Apple M4 Pro",
+    "logicalCPUs": 14,
+    "memoryBytes": 25769803776,
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.14.0",
+      "faster-whisper": "1.2.1",
+      "speechbrain": "1.0.3",
+      "torch": "2.6.0",
+      "numpy": "2.5.3"
+    },
+    "models": [
+      {
+        "name": "qwen3:4b-instruct",
+        "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+      },
+      {
+        "name": "qwen3:4b",
+        "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+      },
+      {
+        "name": "llama3.2:latest",
+        "digest": "a80c4f17acd55265feec403c7aef86be0c25983ab279d83f3bcd3abbcb5b8b72"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      },
+      {
+        "name": "gemma3:1b",
+        "digest": "8648f39daa8fbf5b18c7b4e6a8fb4990c692751d49917417b8842ca5758e7ffc"
+      }
+    ],
+    "analysisModel": "qwen3:4b-instruct",
+    "embeddingModel": "nomic-embed-text:latest",
+    "piiBackend": "ollama",
+    "piiModel": "qwen3:4b-instruct",
+    "skillVersion": "5",
+    "promptVersion": "call-analysis-v5-speakers",
+    "profile": {
+      "providerId": "local",
+      "context": "",
+      "rules": "",
+      "language": "English",
+      "temperature": 0,
+      "maxOutputTokens": 1800,
+      "externalAllowed": false,
+      "version": 0
+    },
+    "hashes": {
+      "worker/uv.lock": "9e8456ebfa3c3d36b9df1a0d9e8d43339df68491ee52d4d05e2c0bff20e9aa10",
+      "server/src/main/resources/agent/skill.json": "9a21f56cc076b4a65889076a9848118a5650a8b0c77c45bbc2c116e3b6cbfd8b",
+      "worker/csi_worker/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "worker/csi_worker/activities.py": "f30df894e2c310bc2de886e0905f952dad848788805cc5a273122e083ef8ba85",
+      "worker/csi_worker/agent_profile.py": "24118aa5568103f879d5cb751587b828ec173958eabc42c29edbc580519af727",
+      "worker/csi_worker/analysis.py": "a7268b0067a3d40e123e4234ce1b5fea125eb47523e5d689cd8570e783bba246",
+      "worker/csi_worker/events.py": "a57b4c55f001815a5a0896dce7f47d0718bd91ec31ce746c7f9b35a71f3519ae",
+      "worker/csi_worker/grouping.py": "c6aa0c7b02464a8bc12572d8d6741acf10d8eb3b621b8368d3ece9430906bcc0",
+      "worker/csi_worker/health.py": "9baf3554e1a1866d93f30bb319204d89e0025c9eb21a76698dfe58b1fb9926e3",
+      "worker/csi_worker/integrations.py": "c3ddd29f128b305e6250c977c5919d927f0de8654b0fa3b0cb93b47916bbe248",
+      "worker/csi_worker/main.py": "06f9e804b651a5a7b697a43565b0564243acaa1fa7214fe478e8a5170b22705d",
+      "worker/csi_worker/media.py": "8a5d35d52c07ee9c967de9da02fa600e03e88ab32efc5ffcda026a56cc76b025",
+      "worker/csi_worker/privacy.py": "3f0d1825e4e65902579d2bbccab2dc8616c3f55c00330fff5b0d2ef72d2c1a06",
+      "worker/csi_worker/speech.py": "e08fb21ff8a645a2043ac924b7a6da80795637fe1b4b58bf99c10867c479d3d2",
+      "worker/csi_worker/storage.py": "61cd81825c1a6dc38a9d9b9119c1b83481ff92715acdb7b4586743f6e423d484",
+      "worker/csi_worker/support_summary.py": "f889fb1cd1ec115f2108d0d486870dce669c47a8a08d347bc4b809999ad7e656",
+      "worker/csi_worker/workflows.py": "db860aa23a4bd73012915d670b715c83f6c5b0278070fa5c8800cbb58e20df12",
+      "worker/csi_worker/evaluation/__init__.py": "bbfa425752b102f578c8350bf80873c2f740c61ac4d50339119a5e59b0b2d59e",
+      "worker/csi_worker/evaluation/audio.py": "ebf46d7ba3427d12192549bb7ea7608d2c1da02e2df41381b1139658308601d6",
+      "worker/csi_worker/evaluation/cost.py": "3eb6d80e5a0578087b272997862247dd0a3ee05f02ba5fb149c7e9e4b0a6253e",
+      "worker/csi_worker/evaluation/grouping.py": "7c297aaa4469fbfc357f9a522b4c1aba2dc6fa62eafc8e128fc731a5913f1358",
+      "worker/csi_worker/evaluation/metrics.py": "590854c789f9bbebdd5082ca3f63af031fc14a54b3855874293f97aeba498801",
+      "worker/csi_worker/evaluation/run.py": "57a1e00b01175b0fb5396d0ba6bd09ff14f3715e47e2123bb203a4a313eb0d3a",
+      "worker/csi_worker/evaluation/runtime.py": "120477efefde465c5550a33febdc1a7a29968ff2682e7e519176397c3c02bd28",
+      "evaluation/cases/grouping.json": "3b6f0cd77a60f0df60e041111a95811cf93943a43f2e4eb1eb4006fae80f643c",
+      "evaluation/cases/recordings.json": "014025a03ed3ad34a982551684bd55a0d78f3c76755a4717f37187466017e616",
+      "evaluation/cases/transcripts.json": "6efe89dff61a604597ea2c50cd41e971ba9c5f7903c3690947dcf2190714d69b"
+    }
+  },
+  "policy": "first-exemplar-cosine-v1",
+  "threshold": 0.22,
+  "cases": [
+    {
+      "id": "heldout-0",
+      "split": "heldout",
+      "group": "upload",
+      "title": "Identity upload failure",
+      "description": "Verification document upload fails without an explanation",
+      "synthetic": true
+    },
+    {
+      "id": "heldout-1",
+      "split": "heldout",
+      "group": "upload",
+      "title": "Document submission error",
+      "description": "Identity file cannot be uploaded and no error guidance appears",
+      "synthetic": true
+    },
+    {
+      "id": "heldout-2",
+      "split": "heldout",
+      "group": "updates",
+      "title": "Missing case updates",
+      "description": "Customer gets no follow-up on an open payment support case",
+      "synthetic": true
+    },
+    {
+      "id": "heldout-3",
+      "split": "heldout",
+      "group": "updates",
+      "title": "No follow-up from support",
+      "description": "Open support ticket has no progress updates",
+      "synthetic": true
+    },
+    {
+      "id": "heldout-4",
+      "split": "heldout",
+      "group": "duplicate",
+      "title": "Duplicate card charge",
+      "description": "Customer reports the same purchase charged twice",
+      "synthetic": true
+    },
+    {
+      "id": "heldout-5",
+      "split": "heldout",
+      "group": "duplicate",
+      "title": "Double billing for purchase",
+      "description": "One order produced two card charges",
+      "synthetic": true
+    }
+  ],
+  "pairDistances": [
+    {
+      "a": "heldout-1",
+      "b": "heldout-0",
+      "sameLabel": true,
+      "distance": 0.1705865237044194
+    },
+    {
+      "a": "heldout-2",
+      "b": "heldout-0",
+      "sameLabel": false,
+      "distance": 0.38560610387685734
+    },
+    {
+      "a": "heldout-2",
+      "b": "heldout-1",
+      "sameLabel": false,
+      "distance": 0.4100092405283302
+    },
+    {
+      "a": "heldout-3",
+      "b": "heldout-0",
+      "sameLabel": false,
+      "distance": 0.41541966765176574
+    },
+    {
+      "a": "heldout-3",
+      "b": "heldout-1",
+      "sameLabel": false,
+      "distance": 0.4272383508289942
+    },
+    {
+      "a": "heldout-3",
+      "b": "heldout-2",
+      "sameLabel": true,
+      "distance": 0.18581897067868747
+    },
+    {
+      "a": "heldout-4",
+      "b": "heldout-0",
+      "sameLabel": false,
+      "distance": 0.38660748398905476
+    },
+    {
+      "a": "heldout-4",
+      "b": "heldout-1",
+      "sameLabel": false,
+      "distance": 0.47404135778634315
+    },
+    {
+      "a": "heldout-4",
+      "b": "heldout-2",
+      "sameLabel": false,
+      "distance": 0.3906055997141107
+    },
+    {
+      "a": "heldout-4",
+      "b": "heldout-3",
+      "sameLabel": false,
+      "distance": 0.45620678016948646
+    },
+    {
+      "a": "heldout-5",
+      "b": "heldout-0",
+      "sameLabel": false,
+      "distance": 0.4433687323888148
+    },
+    {
+      "a": "heldout-5",
+      "b": "heldout-1",
+      "sameLabel": false,
+      "distance": 0.5154176519597301
+    },
+    {
+      "a": "heldout-5",
+      "b": "heldout-2",
+      "sameLabel": false,
+      "distance": 0.426251174147964
+    },
+    {
+      "a": "heldout-5",
+      "b": "heldout-3",
+      "sameLabel": false,
+      "distance": 0.4891377230429481
+    },
+    {
+      "a": "heldout-5",
+      "b": "heldout-4",
+      "sameLabel": true,
+      "distance": 0.12904801280556344
+    }
+  ],
+  "orders": [
+    {
+      "seed": 0,
+      "order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "assignments": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "order": [
+        2,
+        3,
+        5,
+        0,
+        4,
+        1
+      ],
+      "assignments": [
+        2,
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "order": [
+        2,
+        3,
+        1,
+        4,
+        5,
+        0
+      ],
+      "assignments": [
+        1,
+        1,
+        0,
+        0,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "order": [
+        0,
+        2,
+        3,
+        5,
+        4,
+        1
+      ],
+      "assignments": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "order": [
+        3,
+        5,
+        4,
+        0,
+        2,
+        1
+      ],
+      "assignments": [
+        2,
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "order": [
+        1,
+        0,
+        3,
+        5,
+        2,
+        4
+      ],
+      "assignments": [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 6,
+      "order": [
+        2,
+        5,
+        1,
+        3,
+        0,
+        4
+      ],
+      "assignments": [
+        2,
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 7,
+      "order": [
+        4,
+        0,
+        5,
+        3,
+        1,
+        2
+      ],
+      "assignments": [
+        1,
+        1,
+        2,
+        2,
+        0,
+        0
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 8,
+      "order": [
+        5,
+        4,
+        0,
+        3,
+        2,
+        1
+      ],
+      "assignments": [
+        1,
+        1,
+        2,
+        2,
+        0,
+        0
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    },
+    {
+      "seed": 9,
+      "order": [
+        5,
+        0,
+        1,
+        2,
+        4,
+        3
+      ],
+      "assignments": [
+        1,
+        1,
+        2,
+        2,
+        0,
+        0
+      ],
+      "metrics": {
+        "samePairs": 3,
+        "differentPairs": 12,
+        "falseSplits": 0,
+        "falseMerges": 0,
+        "falseSplitRate": 0.0,
+        "falseMergeRate": 0.0
+      }
+    }
+  ],
+  "status": "passed",
+  "seconds": 0.6405619169818237
+}

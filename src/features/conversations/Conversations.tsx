@@ -1,9 +1,11 @@
 import { callReference, callTitle } from "../../domain/presentation";
 import { apiMode } from "../../data/api";
+import { PlatformStatus } from "../platform/PlatformStatus";
 import { Imports } from "../platform/Imports";
+import { DemoImports } from "./DemoImports";
 import { useSearchParams, Link } from "react-router-dom";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search } from "lucide-react";
 import { format } from "date-fns";
 import { WorkspaceView } from "../../components/WorkspaceView";
 import { DataTable } from "../../components/DataTable";
@@ -72,7 +74,8 @@ export default function Conversations() {
   return (
     <>
       <PageHeader title="Conversations" />
-      {apiMode && <Imports />}
+      {apiMode && <PlatformStatus />}
+      {apiMode ? <Imports /> : <DemoImports />}
       <WorkspaceView>
         {(data) => {
           const calls = data.conversations.filter(
@@ -112,20 +115,28 @@ export default function Conversations() {
                     onChange={(e) => update("q", e.target.value)}
                   />
                 </div>
-                <label className="filter-select">
-                  <SlidersHorizontal size={16} />
-                  <select
-                    aria-label="Filter by sentiment"
-                    value={sentiment}
-                    onChange={(e) => update("sentiment", e.target.value)}
-                  >
-                    {["All sentiments", "Positive", "Neutral", "Negative"].map(
-                      (s) => (
-                        <option key={s}>{s}</option>
-                      ),
-                    )}
-                  </select>
-                </label>
+                <div
+                  className="sentiment-filter"
+                  role="group"
+                  aria-label="Filter by sentiment"
+                >
+                  {["All sentiments", "Positive", "Neutral", "Negative"].map(
+                    (s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        className={`sentiment-choice sentiment-${s.toLowerCase().split(" ")[0]}`}
+                        aria-pressed={sentiment === s}
+                        onClick={() =>
+                          update("sentiment", s === "All sentiments" ? "" : s)
+                        }
+                      >
+                        <span className="sentiment-dot" aria-hidden="true" />
+                        {s === "All sentiments" ? "All" : s}
+                      </button>
+                    ),
+                  )}
+                </div>
                 {(query ||
                   sentiment !== "All sentiments" ||
                   params.has("issue")) && (

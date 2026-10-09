@@ -1,8 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { inPeriod, issueMetrics, volumeSeries } from "./analytics";
+import {
+  durationLabel,
+  inPeriod,
+  issueMetrics,
+  volumeSeries,
+} from "./analytics";
 import { conversations } from "../data/fixtures";
 
 describe("evidence metrics", () => {
+  it("formats fractional timestamps as readable minutes and seconds", () => {
+    expect(durationLabel(3.26)).toBe("0:03");
+    expect(durationLabel(65.9)).toBe("1:05");
+  });
   it("uses distinct customers rather than counting every mention", () => {
     const call = conversations.find((c) => c.issueId === "ISS-001")!;
     expect(

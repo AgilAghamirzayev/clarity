@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useWorkspace } from "../data/queries";
 import type { Workspace } from "../domain/models";
 import { ErrorState, LoadingState } from "./ui";
+import { guestMode } from "../data/api";
 
 export function WorkspaceView({
   children,
@@ -21,7 +22,7 @@ export function WorkspaceView({
     );
   return (
     <>
-      {query.data.conversations.some((call) => call.sample) && (
+      {!guestMode && query.data.conversations.some((call) => call.sample) && (
         <div className="sample-notice">
           <strong>Sample data included</strong>
           <span>

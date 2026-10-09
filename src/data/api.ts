@@ -1,7 +1,8 @@
 import type { Decision, Workspace } from "../domain/models";
 import type { WorkspaceRepository } from "./workspace";
 
-export const apiMode = import.meta.env.VITE_DATA_MODE === "api";
+export const guestMode = import.meta.env.VITE_DATA_MODE === "live-demo";
+export const apiMode = import.meta.env.VITE_DATA_MODE !== "demo";
 export class ApiError extends Error {
   status: number;
   constructor(status: number, message: string) {

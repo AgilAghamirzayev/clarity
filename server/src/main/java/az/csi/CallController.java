@@ -18,10 +18,12 @@ import org.springframework.web.server.ResponseStatusException;
 class CallController {
   final Database db;
   final AudioStore audio;
+  final AnalysisProfiles profiles;
 
-  CallController(Database db, AudioStore audio) {
+  CallController(Database db, AudioStore audio, AnalysisProfiles profiles) {
     this.db = db;
     this.audio = audio;
+    this.profiles = profiles;
   }
 
   record ImportMetadata(
@@ -35,7 +37,9 @@ class CallController {
       @Min(1) @Max(8) Integer speakers,
       @Min(0) @Max(1) Integer customerChannel) {}
 
-  @PostMapping(value = "/calls/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(
+      value = {"/calls/import", "/ingestion/recordings"},
+      consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseEntity<Map<String, Object>> upload(
       Authentication auth,
       @RequestHeader("Idempotency-Key") @Size(min = 8, max = 128) String key,
@@ -43,16 +47,20 @@ class CallController {
       @RequestPart("audio") MultipartFile file)
       throws Exception {
     var user = Security.identity(auth);
-    Security.require(user, "ADMIN", "ANALYST");
+    Security.require(user, "ADMIN", "ANALYST", "DEMO", "INGEST");
     if (key.length() < 8
         || key.length() > 128
         || file.isEmpty()
         || file.getSize() > 100 * 1024 * 1024)
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    if (user.role().equals("DEMO") && file.getSize() > 25 * 1024 * 1024)
+      throw new ResponseStatusException(
+          HttpStatus.BAD_REQUEST, "Live demo files must be at most 25 MB");
+    final String importKey = user.role().equals("INGEST") ? user.id() + ":" + key : key;
     String type;
     String digest;
     try (var stream = file.getInputStream()) {
-      type = AudioStore.mediaType(stream.readNBytes(12));
+      type = AudioStore.mediaType(stream.readNBytes(32));
     }
     try (var stream = file.getInputStream()) {
       var hash = MessageDigest.getInstance("SHA-256");
@@ -61,18 +69,9 @@ class CallController {
       while ((n = stream.read(block)) != -1) hash.update(block, 0, n);
       digest = HexFormat.of().formatHex(hash.digest());
     }
-    var existing =
-        db.tenant(
-            user.tenant(),
-            () ->
-                db.sql.queryForList("select id,status,sha256 from calls where import_key=?", key));
-    if (!existing.isEmpty()) {
-      if (!digest.equals(existing.getFirst().get("sha256")))
-        throw new ResponseStatusException(
-            HttpStatus.CONFLICT, "Import key belongs to different audio");
-      return ResponseEntity.ok(
-          Map.of("id", existing.getFirst().get("id"), "status", existing.getFirst().get("status")));
-    }
+    String fingerprint = IngestionController.hash(digest + db.encode(metadata));
+    var replay = replay(user, importKey, digest, fingerprint);
+    if (replay != null) return replay;
     UUID id = UUID.randomUUID();
     String object = user.tenant() + "/" + id + "/audio";
     Mac mac = Mac.getInstance("HmacSHA256");
@@ -90,8 +89,11 @@ class CallController {
                 .substring(0, 20);
     Map<String, Object> data = new LinkedHashMap<>();
     data.put("customer", customer);
+    data.put("requestFingerprint", fingerprint);
+    if (user.role().equals("INGEST")) data.put("sourceId", user.id().toString());
     data.put("title", metadata.title());
     data.put("sample", metadata.sample());
+    if (user.role().equals("DEMO")) data.put("maxAudioSeconds", 300);
     data.put("agent", metadata.agent());
     data.put("department", metadata.department());
     data.put("date", metadata.recordedAt().toString());
@@ -105,25 +107,65 @@ class CallController {
       db.tenant(
           user.tenant(),
           () -> {
+            if (user.role().equals("DEMO")) {
+              db.sql.queryForList(
+                  "select pg_advisory_xact_lock(hashtextextended(?,2))", user.tenant().toString());
+              if (db.sql.queryForObject(
+                      "select count(*) from calls where metadata->>'demoSeedVersion' is null",
+                      Integer.class)
+                  >= 5)
+                throw new ResponseStatusException(
+                    HttpStatus.TOO_MANY_REQUESTS,
+                    "This demo workspace allows up to five recordings");
+            }
+            data.put("analysisProfile", profiles.snapshot());
             db.sql.update(
                 "insert into calls(id,tenant_id,import_key,audio_key,sha256,content_type,metadata)"
                     + " values (?,?,?,?,?,?,?::jsonb)",
                 id,
                 user.tenant(),
-                key,
+                importKey,
                 object,
                 digest,
                 type,
                 db.encode(data));
+            if (user.role().equals("INGEST"))
+              db.sql.update(
+                  "update ingestion_sources set last_received_at=now() where id=? and enabled",
+                  user.id());
             db.event(user.tenant(), "call.imported", id, 1);
             db.audit(user, "call.import", id.toString());
             return null;
           });
     } catch (RuntimeException error) {
       audio.delete(object);
+      // A concurrent delivery may have committed this event while the object was uploading.
+      if (error instanceof org.springframework.dao.DuplicateKeyException) {
+        var concurrent = replay(user, importKey, digest, fingerprint);
+        if (concurrent != null) return concurrent;
+      }
       throw error;
     }
     return ResponseEntity.accepted().body(Map.of("id", id, "status", "QUEUED"));
+  }
+
+  ResponseEntity<Map<String, Object>> replay(
+      Security.Identity user, String key, String digest, String fingerprint) {
+    var rows =
+        db.tenant(
+            user.tenant(),
+            () ->
+                db.sql.queryForList(
+                    "select id,status,sha256,metadata from calls where import_key=?", key));
+    if (rows.isEmpty()) return null;
+    var row = rows.getFirst();
+    var metadata = db.decode(row.get("metadata"));
+    if (!digest.equals(row.get("sha256"))
+        || (metadata.containsKey("requestFingerprint")
+            && !fingerprint.equals(metadata.get("requestFingerprint"))))
+      throw new ResponseStatusException(
+          HttpStatus.CONFLICT, "Import key belongs to different audio or metadata");
+    return ResponseEntity.ok(Map.of("id", row.get("id"), "status", row.get("status")));
   }
 
   @GetMapping("/calls")
@@ -170,11 +212,13 @@ class CallController {
           row.put("reference", "CALL-" + row.get("display_number"));
           metadata.put(
               "customer",
-              "Customer "
-                  + db.sql.queryForObject(
-                      "select min(display_number) from calls where metadata->>'customer'=?",
-                      Long.class,
-                      metadata.get("customer")));
+              metadata.containsKey("demoSeedVersion")
+                  ? metadata.get("customerLabel")
+                  : "Customer "
+                      + db.sql.queryForObject(
+                          "select min(display_number) from calls where metadata->>'customer'=?",
+                          Long.class,
+                          metadata.get("customer")));
           row.put("metadata", metadata);
           row.put(
               "issueIds",
@@ -216,7 +260,7 @@ class CallController {
   @GetMapping("/calls/{id}/audio")
   ResponseEntity<byte[]> download(Authentication auth, @PathVariable UUID id) {
     var u = Security.identity(auth);
-    Security.require(u, "ADMIN", "ANALYST");
+    Security.require(u, "ADMIN", "ANALYST", "DEMO");
     var row =
         db.tenant(
             u.tenant(),
@@ -235,10 +279,13 @@ class CallController {
   @PostMapping("/calls/{id}/retry")
   Object retry(Authentication auth, @PathVariable UUID id) {
     var u = Security.identity(auth);
-    Security.require(u, "ADMIN", "ANALYST");
+    Security.require(u, "ADMIN", "ANALYST", "DEMO");
     return db.tenant(
         u.tenant(),
         () -> {
+          if (u.role().equals("DEMO") && ((Number) find(id).get("generation")).intValue() >= 3)
+            throw new ResponseStatusException(
+                HttpStatus.TOO_MANY_REQUESTS, "Demo retry limit reached");
           var rows =
               db.sql.queryForList(
                   "update calls set"

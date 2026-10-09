@@ -1,0 +1,27 @@
+[
+  {
+    "modelTitle": "Repeated payment failure during checkout with no confirmation of success or failure after approval in banking app",
+    "title": "Checkout payment failures",
+    "recommendationTitle": "Investigate checkout payment failures"
+  },
+  {
+    "modelTitle": "Ambiguous Refund Email Messaging",
+    "title": "Unclear refund status",
+    "recommendationTitle": "Clarify refund status messages"
+  },
+  {
+    "modelTitle": "Lack of Updates on Payment Status",
+    "title": "Missing case updates",
+    "recommendationTitle": "Clarify case ownership and follow-up"
+  },
+  {
+    "modelTitle": "Failed PII Document Upload with No Error Guidance",
+    "title": "Document upload errors",
+    "recommendationTitle": "Improve document upload guidance"
+  },
+  {
+    "modelTitle": "Expired Password Reset Links After Two Attempts",
+    "title": "Expired password reset links",
+    "recommendationTitle": "Review password reset expiry"
+  }
+]

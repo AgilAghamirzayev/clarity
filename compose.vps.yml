@@ -1,0 +1,194 @@
+name: clarity
+x-app-env: &app-env
+  DB_APP_PASSWORD: ${DB_APP_PASSWORD:?Generate .env.vps}
+  S3_ENDPOINT: http://minio:9000
+  S3_ACCESS_KEY: ${S3_ACCESS_KEY:?Generate .env.vps}
+  S3_SECRET_KEY: ${S3_SECRET_KEY:?Generate .env.vps}
+  S3_BUCKET: csi-audio
+  KAFKA_SERVERS: kafka:29092
+  TEMPORAL_ADDRESS: temporal:7233
+  DATABASE_URL: postgresql://csi_app@postgres:5432/csi
+  OLLAMA_URL: http://ollama:11434
+  LLM_MODEL: qwen3:4b-instruct
+  EMBEDDING_MODEL: nomic-embed-text:latest
+  CSI_AI_PROVIDERS: ${CSI_AI_PROVIDERS:-[]}
+  INTEGRATION_ALLOWED_ORIGINS: ${INTEGRATION_ALLOWED_ORIGINS:-}
+services:
+  web:
+    build:
+      context: .
+      dockerfile: infra/Web.Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?Set the public hostname}
+    volumes: ["caddy-data:/data", "caddy-config:/config"]
+    depends_on:
+      api: { condition: service_healthy }
+  api:
+    build:
+      context: .
+      dockerfile: infra/Api.Dockerfile
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      JDBC_URL: jdbc:postgresql://postgres:5432/csi
+      DB_OWNER_PASSWORD: ${DB_OWNER_PASSWORD:?Generate .env.vps}
+      API_BIND: 0.0.0.0
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      FORWARD_HEADERS_STRATEGY: framework
+      DEMO_ENABLED: "true"
+      DEMO_SEED_ENABLED: ${DEMO_SEED_ENABLED:-true}
+      DEMO_MAX_WORKSPACES: ${DEMO_MAX_WORKSPACES:-100}
+      BOOTSTRAP_TENANT: local
+      BOOTSTRAP_EMAIL: ${BOOTSTRAP_EMAIL:-admin@csi.local}
+      BOOTSTRAP_PASSWORD: ${BOOTSTRAP_PASSWORD:?Generate .env.vps}
+    depends_on:
+      postgres: { condition: service_healthy }
+      kafka: { condition: service_started }
+      minio: { condition: service_started }
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8086/health"]
+      interval: 10s
+      start_period: 60s
+      retries: 12
+  worker:
+    env_file:
+      - path: .env.integrations
+        required: false
+    image: clarity-worker:local
+    build:
+      context: .
+      dockerfile: infra/Worker.Dockerfile
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      HF_HUB_OFFLINE: "1"
+      TRANSFORMERS_OFFLINE: "1"
+    volumes: ["models:/app/.models:ro"]
+    depends_on:
+      api: { condition: service_healthy }
+      model-init: { condition: service_completed_successfully }
+      ollama-init: { condition: service_completed_successfully }
+      temporal: { condition: service_started }
+    stop_grace_period: 60s
+  model-init:
+    image: clarity-worker:local
+    build:
+      context: .
+      dockerfile: infra/Worker.Dockerfile
+    command: ["python", "scripts/provision-models.py"]
+    volumes: ["models:/app/.models"]
+    restart: on-failure
+  cleanup:
+    image: clarity-worker:local
+    command: ["python", "scripts/cleanup-demo.py", "--loop"]
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      DB_OWNER_PASSWORD: ${DB_OWNER_PASSWORD:?Generate .env.vps}
+      OWNER_DATABASE_URL: postgresql://csi_owner@postgres:5432/csi
+    depends_on:
+      api: { condition: service_healthy }
+  ollama:
+    image: ollama/ollama:0.12.3
+    restart: unless-stopped
+    environment:
+      OLLAMA_NO_CLOUD: "1"
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_LOADED_MODELS: "1"
+    volumes: ["ollama:/root/.ollama"]
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      retries: 30
+  ollama-init:
+    image: ollama/ollama:0.12.3
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      [
+        "(ollama show qwen3:4b-instruct >/dev/null 2>&1 || ollama pull qwen3:4b-instruct) && (ollama show nomic-embed-text:latest >/dev/null 2>&1 || ollama pull nomic-embed-text:latest)",
+      ]
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    depends_on:
+      ollama: { condition: service_healthy }
+    restart: on-failure
+  postgres:
+    build:
+      context: .
+      dockerfile: infra/Postgres.Dockerfile
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: csi_owner
+      POSTGRES_PASSWORD: ${DB_OWNER_PASSWORD:?Generate .env.vps}
+      POSTGRES_DB: csi
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:?Generate .env.vps}
+    volumes: ["db:/var/lib/postgresql"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U csi_owner -d csi"]
+      interval: 5s
+      retries: 30
+  minio:
+    image: clarity-minio:RELEASE.2025-07-23T15-54-02Z
+    build:
+      context: .
+      dockerfile: infra/Minio.Dockerfile
+    command: server /data
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+    volumes: ["audio:/data"]
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    restart: unless-stopped
+    environment:
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:29093
+      KAFKA_LISTENERS: INTERNAL://:29092,CONTROLLER://:29093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+    volumes: ["events:/var/lib/kafka/data"]
+  temporal-db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: ${TEMPORAL_DB_PASSWORD}
+    volumes: ["temporal-db:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U temporal -d temporal"]
+      interval: 5s
+      retries: 30
+  temporal:
+    image: temporalio/auto-setup:1.27.2
+    restart: unless-stopped
+    depends_on:
+      temporal-db: { condition: service_healthy }
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: temporal
+      POSTGRES_PWD: ${TEMPORAL_DB_PASSWORD}
+      POSTGRES_SEEDS: temporal-db
+volumes:
+  db:
+  audio:
+  events:
+  temporal-db:
+  models:
+  ollama:
+  caddy-data:
+  caddy-config:

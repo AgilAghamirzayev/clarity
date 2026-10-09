@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-api
 dist-ssr
 *.local
 
@@ -35,3 +36,16 @@ __pycache__/
 .pytest_cache/
 *.pyc
 .runtime/
+
+dist-fixture
+
+# Private keys and local authoring/build artifacts
+*.pem
+*.key
+.judge-pitch-build/
+.presentation-build/
+.workflow-ambient-build/
+deliverables/clarity-workflow/
+deliverables/submission/
+deliverables/neurobridge/
+deliverables/judge-pitch/Clarity-Judge-Pitch-Reviewed.pptx

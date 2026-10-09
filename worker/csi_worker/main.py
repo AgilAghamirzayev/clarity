@@ -12,6 +12,7 @@ from temporalio.worker import Worker
 
 from .activities import analyze_call, cluster_call, deliver_event, fail_call, fail_delivery, transcribe_call
 from .events import parse_event
+from .health import report_health
 from .support_summary import build_support_summary, fail_support_summary
 from .workflows import CallWorkflow, DeliveryWorkflow, SupportSummaryWorkflow
 
@@ -99,7 +100,7 @@ async def main():
             max_concurrent_activities=1,
         )
         async with worker:
-            await consume(client)
+            await asyncio.gather(consume(client), report_health())
 
 
 if __name__ == "__main__":

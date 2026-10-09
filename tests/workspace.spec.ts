@@ -1,5 +1,36 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-fixture";
 import AxeBuilder from "@axe-core/playwright";
+
+test("demo opens automatically without authentication or API requests", async ({
+  page,
+}) => {
+  const apiRequests: string[] = [];
+  page.on("request", (request) => {
+    if (new URL(request.url()).pathname.startsWith("/api/")) {
+      apiRequests.push(request.url());
+    }
+  });
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Overview");
+  await expect(page.locator(".profile")).toContainText("Demo account");
+  await expect(
+    page.getByRole("button", { name: /sign in|sign out|register/i }),
+  ).toHaveCount(0);
+  await expect(page.locator('input[type="password"]')).toHaveCount(0);
+  await page.evaluate(() =>
+    window.dispatchEvent(new Event("csi:unauthorized")),
+  );
+  await page.goto("/summary");
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Support summary",
+  );
+  await page.goto("/settings");
+  await expect(
+    page.getByText("Demo reviewer · No sign-in required"),
+  ).toBeVisible();
+  expect(apiRequests).toEqual([]);
+});
 
 test("overview changes periods and opens evidence", async ({ page }) => {
   const errors: string[] = [];
@@ -7,7 +38,8 @@ test("overview changes periods and opens evidence", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Overview");
   await expect(page.locator(".stat-value").first()).toHaveText("34");
-  await page.getByLabel("Overview period").selectOption("30");
+  await page.getByRole("combobox", { name: "Overview period" }).click();
+  await page.getByRole("option", { name: "Last 30 days", exact: true }).click();
   await expect(page.locator(".stat-value").first()).toHaveText("126");
   await page.getByRole("link", { name: "Explore issue", exact: true }).click();
   await expect(
@@ -36,10 +68,17 @@ test("conversation search, empty state, pagination and sort", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "Clear filters" }).click();
   await expect(page.getByLabel("Search conversations")).toHaveValue("");
-  await page.getByLabel("Filter by sentiment").selectOption("Positive");
+  await page
+    .getByRole("group", { name: "Filter by sentiment" })
+    .getByRole("button", { name: "Positive", exact: true })
+    .click();
   await expect(page.locator("tbody")).not.toContainText("Negative");
   await page.reload();
-  await expect(page.getByLabel("Filter by sentiment")).toHaveValue("Positive");
+  await expect(
+    page
+      .getByRole("group", { name: "Filter by sentiment" })
+      .getByRole("button", { name: "Positive", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
 });
 
 test("review validation, persistence, lifecycle, and reset", async ({
@@ -86,7 +125,10 @@ test("rejects a proposal and does not offer an execution action", async ({
 }) => {
   await page.goto("/decisions?recommendation=REC-002");
   await page.getByRole("button", { name: "Review proposal" }).click();
-  await page.getByLabel("Your decision").selectOption("Rejected");
+  await page.getByRole("combobox", { name: "Your decision" }).click();
+  await page
+    .getByRole("option", { name: "Reject recommendation", exact: true })
+    .click();
   await page.getByLabel("Action owner").fill("Card Operations");
   await page
     .getByLabel("Reason for this decision")
@@ -202,13 +244,12 @@ test("support summary changes period and distinguishes sample data", async ({
     page.getByRole("heading", { name: "Support operations" }),
   ).toBeVisible();
   await expect(page.locator(".summary-metrics").first()).toContainText("34");
-  await page.getByLabel("Summary period").selectOption("30");
+  await page.getByRole("combobox", { name: "Summary period" }).click();
+  await page.getByRole("option", { name: "Last 30 days", exact: true }).click();
   await expect(page.locator(".summary-metrics")).toContainText("126");
-  await page.getByLabel("Include sample recordings").uncheck();
-  await expect(
-    page.getByRole("heading", { name: "There is not enough evidence yet" }),
-  ).toBeVisible();
-  await page.getByLabel("Include sample recordings").check();
+  await expect(page.getByLabel("Include sample recordings")).toHaveCount(0);
+  await page.goto("/summary?period=30&samples=false");
+  await expect(page.locator(".summary-metrics")).toContainText("126");
   await page.locator(".summary-evidence a").first().click();
   await expect(
     page.getByRole("heading", { name: "Conversation transcript" }),

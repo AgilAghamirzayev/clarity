@@ -1,0 +1,8 @@
+..................sss....ss..........                                    [100%]
+=========================== short test summary info ============================
+SKIPPED [1] worker/tests/test_local_models.py:12: Requires provisioned local weights and Ollama
+SKIPPED [1] worker/tests/test_local_models.py:27: Requires provisioned local weights and Ollama
+SKIPPED [1] worker/tests/test_local_models.py:34: Requires provisioned local weights and Ollama
+SKIPPED [1] worker/tests/test_persistence.py:14: Requires the local PostgreSQL platform
+SKIPPED [1] worker/tests/test_persistence.py:59: Requires the local PostgreSQL platform
+32 passed, 5 skipped in 0.57s

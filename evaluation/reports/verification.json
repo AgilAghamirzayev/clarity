@@ -1,0 +1,45 @@
+{
+  "backend": {
+    "status": "passed",
+    "tests": 27,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "worker": {
+    "status": "passed",
+    "tests": 51,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "databaseEnabled": true,
+    "modelsEnabled": true
+  },
+  "frontend": {
+    "status": "passed",
+    "tests": 9
+  },
+  "build": {
+    "status": "passed"
+  },
+  "corpus": {
+    "status": "passed",
+    "transcriptCases": 10,
+    "audioCases": 2
+  },
+  "humanSemanticReview": {
+    "status": "pending"
+  },
+  "costEstimate": {
+    "status": "unavailable",
+    "reason": "No supplied prices/utilization"
+  },
+  "browser": {
+    "status": "not-run",
+    "reason": "UI unchanged"
+  },
+  "mutation": {
+    "status": "passed",
+    "description": "Agent-only evidence condition inverted, test failed; restored source and rerun passed"
+  }
+}

@@ -2,6 +2,7 @@ import type { Conversation } from "./models";
 
 export const roleLabels: Record<string, string> = {
   ADMIN: "Administrator",
+  DEMO: "Live demo",
   ANALYST: "Analyst",
   REVIEWER: "Reviewer",
   VIEWER: "Viewer",

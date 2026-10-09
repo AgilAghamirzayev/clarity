@@ -1,0 +1,1854 @@
+{
+  "version": "support-catalog-v1",
+  "provenance": "Fictional support scenarios, generated voices, real local transcription and AI analysis.",
+  "calls": [
+    {
+      "id": "8a518650-95bf-46e5-aea5-c32e2ddeef19",
+      "import_key": "checkout-follow-up",
+      "sha256": "21e3826a40d3a0227858d2889f2501a893c1bba2d2f88f29574331e0d1cf1da3",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-10-09T10:34:41.982225+00:00",
+        "agent": "James Miller",
+        "title": "Repeat contact about a failed card payment",
+        "sample": true,
+        "customer": "demo-customer-01",
+        "language": "en",
+        "speakers": 2,
+        "department": "Payments",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 43,
+        "language": "en",
+        "segments": [
+          {
+            "end": 2.64,
+            "text": "I called yesterday because my card payment failed.",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 5.8,
+            "text": "I still have not received an update and my order is waiting.",
+            "channel": 0,
+            "seconds": 2.94,
+            "speaker": "Customer"
+          },
+          {
+            "end": 8.74,
+            "text": "I should not have to explain the same problem again.",
+            "channel": 0,
+            "seconds": 6.2,
+            "speaker": "Customer"
+          },
+          {
+            "end": 11.69,
+            "text": "I can see the open case. The payment",
+            "channel": 1,
+            "seconds": 9.01,
+            "speaker": "Agent"
+          },
+          {
+            "end": 14.63,
+            "text": "team has not recorded a resolution yet. I",
+            "channel": 1,
+            "seconds": 11.69,
+            "speaker": "Agent"
+          },
+          {
+            "end": 17.63,
+            "text": "will take ownership of the follow-up so you have one contact.",
+            "channel": 1,
+            "seconds": 14.63,
+            "speaker": "Agent"
+          },
+          {
+            "end": 20.79,
+            "text": "The checkout still shows the same generic error.",
+            "channel": 0,
+            "seconds": 18.37,
+            "speaker": "Customer"
+          },
+          {
+            "end": 23.89,
+            "text": "Can you at least confirm whether the money left my account?",
+            "channel": 0,
+            "seconds": 21.17,
+            "speaker": "Customer"
+          },
+          {
+            "end": 27.29,
+            "text": "I cannot confirm that from this screen. I will",
+            "channel": 1,
+            "seconds": 24.37,
+            "speaker": "Agent"
+          },
+          {
+            "end": 30.13,
+            "text": "request the transaction status and send you an update",
+            "channel": 1,
+            "seconds": 27.29,
+            "speaker": "Agent"
+          },
+          {
+            "end": 31.47,
+            "text": "through your existing case.",
+            "channel": 1,
+            "seconds": 30.13,
+            "speaker": "Agent"
+          },
+          {
+            "end": 32.67,
+            "text": "Please do.",
+            "channel": 0,
+            "seconds": 32.03,
+            "speaker": "Customer"
+          },
+          {
+            "end": 35.73,
+            "text": "The lack of updates is just as frustrating as the payment",
+            "channel": 0,
+            "seconds": 33.09,
+            "speaker": "Customer"
+          },
+          {
+            "end": 36.17,
+            "text": "failure.",
+            "channel": 0,
+            "seconds": 35.73,
+            "speaker": "Customer"
+          },
+          {
+            "end": 39.59,
+            "text": "I understand. I have recorded both the payment",
+            "channel": 1,
+            "seconds": 36.77,
+            "speaker": "Agent"
+          },
+          {
+            "end": 41.83,
+            "text": "error and the missing update in the case notes.",
+            "channel": 1,
+            "seconds": 39.59,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "Payment Failure and Support Delays",
+        "issues": [
+          {
+            "title": "Failed Card Payment with No Resolution Recorded in Case Notes",
+            "category": "Payments",
+            "evidence": [0, 6, 7],
+            "priority": "High",
+            "description": "Card payment failed during checkout with no resolution recorded.",
+            "proposedAction": "Verify transaction logs to confirm if funds were deducted and identify root cause of payment decline",
+            "expectedOutcome": "Successful payment or clear explanation of failure cause"
+          },
+          {
+            "title": "Lack of Updates on Payment Status",
+            "category": "Customer Support",
+            "evidence": [1, 12],
+            "priority": "High",
+            "description": "No update provided on the status of a failed payment despite open case.",
+            "proposedAction": "Audit case update frequency and ensure timely communication to customers",
+            "expectedOutcome": "Regular updates on payment and order status"
+          }
+        ],
+        "summary": "Customer reports a failed card payment with no resolution or updates, despite an open case. Both the payment failure and lack of follow-up are expressed as frustrating and unresolved issues. The agent confirms recording both problems but does not resolve them operationally.",
+        "sentiment": "Negative",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-10-09 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:38:26.414789+00:00",
+      "display_number": 1285,
+      "audioResource": "demo/audio/checkout-follow-up.wav",
+      "daysAgo": 0
+    },
+    {
+      "id": "dc0375b0-d4c3-4fff-879b-f7f9f3adcf72",
+      "import_key": "checkout-declined",
+      "sha256": "7635c7585d247c3616e210aec6f022eb8d618baa8e2885841217ff7777279ce2",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-10-08T10:34:41.982225+00:00",
+        "agent": "Emma Wilson",
+        "title": "Payment declined during checkout",
+        "sample": true,
+        "customer": "demo-customer-01",
+        "language": "en",
+        "speakers": 2,
+        "department": "Payments",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 47,
+        "language": "en",
+        "segments": [
+          {
+            "end": 2.84,
+            "text": "I have tried to pay for my order three times this morning.",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 6.14,
+            "text": "Each time the checkout says something went wrong, my card",
+            "channel": 0,
+            "seconds": 3.18,
+            "speaker": "Customer"
+          },
+          {
+            "end": 8.1,
+            "text": "works on other websites, so",
+            "channel": 0,
+            "seconds": 6.14,
+            "speaker": "Customer"
+          },
+          {
+            "end": 9.32,
+            "text": "this is very frustrating.",
+            "channel": 0,
+            "seconds": 8.1,
+            "speaker": "Customer"
+          },
+          {
+            "end": 12.61,
+            "text": "I understand. Can you tell me whether the error",
+            "channel": 1,
+            "seconds": 9.65,
+            "speaker": "Agent"
+          },
+          {
+            "end": 15.47,
+            "text": "appears before or after you confirm the payment in your",
+            "channel": 1,
+            "seconds": 12.61,
+            "speaker": "Agent"
+          },
+          {
+            "end": 16.11,
+            "text": "banking app?",
+            "channel": 1,
+            "seconds": 15.47,
+            "speaker": "Agent"
+          },
+          {
+            "end": 19.41,
+            "text": "After I approve it, then the checkout sends me back",
+            "channel": 0,
+            "seconds": 16.47,
+            "speaker": "Customer"
+          },
+          {
+            "end": 20.07,
+            "text": "to the basket.",
+            "channel": 0,
+            "seconds": 19.41,
+            "speaker": "Customer"
+          },
+          {
+            "end": 23.47,
+            "text": "I do not know if I have been charged, and I am worried",
+            "channel": 0,
+            "seconds": 20.47,
+            "speaker": "Customer"
+          },
+          {
+            "end": 24.41,
+            "text": "about trying again.",
+            "channel": 0,
+            "seconds": 23.47,
+            "speaker": "Customer"
+          },
+          {
+            "end": 27.79,
+            "text": "Please do not make another attempt yet. I will",
+            "channel": 1,
+            "seconds": 24.99,
+            "speaker": "Agent"
+          },
+          {
+            "end": 30.59,
+            "text": "check the payment status with our payments team and keep",
+            "channel": 1,
+            "seconds": 27.79,
+            "speaker": "Agent"
+          },
+          {
+            "end": 32.73,
+            "text": "this case open until we confirm it.",
+            "channel": 1,
+            "seconds": 30.59,
+            "speaker": "Agent"
+          },
+          {
+            "end": 33.75,
+            "text": "Thank you.",
+            "channel": 0,
+            "seconds": 33.23,
+            "speaker": "Customer"
+          },
+          {
+            "end": 37.07,
+            "text": "It would help if the error message told me whether the payment went",
+            "channel": 0,
+            "seconds": 34.07,
+            "speaker": "Customer"
+          },
+          {
+            "end": 37.55,
+            "text": "through instead",
+            "channel": 0,
+            "seconds": 37.07,
+            "speaker": "Customer"
+          },
+          {
+            "end": 39.29,
+            "text": "Instead of just saying something went wrong.",
+            "channel": 0,
+            "seconds": 37.55,
+            "speaker": "Customer"
+          },
+          {
+            "end": 42.29,
+            "text": "I will include that feedback in the escalation.",
+            "channel": 1,
+            "seconds": 39.73,
+            "speaker": "Agent"
+          },
+          {
+            "end": 45.59,
+            "text": "You will receive a case update once the team has checked the",
+            "channel": 1,
+            "seconds": 42.65,
+            "speaker": "Agent"
+          },
+          {
+            "end": 46.13,
+            "text": "transaction.",
+            "channel": 1,
+            "seconds": 45.59,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "Payment Failure",
+        "issues": [
+          {
+            "title": "Repeated payment failure during checkout with no confirmation of success or failure after approval in banking app",
+            "category": "Payments",
+            "evidence": [0, 1, 2, 7, 8, 9, 10],
+            "priority": "High",
+            "description": "Repeated payment failure during checkout",
+            "proposedAction": "Inspect payment decline logs for the three attempted transactions and verify if any charge was applied.",
+            "expectedOutcome": "Successful payment completion without error messages"
+          }
+        ],
+        "summary": "Customer reports three failed payment attempts at checkout, each ending with a vague 'something went wrong' message. After approving via bank app, they are redirected to basket and unsure if charged. Customer expresses frustration and concern about further attempts. Agent confirms investigation but no resolution or clear outcome yet.",
+        "sentiment": "Negative",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-10-08 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:37:08.038340+00:00",
+      "display_number": 1284,
+      "audioResource": "demo/audio/checkout-declined.wav",
+      "daysAgo": 1
+    },
+    {
+      "id": "2a13b8bf-d559-4e20-9959-036f586f0512",
+      "import_key": "refund-status",
+      "sha256": "5ae5a22d216f6159459cf2cad4d7dae94cbb704b6ac7ca1b035c999a48597e4b",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-10-07T10:34:41.982225+00:00",
+        "agent": "Olivia Carter",
+        "title": "Refund timeline is unclear after a return",
+        "sample": true,
+        "customer": "demo-customer-02",
+        "language": "en",
+        "speakers": 2,
+        "department": "Returns & refunds",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 50,
+        "language": "en",
+        "segments": [
+          {
+            "end": 2.78,
+            "text": "My returned item was received last week, but I",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 5.04,
+            "text": "still do not understand when I should expect",
+            "channel": 0,
+            "seconds": 2.78,
+            "speaker": "Customer"
+          },
+          {
+            "end": 5.48,
+            "text": "the refund.",
+            "channel": 0,
+            "seconds": 5.04,
+            "speaker": "Customer"
+          },
+          {
+            "end": 8.98,
+            "text": "The email says processing, and the help page gives a",
+            "channel": 0,
+            "seconds": 6.02,
+            "speaker": "Customer"
+          },
+          {
+            "end": 10.0,
+            "text": "different explanation.",
+            "channel": 0,
+            "seconds": 8.98,
+            "speaker": "Customer"
+          },
+          {
+            "end": 13.15,
+            "text": "I will check the return status. The refund",
+            "channel": 1,
+            "seconds": 10.29,
+            "speaker": "Agent"
+          },
+          {
+            "end": 15.97,
+            "text": "has been requested, but the case does not show",
+            "channel": 1,
+            "seconds": 13.15,
+            "speaker": "Agent"
+          },
+          {
+            "end": 18.15,
+            "text": "that it has reached your payment method yet.",
+            "channel": 1,
+            "seconds": 15.97,
+            "speaker": "Agent"
+          },
+          {
+            "end": 21.67,
+            "text": "One advisor told me the refund had already been sent.",
+            "channel": 0,
+            "seconds": 18.71,
+            "speaker": "Customer"
+          },
+          {
+            "end": 24.03,
+            "text": "Now you are saying it is only requested.",
+            "channel": 0,
+            "seconds": 22.01,
+            "speaker": "Customer"
+          },
+          {
+            "end": 26.03,
+            "text": "Which information should I trust?",
+            "channel": 0,
+            "seconds": 24.45,
+            "speaker": "Customer"
+          },
+          {
+            "end": 29.06,
+            "text": "I am sorry the explanations were inconsistent.",
+            "channel": 1,
+            "seconds": 26.7,
+            "speaker": "Agent"
+          },
+          {
+            "end": 32.64,
+            "text": "I will ask the refunds team to confirm the current stage",
+            "channel": 1,
+            "seconds": 29.76,
+            "speaker": "Agent"
+          },
+          {
+            "end": 34.98,
+            "text": "and update the case with a clear explanation.",
+            "channel": 1,
+            "seconds": 32.64,
+            "speaker": "Agent"
+          },
+          {
+            "end": 37.73,
+            "text": "I do not need a promise you cannot keep.",
+            "channel": 0,
+            "seconds": 35.67,
+            "speaker": "Customer"
+          },
+          {
+            "end": 40.59,
+            "text": "I just want the same accurate information from the",
+            "channel": 0,
+            "seconds": 37.73,
+            "speaker": "Customer"
+          },
+          {
+            "end": 42.51,
+            "text": "email, the website and your team.",
+            "channel": 0,
+            "seconds": 40.59,
+            "speaker": "Customer"
+          },
+          {
+            "end": 45.65,
+            "text": "That is fair. I have recorded the conflicting",
+            "channel": 1,
+            "seconds": 42.99,
+            "speaker": "Agent"
+          },
+          {
+            "end": 48.65,
+            "text": "messages and will send the confirmed status rather than",
+            "channel": 1,
+            "seconds": 45.65,
+            "speaker": "Agent"
+          },
+          {
+            "end": 49.49,
+            "text": "guessing at a date.",
+            "channel": 1,
+            "seconds": 48.65,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "Refunds",
+        "issues": [
+          {
+            "title": "Conflicting Refund Status Information Across Channels",
+            "category": "Refunds",
+            "evidence": [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 15, 17],
+            "priority": "Medium",
+            "description": "Conflicting information about refund status across email, website, and customer service.",
+            "proposedAction": "Verify refund processing stage with refunds team and confirm status across email, website, and case.",
+            "expectedOutcome": "Clear, consistent refund status from all channels."
+          }
+        ],
+        "summary": "Customer reports inconsistent refund status information from multiple sources, expressing frustration over conflicting messages. The agent acknowledges the inconsistency and commits to providing verified status updates, but customer demands clarity and accuracy across all channels.",
+        "sentiment": "Negative",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-10-07 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:38:47.212673+00:00",
+      "display_number": 1286,
+      "audioResource": "demo/audio/refund-status.wav",
+      "daysAgo": 2
+    },
+    {
+      "id": "66246230-1d49-4a35-9785-2dfaa4db09a2",
+      "import_key": "verification-upload",
+      "sha256": "385a161b8a49fa2d7f0b5e193fa3704a8c63accac8e80102f8f78bc9b498d015",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-10-06T10:34:41.982225+00:00",
+        "agent": "Daniel Brooks",
+        "title": "Identity document upload keeps failing",
+        "sample": true,
+        "customer": "demo-customer-03",
+        "language": "en",
+        "speakers": 2,
+        "department": "Account verification",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 48,
+        "language": "en",
+        "segments": [
+          {
+            "end": 2.7,
+            "text": "The identity verification screen keeps rejecting",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 3.92,
+            "text": "my document photo.",
+            "channel": 0,
+            "seconds": 2.7,
+            "speaker": "Customer"
+          },
+          {
+            "end": 7.14,
+            "text": "I have tried a clear image twice, but the app only",
+            "channel": 0,
+            "seconds": 4.32,
+            "speaker": "Customer"
+          },
+          {
+            "end": 8.2,
+            "text": "says upload failed.",
+            "channel": 0,
+            "seconds": 7.14,
+            "speaker": "Customer"
+          },
+          {
+            "end": 10.42,
+            "text": "I cannot finish opening my account.",
+            "channel": 0,
+            "seconds": 8.58,
+            "speaker": "Customer"
+          },
+          {
+            "end": 13.52,
+            "text": "Does the message explain whether the file format,",
+            "channel": 1,
+            "seconds": 10.74,
+            "speaker": "Agent"
+          },
+          {
+            "end": 16.12,
+            "text": "image quality or connection caused the failure?",
+            "channel": 1,
+            "seconds": 13.88,
+            "speaker": "Agent"
+          },
+          {
+            "end": 19.01,
+            "text": "No, it does not give me any instructions.",
+            "channel": 0,
+            "seconds": 16.73,
+            "speaker": "Customer"
+          },
+          {
+            "end": 22.23,
+            "text": "I also tried switching from mobile data to wireless",
+            "channel": 0,
+            "seconds": 19.55,
+            "speaker": "Customer"
+          },
+          {
+            "end": 24.03,
+            "text": "internet and got the same result.",
+            "channel": 0,
+            "seconds": 22.23,
+            "speaker": "Customer"
+          },
+          {
+            "end": 27.42,
+            "text": "I will escalate the upload failure with the device and app",
+            "channel": 1,
+            "seconds": 24.56,
+            "speaker": "Agent"
+          },
+          {
+            "end": 28.28,
+            "text": "version details.",
+            "channel": 1,
+            "seconds": 27.42,
+            "speaker": "Agent"
+          },
+          {
+            "end": 31.8,
+            "text": "Please do not send your identity document through this",
+            "channel": 1,
+            "seconds": 28.98,
+            "speaker": "Agent"
+          },
+          {
+            "end": 32.8,
+            "text": "support conversation.",
+            "channel": 1,
+            "seconds": 31.8,
+            "speaker": "Agent"
+          },
+          {
+            "end": 34.8,
+            "text": "I appreciate that.",
+            "channel": 0,
+            "seconds": 33.66,
+            "speaker": "Customer"
+          },
+          {
+            "end": 38.08,
+            "text": "I need a way to complete verification, and a useful",
+            "channel": 0,
+            "seconds": 35.18,
+            "speaker": "Customer"
+          },
+          {
+            "end": 39.62,
+            "text": "error message would save every",
+            "channel": 0,
+            "seconds": 38.08,
+            "speaker": "Customer"
+          },
+          {
+            "end": 40.14,
+            "text": "one time.",
+            "channel": 0,
+            "seconds": 39.62,
+            "speaker": "Customer"
+          },
+          {
+            "end": 43.48,
+            "text": "I have recorded the steps you tried and the missing guidance.",
+            "channel": 1,
+            "seconds": 40.66,
+            "speaker": "Agent"
+          },
+          {
+            "end": 46.7,
+            "text": "The verification team will review the secure upload",
+            "channel": 1,
+            "seconds": 44.14,
+            "speaker": "Agent"
+          },
+          {
+            "end": 47.3,
+            "text": "process.",
+            "channel": 1,
+            "seconds": 46.7,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "Account Verification",
+        "issues": [
+          {
+            "title": "Failed PII Document Upload with No Error Guidance",
+            "category": "Account Verification",
+            "evidence": [0, 1, 2, 3, 5, 7, 8, 9],
+            "priority": "High",
+            "description": "PII document upload fails repeatedly with no error explanation or guidance.",
+            "proposedAction": "Review the secure upload process and validate error messaging for file format, image quality, and connection issues.",
+            "expectedOutcome": "Successful document upload with clear failure reasons and instructions."
+          }
+        ],
+        "summary": "Customer reports repeated failure to upload document during account verification, with no clear error message or instructions. The issue persists across different internet connections and image attempts, indicating a systemic problem in the upload process that requires immediate improvement in user guidance and error feedback.",
+        "sentiment": "Negative",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-10-06 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:38:47.302369+00:00",
+      "display_number": 1288,
+      "audioResource": "demo/audio/verification-upload.wav",
+      "daysAgo": 3
+    },
+    {
+      "id": "a5084cb7-4acd-4dc9-8829-0b86c25184a4",
+      "import_key": "notification-guidance",
+      "sha256": "428ac6e4db51471eee8036b1a13daccf6f8f3f60eb6b72f539b2ec9d310b5750",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-10-05T10:34:41.982225+00:00",
+        "agent": "Olivia Carter",
+        "title": "Notification preferences explained clearly",
+        "sample": true,
+        "customer": "demo-customer-05",
+        "language": "en",
+        "speakers": 2,
+        "department": "General support",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 39,
+        "language": "en",
+        "segments": [
+          {
+            "end": 2.76,
+            "text": "I want to keep security alerts but turn off marketing",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 3.4,
+            "text": "notifications.",
+            "channel": 0,
+            "seconds": 2.76,
+            "speaker": "Customer"
+          },
+          {
+            "end": 6.08,
+            "text": "I am not sure which settings to change.",
+            "channel": 0,
+            "seconds": 4.14,
+            "speaker": "Customer"
+          },
+          {
+            "end": 8.71,
+            "text": "Open settings, then notifications,",
+            "channel": 1,
+            "seconds": 6.35,
+            "speaker": "Agent"
+          },
+          {
+            "end": 12.49,
+            "text": "marketing messages and account security alerts have",
+            "channel": 1,
+            "seconds": 9.63,
+            "speaker": "Agent"
+          },
+          {
+            "end": 15.41,
+            "text": "separate controls, leave security alerts",
+            "channel": 1,
+            "seconds": 12.49,
+            "speaker": "Agent"
+          },
+          {
+            "end": 17.55,
+            "text": "enabled and turn off the marketing preference.",
+            "channel": 1,
+            "seconds": 15.41,
+            "speaker": "Agent"
+          },
+          {
+            "end": 19.99,
+            "text": "I can see both controls now.",
+            "channel": 0,
+            "seconds": 18.17,
+            "speaker": "Customer"
+          },
+          {
+            "end": 23.31,
+            "text": "I have turned off marketing, and the security setting is",
+            "channel": 0,
+            "seconds": 20.35,
+            "speaker": "Customer"
+          },
+          {
+            "end": 23.87,
+            "text": "still on.",
+            "channel": 0,
+            "seconds": 23.31,
+            "speaker": "Customer"
+          },
+          {
+            "end": 27.33,
+            "text": "That is the right configuration. You can return to",
+            "channel": 1,
+            "seconds": 24.33,
+            "speaker": "Agent"
+          },
+          {
+            "end": 30.17,
+            "text": "the same screen whenever you want to update your preferences.",
+            "channel": 1,
+            "seconds": 27.33,
+            "speaker": "Agent"
+          },
+          {
+            "end": 31.36,
+            "text": "Perfect.",
+            "channel": 0,
+            "seconds": 31.02,
+            "speaker": "Customer"
+          },
+          {
+            "end": 33.64,
+            "text": "That was easy once you explained it.",
+            "channel": 0,
+            "seconds": 31.88,
+            "speaker": "Customer"
+          },
+          {
+            "end": 35.42,
+            "text": "Thank you for walking me through it.",
+            "channel": 0,
+            "seconds": 34.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 38.56,
+            "text": "You are welcome. I am glad the settings are clear",
+            "channel": 1,
+            "seconds": 35.76,
+            "speaker": "Agent"
+          },
+          {
+            "end": 38.88,
+            "text": "now.",
+            "channel": 1,
+            "seconds": 38.56,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "User Settings",
+        "issues": [],
+        "summary": "Customer successfully configured notification preferences with no reported issues.",
+        "sentiment": "Positive",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-10-05 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:38:26.151923+00:00",
+      "display_number": 1290,
+      "audioResource": "demo/audio/notification-guidance.wav",
+      "daysAgo": 4
+    },
+    {
+      "id": "6c247377-39fa-4265-8659-8a1ec903b5ea",
+      "import_key": "support-appreciation",
+      "sha256": "79829fe9817bdd3fd58cf89556d8d4054bdc353ef2d63d638b045108d6d03de8",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-10-03T10:34:41.982225+00:00",
+        "agent": "Daniel Brooks",
+        "title": "Customer praises clear and helpful support",
+        "sample": true,
+        "customer": "demo-customer-06",
+        "language": "en",
+        "speakers": 2,
+        "department": "General support",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 36,
+        "language": "en",
+        "segments": [
+          {
+            "end": 1.58,
+            "text": "I am calling to say thank you.",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 4.64,
+            "text": "Your team helped me understand the account settings yesterday,",
+            "channel": 0,
+            "seconds": 1.88,
+            "speaker": "Customer"
+          },
+          {
+            "end": 6.14,
+            "text": "and everything is working",
+            "channel": 0,
+            "seconds": 5.12,
+            "speaker": "Customer"
+          },
+          {
+            "end": 6.74,
+            "text": "well now.",
+            "channel": 0,
+            "seconds": 6.14,
+            "speaker": "Customer"
+          },
+          {
+            "end": 9.9,
+            "text": "Thank you for sharing that feedback, was there",
+            "channel": 1,
+            "seconds": 7.02,
+            "speaker": "Agent"
+          },
+          {
+            "end": 11.98,
+            "text": "anything in the explanation that you found",
+            "channel": 1,
+            "seconds": 9.9,
+            "speaker": "Agent"
+          },
+          {
+            "end": 13.06,
+            "text": "especially helpful?",
+            "channel": 1,
+            "seconds": 11.98,
+            "speaker": "Agent"
+          },
+          {
+            "end": 16.42,
+            "text": "The advisor used simple language, explained",
+            "channel": 0,
+            "seconds": 13.66,
+            "speaker": "Customer"
+          },
+          {
+            "end": 18.34,
+            "text": "each step and checked that I could see the",
+            "channel": 0,
+            "seconds": 16.42,
+            "speaker": "Customer"
+          },
+          {
+            "end": 18.96,
+            "text": "right screen.",
+            "channel": 0,
+            "seconds": 18.34,
+            "speaker": "Customer"
+          },
+          {
+            "end": 20.44,
+            "text": "I felt listened to.",
+            "channel": 0,
+            "seconds": 19.36,
+            "speaker": "Customer"
+          },
+          {
+            "end": 23.57,
+            "text": "That is good to hear, I will share the feedback",
+            "channel": 1,
+            "seconds": 20.81,
+            "speaker": "Agent"
+          },
+          {
+            "end": 24.85,
+            "text": "with our support team.",
+            "channel": 1,
+            "seconds": 23.57,
+            "speaker": "Agent"
+          },
+          {
+            "end": 25.91,
+            "text": "Please do.",
+            "channel": 0,
+            "seconds": 25.27,
+            "speaker": "Customer"
+          },
+          {
+            "end": 27.57,
+            "text": "I have no issue to report.",
+            "channel": 0,
+            "seconds": 26.31,
+            "speaker": "Customer"
+          },
+          {
+            "end": 30.49,
+            "text": "I just wanted the team to know they made the experience",
+            "channel": 0,
+            "seconds": 27.97,
+            "speaker": "Customer"
+          },
+          {
+            "end": 30.99,
+            "text": "easy.",
+            "channel": 0,
+            "seconds": 30.49,
+            "speaker": "Customer"
+          },
+          {
+            "end": 34.46,
+            "text": "We appreciate your feedback, thank you for taking",
+            "channel": 1,
+            "seconds": 31.48,
+            "speaker": "Agent"
+          },
+          {
+            "end": 35.42,
+            "text": "the time to call.",
+            "channel": 1,
+            "seconds": 34.46,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "Customer Experience Feedback",
+        "issues": [],
+        "summary": "No customer-reported product or service problems were stated. The caller expressed satisfaction with the account setup assistance and thanked the team.",
+        "sentiment": "Positive",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-10-03 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:37:42.806581+00:00",
+      "display_number": 1291,
+      "audioResource": "demo/audio/support-appreciation.wav",
+      "daysAgo": 6
+    },
+    {
+      "id": "52591f93-3655-47d1-8c1b-aebb34f4fcac",
+      "import_key": "refund-follow-up",
+      "sha256": "a23090cac2990785bbf8dfd7049fa4a544cb7b7c4f085cf9afe1fc1cce4aba93",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-09-30T10:34:41.982225+00:00",
+        "agent": "Emma Wilson",
+        "title": "Customer asks for a clear refund update",
+        "sample": true,
+        "customer": "demo-customer-02",
+        "language": "en",
+        "speakers": 2,
+        "department": "Returns & refunds",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 40,
+        "language": "en",
+        "segments": [
+          {
+            "end": 2.88,
+            "text": "I have returned my order and would like to understand the next",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 4.02,
+            "text": "steps for my refund.",
+            "channel": 0,
+            "seconds": 2.88,
+            "speaker": "Customer"
+          },
+          {
+            "end": 7.0,
+            "text": "The confirmation email does not say what processing",
+            "channel": 0,
+            "seconds": 4.48,
+            "speaker": "Customer"
+          },
+          {
+            "end": 7.62,
+            "text": "means.",
+            "channel": 0,
+            "seconds": 7.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 10.64,
+            "text": "Processing means the return has been recorded,",
+            "channel": 1,
+            "seconds": 7.86,
+            "speaker": "Agent"
+          },
+          {
+            "end": 13.76,
+            "text": "but I need to check the refund request before I can",
+            "channel": 1,
+            "seconds": 11.0,
+            "speaker": "Agent"
+          },
+          {
+            "end": 15.24,
+            "text": "tell you its current status.",
+            "channel": 1,
+            "seconds": 13.76,
+            "speaker": "Agent"
+          },
+          {
+            "end": 18.21,
+            "text": "Can that explanation be included in the email?",
+            "channel": 0,
+            "seconds": 15.65,
+            "speaker": "Customer"
+          },
+          {
+            "end": 21.35,
+            "text": "I would not have needed to call if the message had been clearer.",
+            "channel": 0,
+            "seconds": 18.65,
+            "speaker": "Customer"
+          },
+          {
+            "end": 24.72,
+            "text": "That is useful feedback. I will send it to the",
+            "channel": 1,
+            "seconds": 21.96,
+            "speaker": "Agent"
+          },
+          {
+            "end": 27.56,
+            "text": "team that maintains our return messages and check your",
+            "channel": 1,
+            "seconds": 24.72,
+            "speaker": "Agent"
+          },
+          {
+            "end": 28.72,
+            "text": "refund status now.",
+            "channel": 1,
+            "seconds": 27.56,
+            "speaker": "Agent"
+          },
+          {
+            "end": 29.89,
+            "text": "Thank you.",
+            "channel": 0,
+            "seconds": 29.33,
+            "speaker": "Customer"
+          },
+          {
+            "end": 32.93,
+            "text": "A short explanation of each stage would make the process",
+            "channel": 0,
+            "seconds": 30.19,
+            "speaker": "Customer"
+          },
+          {
+            "end": 34.05,
+            "text": "easier to follow.",
+            "channel": 0,
+            "seconds": 32.93,
+            "speaker": "Customer"
+          },
+          {
+            "end": 37.58,
+            "text": "I agree. I will record that request and keep the",
+            "channel": 1,
+            "seconds": 34.64,
+            "speaker": "Agent"
+          },
+          {
+            "end": 39.36,
+            "text": "reply linked to this return case.",
+            "channel": 1,
+            "seconds": 37.58,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "Refund Process Clarity",
+        "issues": [
+          {
+            "title": "Ambiguous Refund Email Messaging",
+            "category": "Refund Process Clarity",
+            "evidence": [2, 3, 7, 13],
+            "priority": "Medium",
+            "description": "Customer reports confusion about what 'processing' means in refund emails and requests clearer stage explanations for returns.",
+            "proposedAction": "Review return email templates to add explanatory text for each stage (e.g., 'processing', 'refunded') and validate with customer feedback.",
+            "expectedOutcome": "Refund status updates include clear, user-friendly descriptions of each processing stage."
+          }
+        ],
+        "summary": "Customer reports unclear refund process messaging, requesting clearer explanations of stages in return emails. Feedback suggests improvement to email content for better user understanding. Sentiment reflects frustration due to lack of clarity and need for follow-up action.",
+        "sentiment": "Negative",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-09-30 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:38:26.055631+00:00",
+      "display_number": 1287,
+      "audioResource": "demo/audio/refund-follow-up.wav",
+      "daysAgo": 9
+    },
+    {
+      "id": "295fe5e2-f8c0-4f36-afcf-afa9e9a2fab0",
+      "import_key": "password-reset",
+      "sha256": "03f03764d5497e87ee6f659b6a8ab28c96b8cd3c6cb70d45ccce195864182c31",
+      "content_type": "audio/wav",
+      "status": "COMPLETED",
+      "stage": "complete",
+      "error_code": null,
+      "attempts": 3,
+      "generation": 1,
+      "metadata": {
+        "date": "2026-09-27T10:34:41.982225+00:00",
+        "agent": "James Miller",
+        "title": "Password reset link expires before it opens",
+        "sample": true,
+        "customer": "demo-customer-04",
+        "language": "en",
+        "speakers": 2,
+        "department": "Account access",
+        "customerChannel": 0,
+        "demoSeedVersion": "support-catalog-v1"
+      },
+      "transcript": {
+        "duration": 40,
+        "language": "en",
+        "segments": [
+          {
+            "end": 2.98,
+            "text": "I requested a password reset twice, both emails",
+            "channel": 0,
+            "seconds": 0.0,
+            "speaker": "Customer"
+          },
+          {
+            "end": 5.34,
+            "text": "arrived, but each link said it had expired",
+            "channel": 0,
+            "seconds": 2.98,
+            "speaker": "Customer"
+          },
+          {
+            "end": 6.4,
+            "text": "when I opened it.",
+            "channel": 0,
+            "seconds": 5.34,
+            "speaker": "Customer"
+          },
+          {
+            "end": 8.2,
+            "text": "I am locked out of my account.",
+            "channel": 0,
+            "seconds": 6.64,
+            "speaker": "Customer"
+          },
+          {
+            "end": 11.48,
+            "text": "Thank you for explaining. Please use only the",
+            "channel": 1,
+            "seconds": 8.56,
+            "speaker": "Agent"
+          },
+          {
+            "end": 14.22,
+            "text": "most recent reset email and tell me whether the same",
+            "channel": 1,
+            "seconds": 11.48,
+            "speaker": "Agent"
+          },
+          {
+            "end": 15.04,
+            "text": "message appears.",
+            "channel": 1,
+            "seconds": 14.22,
+            "speaker": "Agent"
+          },
+          {
+            "end": 16.56,
+            "text": "I have done that.",
+            "channel": 0,
+            "seconds": 15.72,
+            "speaker": "Customer"
+          },
+          {
+            "end": 18.7,
+            "text": "It still says the link has expired.",
+            "channel": 0,
+            "seconds": 16.92,
+            "speaker": "Customer"
+          },
+          {
+            "end": 21.26,
+            "text": "I cannot see another way to get back in.",
+            "channel": 0,
+            "seconds": 19.22,
+            "speaker": "Customer"
+          },
+          {
+            "end": 24.62,
+            "text": "I will record the repeated reset failure and ask the",
+            "channel": 1,
+            "seconds": 21.74,
+            "speaker": "Agent"
+          },
+          {
+            "end": 27.6,
+            "text": "account access team to review the flow. We will never",
+            "channel": 1,
+            "seconds": 24.62,
+            "speaker": "Agent"
+          },
+          {
+            "end": 29.18,
+            "text": "ask you to share your password.",
+            "channel": 1,
+            "seconds": 27.6,
+            "speaker": "Agent"
+          },
+          {
+            "end": 30.42,
+            "text": "Thank you.",
+            "channel": 0,
+            "seconds": 29.74,
+            "speaker": "Customer"
+          },
+          {
+            "end": 33.72,
+            "text": "I hope the team can check why a new link is already expired.",
+            "channel": 0,
+            "seconds": 30.74,
+            "speaker": "Customer"
+          },
+          {
+            "end": 37.23,
+            "text": "I have included that detail in the case so the team",
+            "channel": 1,
+            "seconds": 34.41,
+            "speaker": "Agent"
+          },
+          {
+            "end": 39.15,
+            "text": "can reproduce the reported behavior.",
+            "channel": 1,
+            "seconds": 37.23,
+            "speaker": "Agent"
+          }
+        ],
+        "diarization": "channel",
+        "roleAttribution": "channel-metadata"
+      },
+      "analysis": {
+        "model": "qwen3:4b-instruct",
+        "topic": "Account Access",
+        "issues": [
+          {
+            "title": "Expired Password Reset Links After Two Attempts",
+            "category": "Account Access",
+            "evidence": [0, 1, 2, 3, 5, 7, 8, 9, 14, 15],
+            "priority": "High",
+            "description": "Repeated password reset failures with expired links, leading to account lockout.",
+            "proposedAction": "Review the password reset email flow to identify why links expire prematurely.",
+            "expectedOutcome": "Successful access via valid password reset link"
+          }
+        ],
+        "summary": "Customer reports two failed password resets with expired links, resulting in account lockout. The issue persists despite instructions and is escalated for investigation. Sentiment reflects frustration due to inability to regain access.",
+        "sentiment": "Negative",
+        "promptVersion": "call-analysis-v2"
+      },
+      "created_at": "2026-09-27 10:34:41.982225+00:00",
+      "updated_at": "2026-10-09 11:38:48.753999+00:00",
+      "display_number": 1289,
+      "audioResource": "demo/audio/password-reset.wav",
+      "daysAgo": 12
+    }
+  ],
+  "issues": [
+    {
+      "id": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+      "data": {
+        "id": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+        "owner": "Unassigned",
+        "title": "Checkout payment failures",
+        "category": "Payments",
+        "priority": "High",
+        "hypothesis": "Cause requires investigation of the cited evidence.",
+        "description": "Repeated payment failure during checkout"
+      },
+      "centroid": "[0.07947822,0.03705869,-0.16511945,0.013523255,0.040244617,-0.04785473,0.033825286,-0.019614823,0.006894004,0.03604266,-0.07921145,0.04677678,0.041894242,0.016488167,-0.050364528,-0.027429095,0.03560657,-0.034935374,-0.02204796,0.011898169,-0.04492942,0.007879579,-0.06513327,0.0038471872,0.013258824,0.027416514,-0.015778856,-0.018843884,-0.062977135,-0.012593586,-0.019079877,0.0024441257,0.021035608,-0.07379912,-0.026344908,-0.0171759,0.021440199,0.017186953,0.0033063497,-0.019652277,-0.011948819,0.07988227,-0.014013294,-0.03434042,0.07083257,0.0075104027,0.05217897,0.059501342,0.07266922,-0.069121264,0.0069573284,-0.04254695,0.029909821,0.033632368,0.04236524,0.028510032,-0.024903176,0.0064043957,-0.03356749,-0.024754621,0.08292101,0.04563435,0.029613158,0.09052818,0.07976917,-0.022867084,-0.041447423,0.03407525,0.0038728984,-0.009958862,0.031814266,-0.00735127,-0.0106424885,-0.020201555,0.00654798,-0.00018168188,-0.049432207,-0.027252508,-0.014085258,0.04950813,0.009215687,0.00033950934,0.06866267,0.041173443,0.045916334,0.012200538,0.0074970284,0.007876972,-0.056854393,0.07017371,-0.018313903,0.0014530877,0.009418776,0.037313342,-0.1153672,0.033461783,-0.021574683,-0.008833012,-0.051283233,-0.016039057,-0.055918373,-0.011569591,0.006711481,-0.058405157,0.07794549,0.022854976,0.031828288,0.034807052,0.0021279682,-0.008887318,-0.02911158,0.052787546,0.021804709,-0.026819983,0.023323767,0.012119749,0.06821918,-0.028731422,-0.011457709,0.027689865,-0.0294953,-0.030002845,-0.0087434305,0.05950885,-0.026238227,0.03211119,-0.010102391,0.018944632,0.05416615,-0.027171323,0.036751866,0.02730797,-0.0065094777,-0.026211094,0.028204178,0.026649306,0.037298795,-0.032537054,-0.02556034,-0.02327916,0.030287556,-0.020442478,0.040814083,0.04655314,0.0050505926,-0.07952641,0.025705392,-0.0006335085,-0.029321497,0.00831891,-0.03192791,0.01950695,-0.032868333,0.021117954,0.038222235,-0.006316406,-0.013349606,-0.010045507,0.084909216,0.031620428,0.09569571,-0.03152464,-0.027482968,0.058675867,-0.04766622,-0.053349018,-0.009601381,0.051672343,0.04072606,0.045992088,0.0042535583,-0.01576205,0.03484619,-0.015802588,0.032292888,0.021563394,0.040182255,-0.0017469142,0.008648369,-0.07282477,-0.010724812,-4.970299e-05,0.046387333,0.040256847,-0.007414508,-0.02341251,0.0262784,0.02409111,-0.044878397,-0.08536959,-0.006528211,0.023030685,-0.0329895,-0.02490466,-0.0713274,-0.00839996,0.030722396,0.029527463,0.01724299,-0.0626491,0.00860928,0.02870575,-0.054221127,0.017695814,-0.066769995,0.0077547748,-0.056808077,0.016352644,-0.025623469,0.04321901,0.07021479,-0.04243434,-0.033573832,0.007638904,0.0019402045,0.0010830783,0.047836475,-0.03517227,-0.022917498,0.0024980095,0.015466042,-0.020330561,-0.0115142,-0.040119413,0.038182165,0.021014744,-0.0057623335,-0.009382013,-0.020106053,-0.007905409,-0.036765713,-0.071204744,0.003758496,-0.0017749771,0.004807236,-0.03108385,-0.028490337,0.008689435,0.0066620284,0.026897565,-0.046638753,0.04451238,-0.022248128,0.011392663,-0.04285884,0.021981424,0.03659035,-0.046971735,0.054028165,0.025377091,0.0042704446,0.030453267,0.03290375,0.03106758,0.007879697,-0.004257362,-0.001289043,0.034273848,0.022673296,-0.020124651,0.013365698,0.04248386,0.05711124,0.0070700594,-0.020936284,-0.03749256,0.006864897,0.0022497135,0.013721173,-0.012637103,0.004732189,0.07138797,0.046180166,0.07676408,0.025419973,-0.012280759,-0.023666041,-0.021661263,0.0053406763,0.014369427,-0.021636777,-0.039511397,-0.0632691,0.019404577,-0.051002175,0.04627314,0.07264036,0.00259026,0.0050415145,0.05811152,-0.0058015813,-0.016013522,-0.04661982,0.027884046,-0.04820623,0.0053267786,0.071191,0.012915283,0.029145963,-0.036582854,0.016224718,0.031458355,0.0019973393,0.0061794636,-0.027677014,-0.03216252,0.031393442,-0.009101966,0.029778158,-0.017887143,-0.04012236,0.003561,-0.04501324,0.01857009,-0.072705425,0.06702881,0.002107177,0.05584484,0.036619958,-0.02707511,0.009619701,0.009525378,-0.018610526,-0.033643402,0.032722067,-0.0005062823,0.0090057375,0.059630897,-0.06663761,-0.024067966,-0.03327991,0.022802485,0.0058363895,-0.07421579,0.02138136,0.020638937,-0.0130703375,-0.014129528,-0.0076274695,0.046901427,0.089393675,0.010308565,0.05905748,-0.06978216,-7.726548e-05,0.0061277756,-0.036392543,0.008259594,0.04189743,0.02118681,-0.0031483625,0.01580968,0.01807232,-0.0043606814,0.021158326,-0.0322349,0.031812396,0.019984407,0.009780375,-0.01084112,0.04166272,-0.008235739,-0.011457185,-0.018265955,0.009677655,0.0021178387,0.052509528,-0.011743777,-0.013664224,-0.05855524,0.03185964,0.00037026685,-0.005494602,0.023842067,0.05558911,0.0039946283,-0.09409919,-0.042446956,-0.035791494,0.03801747,0.04779948,-0.008401786,0.013319671,0.0050111166,0.0041531296,-0.025355527,-0.03506904,-0.024722978,-0.008641374,-0.0041439333,-0.024600497,0.021256523,-0.013497946,0.046527002,0.039478626,-0.052606065,0.04515419,-0.014188007,0.012383372,0.014121101,-0.02066535,-0.072505035,0.0001860711,-0.006000219,-0.00058334955,0.041943897,-0.011205313,-0.03568926,0.042721137,0.0014698491,-0.0137477005,0.026303474,-0.016058555,-0.020648232,0.019247167,0.009794305,0.08864055,0.0065989876,-0.025173752,-0.01283846,0.034935493,0.009791198,0.0026593418,-0.021077165,0.030619934,0.008720326,-0.043998253,0.05454395,0.022641772,-0.12301371,0.01356683,0.021437265,0.026517617,-0.004999057,-0.025017496,-0.020994172,0.020779178,0.022552032,0.031373493,0.055556074,0.030918796,-0.043437686,-0.008280324,0.01675265,0.044660587,0.10094198,0.0064163655,-0.015680289,0.014987951,0.00047111596,-0.011174238,0.036166344,0.02494843,0.01825063,0.006933691,-0.025905006,0.016842682,-0.003736793,-0.012499876,0.04232787,0.01608758,0.040467784,-0.033084907,0.06229052,-0.028031794,-0.012572262,0.067687,-0.05432816,-0.011622751,0.081019044,-0.04355898,0.028316215,0.06338852,0.022321865,0.03184665,-0.028995564,-0.01522595,0.0021324344,0.023280801,0.018960744,0.025193857,-0.019749947,0.014399039,-0.009396006,-0.03183801,0.01753669,0.062736124,-0.024629924,0.082698956,-0.00019894016,0.04403486,0.020409636,0.020961672,-0.03584164,0.013194657,-0.011147857,-0.043410994,0.025239216,-0.027838966,0.012476913,0.01534687,-0.020431971,-0.0009966023,-0.04072171,0.07238594,-0.03644396,-0.04798697,-0.08867628,-0.023963597,0.03640488,-0.049970564,-0.016161192,0.031643424,0.024571829,0.017038768,-0.030449068,0.034026705,-0.010164575,-0.053819966,0.033214528,-0.0078048944,-0.004941038,-0.038339123,0.0028427641,0.0008963969,-0.027818425,-0.00014446343,-0.015188719,0.05390657,-0.03277868,0.04405789,0.051860947,0.014434798,0.0113322055,0.0018935272,-0.052528344,0.015380118,0.016133392,0.0005353838,0.03357614,-0.011653455,0.036860246,-0.040204898,-0.017662525,-0.0003981742,-0.012645788,-0.023801086,0.036489815,-0.033767726,-0.0733032,0.028156523,-0.003535863,-0.008923238,-0.011798039,0.020785239,-0.02837928,-0.007209647,-0.030660188,-0.059741504,-0.044602714,0.03345778,-0.020427391,0.06121437,-0.00078319834,0.06380217,-0.025858488,-0.028821573,-0.0029136327,-0.011675234,0.006030972,-0.013576234,-0.013075789,-0.030254351,-0.054778654,-0.004597723,-0.0030030168,0.0032293592,-0.020840304,-0.029871276,-0.04497085,0.014523059,0.0026859574,0.020919107,0.082545444,-0.03490962,-0.019178148,-0.012479057,-0.036839195,0.0507938,-0.04290908,-0.027462745,0.045799088,-0.0009612524,-0.00589307,-0.020107627,0.0334224,-0.04719771,-0.036340907,-0.005693774,-0.04504988,-0.0010432306,0.03694962,0.034856103,-0.017860377,-0.027419697,0.012053068,0.009671457,-0.0019099164,-0.0006294994,-0.00899457,0.032738212,0.025847426,0.010295424,0.0213475,0.012363363,-0.04116785,0.014943154,-0.010722543,3.5557623e-05,-0.024352513,-0.0075641163,-0.07922271,0.062468816,-0.01042713,0.020188922,-0.021265944,-0.019066965,-0.012499961,0.010776066,0.007858405,-0.020302318,0.0202147,-0.102276884,-0.038881995,-0.06720763,0.022512542,-0.028556643,0.029173164,-0.029847134,-0.0066218846,0.022709373,0.025882313,0.03689478,0.010465357,0.04734725,-0.012030511,0.016326023,0.048400193,0.008942431,-0.046370476,0.07057915,0.04511036,0.057970837,-0.0087472135,0.0069980505,-0.028108127,0.018517924,-0.023350568,-0.073685504,-0.035905447,0.015157677,0.020723585,-0.085393146,0.0031097692,0.021628696,-0.007732462,-0.005819368,-0.0144715775,-0.029908136,-0.053965762,0.030074265,0.050080307,0.011345288,-0.015945626,0.0034005013,0.06448777,0.027719583,0.010225846,-0.0064626597,0.0012707966,-0.0029269215,-0.026337441,0.011054161,-0.024320925,-0.000411378,0.004344726,0.052674446,-0.027518034,0.051214397,-0.029535973,-0.04255887,-0.071158394,0.0070312545,-0.041865688,0.014412582,0.0090646595,-0.013773246,-0.031699788,-0.02217984,0.024193265,-0.028224578,0.029772263,-0.0063860524,0.023012703,-0.06502162,-0.06390791,-0.01473039,-0.002574665,-0.039884683,0.01885221,-0.021493077,-0.009797127,-0.018852383,0.03645388,-0.022619797,0.004267549,-0.062325392,-0.0348085,-0.032535445,-0.019751646,0.033644293,-0.025030047,-0.08407834,-0.03386589,-0.0021865105,-0.0047507905,0.0061047673,-0.03246242,-0.012333772,-0.013979516,-0.0009722437,0.0024230522,-0.059293773,0.07175966,-0.0061578956,-0.019185128,-0.06447716,-0.009416725,-0.06515802,-0.061053317,-0.043309506,0.006627951,-0.02727426,0.031293537,-0.0005916723,-0.022779392,-0.006351103,-0.000311012,0.014693749,-0.026647132,-0.033813145,-0.0031916637,-0.03904251,0.012263255,0.022400316,0.0455877,-0.02117446,0.04263432,0.10274795,0.0122837005,0.018023897,-0.008503976,0.032995753,-0.07602688,-0.024257885,-0.05793319,-0.060045067,-0.022944884]",
+      "model": "nomic-embed-text:latest",
+      "created_at": "2026-10-09 11:37:08.038340+00:00"
+    },
+    {
+      "id": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+      "data": {
+        "id": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+        "owner": "Unassigned",
+        "title": "Unclear refund status",
+        "category": "Refund Process Clarity",
+        "priority": "Medium",
+        "hypothesis": "Cause requires investigation of the cited evidence.",
+        "description": "Customer reports confusion about what 'processing' means in refund emails and requests clearer stage explanations for returns."
+      },
+      "centroid": "[0.034913834,0.051131286,-0.120506234,-0.0254929,0.10668859,-0.013470474,-0.0034285327,4.7380057e-05,0.057096153,-0.04444039,-0.010669641,0.05407092,0.032490525,0.014430701,-0.011535862,-0.04876369,0.05512375,-0.063820176,-0.05107063,0.056113932,-0.0048964964,0.019417295,-0.09664284,-0.032250147,0.007769805,0.0022790192,0.0088204965,-0.037755035,-0.07504701,-0.011829742,0.011420193,-0.003915527,-0.014352896,-0.029500024,-0.08738265,-0.03360906,0.014898866,-0.018519841,0.026883196,-0.028439239,0.033333838,-0.020306839,0.021199483,-0.00474608,0.05335575,0.004603877,0.032420337,0.031721946,0.033159386,-0.051354893,0.048769876,-0.03888187,-0.0026791263,0.03305145,0.08175458,0.01702604,6.218413e-05,0.07421158,0.045160387,-0.019388016,0.094869874,0.10014023,-0.027753154,0.0870465,0.052271996,-0.019625202,-0.04849773,0.056400813,-0.02005856,-0.04804416,0.09786716,-0.009270434,-0.014856231,0.049479116,-0.008981865,-0.046803657,-0.06309043,-0.057946578,-0.025842084,0.028936597,0.04945911,-0.005813684,0.06307845,0.015316876,0.0013499457,0.060053907,0.003480955,-0.010795622,-0.0016949226,0.056213684,-0.043548062,-0.0204734,0.0388937,-0.0070723454,-0.1089968,0.036854737,-0.033866532,-0.01919748,-0.062176716,-0.053250656,-0.034857202,-0.0023549418,0.056919497,-0.029786834,0.08891973,0.04038096,0.026168073,0.02579029,0.03041194,-0.028922569,-0.031650275,0.045145005,-0.024409177,-0.031610947,0.019383276,0.0038343356,0.05043844,-0.010591912,0.017634768,0.06691233,0.05539417,-0.041397825,-0.012295443,0.051099658,0.010460537,0.011631219,0.01716326,-0.025186429,0.02102456,-0.035215925,0.016574986,-0.028602948,0.0073900046,0.011830558,-0.023063775,0.00022805494,0.013336207,-0.026454499,0.02454494,0.055308517,0.08845325,0.008960865,-0.025833819,-0.024153039,-0.033171345,-0.031005232,0.015323725,-0.017826384,-0.008187347,-0.021492422,-0.024146114,0.049294807,-0.023604063,0.031923085,0.027385458,-0.057462085,-0.013597386,0.0031128358,0.011942448,0.017783865,0.105178066,0.015625946,0.009502079,0.05130007,-0.030152736,-0.039375477,-0.0327569,0.022617826,0.020174379,0.019394612,-0.04169133,-0.013481043,-0.0027482298,-0.010367232,0.044809286,0.039481975,0.08846306,-0.035646405,0.018181298,-0.035741992,-0.040081054,-0.0056370627,0.040112663,0.023686554,-0.016552672,-0.06032572,0.06475912,0.01420191,-0.021382125,-0.011759023,-0.001460558,0.026527487,-0.03554993,-0.04481182,-0.04520746,-0.04079072,-0.002246308,0.022101287,0.025347156,-0.02655234,0.017574783,0.030073564,-0.017044153,0.029269936,-0.025400154,0.04089683,-0.030752312,0.031795252,-0.00024433451,-0.0062428447,0.061219905,-0.036898527,0.01346256,0.0030628059,-0.0072062737,-0.012244591,-0.01578584,0.005743743,-0.011553608,0.007915796,-0.006872727,-0.01080375,0.010578202,0.003427589,0.028060041,0.007652116,0.011502249,-0.018484848,-0.06717834,0.02655952,0.006380743,-0.06813458,0.027841521,0.010241457,0.025222812,-0.018969685,-0.024596404,0.04310557,0.03376358,0.021876326,0.0012947668,0.035696108,-0.015095243,0.03323035,-0.0634784,0.0143512795,0.033976402,-0.016586902,0.0001021986,0.018906921,0.015297303,0.045828763,0.0074358582,0.0013330627,0.04372552,-0.016456498,-0.0076185265,0.03971709,0.013094429,0.020887792,0.023956865,-0.0015410573,0.033717275,-0.005599436,0.014232482,-0.044960264,-0.00075614196,0.028714659,-0.0013457827,0.0003492038,0.00613732,0.018267669,0.0052252295,0.048398823,-0.010228825,-0.04928355,0.018855404,-0.06578935,0.032486636,0.028050788,0.0022083807,-0.052289277,0.01862436,0.022951216,-0.018617667,0.023992887,-0.004560106,0.062005438,-0.02633845,0.039628897,0.004897558,-0.01327161,-0.046935447,-0.011264355,-0.023418155,0.018063279,0.06451147,0.024077078,0.0024620804,-0.04526958,0.0033317881,-0.01751207,-0.0030648885,0.065990664,-0.0016508535,-0.006202471,0.010129528,-0.0335295,0.0152981905,-0.012831543,-0.09433635,0.024365228,-0.011010783,0.022755109,-0.056085818,0.09044394,0.03896309,-0.003017457,0.06707575,0.02150435,-0.032922007,-0.075727336,0.01687994,-0.003052998,0.002582443,0.03617315,-0.015103298,0.0440887,-0.021450972,-0.018962314,-0.005544199,0.007357223,-0.05650584,-0.117378876,-0.0018379362,-0.0029928535,-0.0077748816,0.008687497,0.046282984,0.0145992115,0.08934826,0.036465082,0.04092172,-0.041612625,-0.017002005,-0.02542778,-0.02663072,-0.049899783,0.031464092,0.0038222417,-0.046121474,0.01700839,-0.009759801,-0.0007208872,-0.039327834,7.134271e-05,0.021454642,0.003711768,-0.00041678146,0.0071050194,0.04043711,-0.004268881,-0.021293817,-0.039940313,0.01564554,-0.008384484,0.031963706,0.016719762,-0.0060708118,-0.021113226,0.015302275,-0.055885173,-0.0068065766,0.010302874,0.037971187,0.02243136,-0.053800862,-0.004755256,-0.036350098,0.024580266,0.024347201,-0.026122099,-0.0073554865,-0.0051343013,0.015396679,-0.043033656,-0.0059690843,-0.027619645,-0.039105274,-0.011385712,-0.007436336,-0.04273163,-0.041196607,0.057471897,0.03471365,-0.0670511,0.012311328,0.029888848,0.031564552,0.036680803,0.0013062274,-0.074486405,0.025045978,0.030362774,-0.0018888367,0.035034873,-0.010623647,-0.056297448,0.016506149,-8.167252e-05,-0.020941176,0.047821756,-0.025818497,-0.061477043,0.007781436,0.027850937,0.09430866,-0.02067794,-0.029214224,0.015448853,0.05167207,0.004972832,0.0139426505,0.018305523,0.010110196,0.077859186,0.030996388,0.015595887,-0.07121887,-0.088794164,-0.017119806,0.009750638,0.035146683,-0.005404766,-0.047491543,0.0320013,0.009896023,0.037159447,-0.006454436,0.034689646,0.062003117,-0.00944072,-0.012437826,-0.009404867,-0.012315814,0.08492955,0.062524244,-0.014774056,-0.058025245,0.007651631,-0.08398347,0.038934346,-0.0030658012,-0.013992071,0.05512391,-0.05732474,0.031081589,-0.012006738,-0.024289228,0.0023640594,0.034896012,0.00032424074,-0.01290103,0.018023342,-5.762884e-05,-0.017767107,0.049286537,-0.016766576,0.0027235062,0.057788856,-0.03006683,0.010792448,0.04949553,-0.015487537,0.038578376,0.035073705,-0.042712923,-0.030376801,0.01988246,0.03520815,-0.0050473344,-0.008397574,0.002906332,-0.050094754,-0.055288654,0.02781792,0.04061571,0.007740136,0.020760302,-0.03345778,0.036568534,0.0021297992,-0.051519804,-0.023404002,-0.008030588,-0.027061073,-0.03430074,0.026603984,5.941048e-05,0.0136268595,0.020062523,-0.00024855934,-0.015834816,0.0011851072,0.010327535,-0.034377225,-0.00632475,-0.09406369,-0.024103642,0.014576975,0.009255196,-0.042640414,0.012583208,0.055619225,0.022081282,-0.0069539263,0.033700734,-0.013050205,-0.031722985,0.057980984,-0.017381929,-0.028662782,0.014499355,-0.0066122147,-0.060765665,-0.03965781,0.024445374,-0.053267013,0.01831139,0.02212288,0.03369158,0.096311696,0.04185818,0.004963567,0.022102846,-0.044217452,-0.04458439,0.043675575,0.04620483,0.02589411,-0.040622283,0.049121924,0.0055674114,0.04140221,0.00015922304,-0.009687794,0.027796496,0.021369822,-0.034985606,-0.07888555,0.049959213,-0.029103627,0.0049260342,-0.04873436,0.06712382,-0.0078829145,0.035427745,-0.040191576,-0.0345905,-0.012861019,-0.047682535,-0.006077852,0.010278747,0.02358298,0.06559973,-0.06488221,0.007540328,-0.024564575,-0.007733688,0.024068013,0.0057003037,-0.03259986,-0.015283619,-0.016061557,-0.02609037,-0.03306585,0.0028056337,-0.0136309,-0.06922013,-0.029502658,0.035049733,-0.030677732,0.008510172,0.08579951,-0.05474469,0.018569352,-0.010696032,0.025865406,0.06455317,-0.007964746,-0.015685486,-0.009236906,-0.023954703,-0.012634996,-0.01661802,0.012770487,-0.032896016,-0.044451717,-0.00568011,-0.067516565,0.0063940044,0.039127823,0.03505252,-0.05003822,0.021733087,0.03378091,-0.022263795,0.022249326,0.0072663412,-0.065736875,0.006749105,-0.00560271,0.052867718,0.0021546828,0.020705014,-0.06564567,-0.009991911,-0.036878776,-0.003906118,-0.041967597,-0.011589475,-0.06486773,0.06860305,-0.03929291,0.06345054,0.007336467,-0.011474638,-0.025227478,0.007554501,-0.002383739,-0.023483021,0.037012186,-0.033167668,-0.03089886,-0.051116545,0.0056153913,-0.01613357,0.02152503,-0.054608315,0.002019707,0.06166192,0.0011893131,-0.0005543986,0.01769822,0.001661569,0.006688859,0.034872074,0.035563886,0.04489708,-0.02116528,0.022830656,0.08216616,0.02726327,0.043589573,0.028694652,-0.001453895,-0.0036834334,-0.039901987,-0.042920288,-0.041481692,-0.009507065,-0.0061284574,-0.08019209,0.043605745,0.019264545,-0.027832549,-0.0062703993,-0.009852717,-0.06440369,0.0047856276,0.036071897,-0.016112855,0.053996928,-0.018846799,0.058516588,0.0019527968,-0.000637255,-0.003675945,-0.04216238,-0.017966941,-0.0034181387,0.030924821,0.018425915,0.01631579,-0.036380194,-0.010793525,0.01835993,-0.0025460673,0.0008546351,-0.04414661,-0.02490412,-0.03222851,0.017253518,-0.02342968,-0.016025288,0.0140841035,0.008318554,0.013832633,0.023428654,0.023463536,0.009636798,0.0023361286,0.051576033,0.022403339,-0.027985951,-0.0086698355,-0.019136975,-0.04066186,-0.025015352,-0.006332345,-0.0009577448,0.008971401,-0.016719887,0.041506328,-0.054456405,0.022507712,-0.028262492,-0.061407376,-0.043714013,-0.031786416,0.03841601,0.037979096,-0.07697884,-0.04814617,-0.010752941,-0.01990365,0.019832749,-0.060095303,0.019076759,-0.0027559835,0.03406664,-0.0045204205,-0.01390716,0.03195162,0.0076051317,0.035316776,-0.04039092,-0.014015603,-0.036781617,-0.0370818,-0.02393732,0.036558982,-0.032633327,0.033041973,-0.023333123,-0.055123225,-0.038446255,-0.0042383536,-0.01965386,-0.027640834,-0.018472876,-0.017878825,-0.016243817,0.04810038,-0.038486686,-0.0061216205,0.0026698734,0.05084461,0.028262433,-0.014967153,-0.00026603832,0.0049617607,0.06101819,-0.017224956,-0.053795327,-0.010682255,-0.053205423,-0.014828614]",
+      "model": "nomic-embed-text:latest",
+      "created_at": "2026-10-09 11:38:26.055631+00:00"
+    },
+    {
+      "id": "d4bebfd3-c294-4f9e-8f49-0955057840da",
+      "data": {
+        "id": "d4bebfd3-c294-4f9e-8f49-0955057840da",
+        "owner": "Unassigned",
+        "title": "Missing case updates",
+        "category": "Customer Support",
+        "priority": "High",
+        "hypothesis": "Cause requires investigation of the cited evidence.",
+        "description": "No update provided on the status of a failed payment despite open case."
+      },
+      "centroid": "[0.055950668,0.008145229,-0.14732066,-0.0030522814,0.055858858,0.015393755,0.006142105,0.00485225,0.04231239,-0.04692844,-0.026139574,0.022043664,0.06402681,0.030869199,-0.04435666,-0.020943604,0.015257235,-0.024554068,-0.014523197,0.04952278,0.030556161,-0.016375128,-0.07098814,0.028991578,0.035988826,0.016832814,0.004182925,-0.010508611,-0.037273876,-0.009277731,0.024098013,-0.0036593531,0.03367933,-0.053386398,-0.030370783,-0.0045291972,0.06328249,0.020937312,0.0033051532,-0.056474987,0.039741695,0.0037799971,0.007299649,-0.028600233,0.052281197,-0.024327217,0.044322755,0.060024887,0.03482932,-0.031547137,0.043350577,-0.031653162,-0.007107735,0.026003515,0.053904578,0.04876002,-0.006619843,0.032254823,0.010246182,-0.020579616,0.11223292,0.055274315,-0.009460756,0.0847586,0.045452997,-0.02630065,-0.018412186,0.02018067,0.031477455,-0.031253055,0.0013416432,0.019827774,-0.011850764,-0.040137324,-0.02125616,0.006530053,-0.080325946,-0.02701942,-0.014203414,-0.0029425146,0.073230684,0.006735181,0.106106855,-0.03245702,0.0687537,0.00028989353,-0.0105461115,-0.0001664076,-0.010241603,0.0968692,-0.015037183,0.03323075,0.0078060967,0.013862689,-0.083775915,0.009754306,-0.047212,0.022798881,-0.06356385,-0.023232274,-0.027974846,-0.0772247,-0.022157913,-0.035672124,0.10176196,0.06931984,-0.011521761,0.009809579,-0.013552756,0.012475458,-0.032464806,0.06989286,-0.01002992,-0.0015579327,-0.00095297844,-0.03425216,0.06822161,-0.02879788,-0.012646653,0.044660494,-0.041130595,0.0026970347,0.014207753,0.04898677,-0.0110341655,0.005826401,0.007843781,-0.032066483,0.06079469,-0.039472435,0.012980934,0.015374301,-0.0017665031,0.028935583,0.009990254,0.049624182,0.022755671,-0.031666655,-0.0126400255,-0.029767528,0.08818547,-0.01893147,0.010216755,0.022298336,0.023032002,-0.05741799,0.042780895,-0.015340327,0.016209088,0.008297454,-0.00034326917,-0.013322247,-0.013724253,0.03678833,0.040887974,-0.046612184,0.015808217,0.003801719,0.053727023,-0.03157007,0.046311352,0.018767139,-0.0283412,0.041955348,-0.041387852,-0.08592585,-0.004360668,0.04582884,0.02729268,0.02780868,-0.019462632,-0.04263493,0.042520847,0.031894173,0.0718977,2.1683201e-05,0.043077864,-0.016416583,0.02596363,-0.078045614,-0.01192099,-0.036856037,0.045020062,0.024650415,0.00679349,-0.03356298,0.026805455,-0.005713951,-0.026957106,-0.03539994,-0.01312884,0.005743294,-0.02015262,-0.03891535,-0.015275562,-0.033413857,0.040854406,0.020913579,0.036766212,-0.03225674,-0.0032364423,0.007833753,-0.057237256,0.015435352,-0.02954552,0.02511712,-0.04298147,0.033635806,0.028120916,0.026721058,0.050789997,-0.053626485,0.020319125,0.026965426,0.03905559,-0.021904025,0.0171803,-0.024884941,-0.025710912,0.011881658,0.026553936,-0.016410671,0.010780887,-0.014884772,0.07274435,0.015651075,-0.04448615,0.037360337,-0.052566305,-0.012121112,-0.032963805,-0.08364518,0.023654608,0.014963468,0.011777848,0.004028693,-0.009567862,0.028432507,0.04375475,0.037398703,-0.061282165,-0.0035270157,-0.021950925,-0.0389664,-0.04780577,0.029769914,-0.044322062,-0.009299101,-0.013276356,0.026220145,0.0130145205,0.045906402,0.06296989,0.026519516,0.008373002,0.012780789,-0.03805292,0.010616826,0.039578974,-0.01485098,0.0391469,-0.0033524937,0.047514584,-0.044474196,0.0064774607,-0.013544787,-0.007205218,-0.02620737,0.015833918,-0.03625037,0.0048597003,0.043441504,-0.013603918,0.04946422,0.04859215,0.0023393244,-0.0017784985,0.020419508,-0.05485336,0.015327972,-0.013651581,-0.047895104,-0.021104367,0.013289344,-0.038654566,0.012688286,0.038706552,-0.004297061,-0.003082063,0.037833527,0.012077522,0.021274937,0.0005498414,0.013451676,-0.021399729,0.0493928,0.08803268,0.0069240294,0.01939125,-0.05894047,0.025905557,0.036219705,0.020136565,0.00213894,0.0030519462,-0.06864037,0.038153134,-0.00979169,0.020349793,-0.010688886,-0.044864733,0.037539884,-0.033702523,0.0040963907,-0.092660286,0.070493,-0.0019007821,0.048754834,0.019108111,0.0045481115,-0.02968508,0.0030582692,-0.02016983,-0.05428038,0.041378852,0.017436076,0.0060610385,0.050721176,-0.012837347,-0.008642448,0.008171802,0.020939792,0.0019801292,-0.069769114,0.043160327,0.0073176334,-0.0138152735,-0.012321592,0.013674648,0.04425104,0.12274093,0.011869622,0.014098176,-0.047103126,-0.011173315,-0.014482214,-0.029392036,0.0076415683,0.006783756,0.0013011345,-0.03365912,0.044086438,0.013490543,0.029900324,-0.002636018,-0.014268487,-0.016789926,-0.020752687,0.0009926163,0.00917607,0.04576224,-0.011230052,0.012459539,-0.033528216,-0.0076641673,0.02509034,0.049905524,-0.04393813,-0.010177455,-0.07251495,0.01226704,-0.014408456,0.0008050899,0.06046121,0.07674669,0.01566739,-0.068750314,-0.032288205,-0.06999573,0.017678881,0.085091494,-0.05948562,-0.007263409,-0.022827568,0.008674082,-0.0145530095,-0.012579383,-0.01955883,-0.04010809,0.010604172,0.008185696,-0.004827819,-0.02996826,0.026447201,0.023875495,-0.045511138,0.038820814,0.0062030624,0.015875554,-0.0037735295,-0.007113411,-0.06911739,-0.012133126,-0.0026835059,0.040123366,0.044870626,-0.039570726,-0.042685628,0.023158532,-0.0045153527,0.012342692,-0.0073122075,-0.0097961575,-0.03883561,0.01485392,0.0037481743,0.08225676,0.016669963,-0.04039487,0.034649167,0.07052271,0.051360898,0.029957183,0.0046905014,0.0002024307,0.054792546,0.016344478,0.040342752,-0.00899008,-0.05804962,-0.023025993,0.053026453,0.04888166,-0.010973191,-0.013893875,0.026762249,0.042251896,0.018380603,-0.00203166,0.0009871699,0.026289716,-0.013123333,-0.042186316,-0.022183528,0.011989011,0.097227484,0.034092132,0.0183392,-0.0069839573,-0.015909014,-0.0011650234,0.00046089265,-0.002104826,-0.0011301783,0.023231933,-0.037861165,0.0018930265,-0.034782264,-0.016577713,0.0447251,0.0034614408,-0.027834548,-0.024372464,0.030140307,-0.01883875,-0.044030894,0.060537826,-0.031207988,-0.028335601,0.07531354,-0.014196932,0.02556712,0.051469646,0.006338991,-0.026013052,-0.012239819,0.007470876,-0.022777194,0.0004174389,0.03802881,0.01661746,-0.028047306,0.005756164,-0.033414543,-0.044919822,0.034826837,0.041495312,0.0058142543,-0.01977267,-0.05836425,0.05068795,0.028050702,0.002008323,0.033335235,-0.015733577,0.009521056,-0.04888239,0.051353157,-0.0058908616,0.01699399,0.006332838,0.030480187,0.01797568,-0.013030756,0.05915425,-0.01803112,0.00045565772,-0.10771672,-0.008529575,-0.015176956,-0.035471603,-0.013379063,0.0046715997,0.020995283,0.015136346,-0.03046768,0.017952919,0.0019190982,-0.068281375,0.056712255,-0.03190746,-0.019980457,-0.0037196905,-0.011126047,-0.037957985,-0.038626954,-0.02383252,-0.04554425,0.017691934,0.004400014,0.027970297,0.06865256,0.0036381437,-0.007008761,-0.020844651,-0.025389789,-0.009403258,0.03921914,0.0029437346,0.017986476,-0.050144482,0.030707616,-0.023376042,0.018273273,0.012300801,-0.011311738,-0.012744895,0.03197578,0.004117761,-0.10122991,0.006198524,-0.016193971,-0.040500827,-0.022631804,0.005611845,-0.04595577,-0.01713612,-0.006368628,-0.051934294,-0.061075147,0.06080548,0.029425006,0.054305702,0.0291669,0.061961103,0.0030582764,-0.03883475,-0.0070475833,0.0059515475,-0.016937194,-0.05795021,-0.014037102,0.025000881,-0.030787962,-0.05149634,-0.03698704,-0.011703166,-0.0012139701,-0.04330811,-0.042585324,-0.026288547,0.004701063,0.015911698,0.11411594,-0.021158952,-0.0072302134,-0.021739379,-0.022028288,0.052543074,0.015416225,-0.010590036,0.02274519,-0.003143642,-0.007857276,-0.01497232,0.053447206,-0.029668989,-0.05183294,-0.014283322,-0.05700768,-0.0043250006,0.0015341296,0.042301167,-0.031137358,-0.016217763,0.0587843,0.014935289,0.04448586,-0.003997227,-0.04441525,-0.01623507,0.01372211,0.01551355,-0.00084440556,0.05121179,-0.054681,0.031195054,-0.02174943,-0.049412694,-0.042815052,-0.004075154,-0.073796935,0.03143298,0.023279216,0.040299922,-0.011996349,-0.050103016,-0.047452416,-0.0009190819,0.0255409,-0.0069822436,0.026898751,-0.09242856,-0.060089923,-0.036290064,-0.0041044364,-0.020841641,-0.0021112273,-0.0062099183,-0.019817106,0.05595171,0.010233949,0.01727978,0.015879389,0.024926875,-0.017248333,0.032090098,0.033795774,0.020979894,-0.07552078,0.060351495,0.02824463,0.03417997,-0.0072597223,0.007342414,-0.035063744,-0.03128745,-0.05448695,-0.06829619,-0.057366755,-0.010357031,0.03454124,-0.06961986,0.027299501,0.043097768,-0.029710243,0.03157888,-0.032616485,-0.059415706,-0.030042512,0.04920235,0.054316893,0.022273116,-0.00841745,0.045344926,0.055736,0.011662787,0.0010919739,-0.00969531,-0.016844274,0.000827655,0.015922362,0.046581667,-0.008005735,-0.009687118,-0.0013860065,0.006890241,-0.039422467,0.015467717,-0.036164265,-0.028296037,-0.06532751,0.0010059028,-0.03694274,-0.030659672,0.015358228,-0.009931898,-0.033247594,0.00040896676,-0.022703158,-0.03648695,0.010981563,0.0010097912,0.048201982,-0.03839281,-0.021885013,-0.0011355364,0.030710492,-0.05460453,-0.018421821,0.011566634,-0.0044288444,-0.011808198,0.009185572,-0.0022385472,0.0038266745,-0.02024498,-0.061454993,-0.054499973,-0.030287335,0.031281695,0.0029177945,-0.06019825,-0.04719821,-0.025033282,-0.02753918,0.04255788,0.0035531227,-0.00021052385,-0.032838523,-0.0026394445,-0.0072178026,-0.014312846,0.046519097,-0.032970887,-0.026055975,-0.02780743,-0.013916042,-0.013142272,-0.053471226,-0.088457115,0.03787623,-0.0037459526,0.013678996,0.014789983,0.004511934,-0.0017940782,-0.027972223,0.046649314,0.013820618,-0.03865875,-0.018807994,-0.029738348,0.019534202,0.0048901453,0.0477088,-0.023729358,-0.005582867,0.10396539,9.552994e-05,0.014009,0.01592793,0.040819198,-0.039058827,-0.020779347,-0.074505754,-0.0400649,-0.04280729]",
+      "model": "nomic-embed-text:latest",
+      "created_at": "2026-10-09 11:38:26.414789+00:00"
+    },
+    {
+      "id": "7c273c1f-f068-43f9-bce6-f14d74b1ad19",
+      "data": {
+        "id": "7c273c1f-f068-43f9-bce6-f14d74b1ad19",
+        "owner": "Unassigned",
+        "title": "Document upload errors",
+        "category": "Account Verification",
+        "priority": "High",
+        "hypothesis": "Cause requires investigation of the cited evidence.",
+        "description": "PII document upload fails repeatedly with no error explanation or guidance."
+      },
+      "centroid": "[0.016096802,0.034799088,-0.15448122,-0.025149252,0.06830319,-0.015872125,-0.022428947,-0.0072344476,-0.014811019,-0.016426917,-0.041795153,0.01940889,0.029228419,0.01871725,-0.002101545,-0.0023975854,0.040564355,-0.030261377,0.0003955727,0.04418866,-0.008001281,-0.04067031,-0.067834236,0.029526725,0.04638061,-0.014770533,0.012540474,-0.04059417,-0.041700453,-0.009459898,0.04015363,-0.016160218,-0.005000928,-0.050968006,-0.014555183,-0.07329408,0.0063681235,-0.010603752,-0.0060032434,0.04343763,-0.01562252,-0.003883519,0.0005543108,-0.031394158,0.03277036,-0.04795018,0.05512664,0.033010602,0.052666258,-0.03192708,0.038011834,-0.04909133,0.016263975,-0.020778669,0.060397662,0.06051651,-0.038949646,-0.0044682757,-0.012606065,-0.0038131622,0.056906994,0.045595843,0.001771062,0.062040724,0.052807543,-0.02006646,-0.07170718,0.06965627,0.039627686,-0.0076861237,0.037547752,0.012742824,0.04366167,0.00524098,-0.067139365,0.016683815,-0.036027674,-0.0744624,-0.009174678,0.03371582,0.012070144,0.008048253,0.062547155,-0.03425367,0.08017013,0.004055227,0.0010235502,0.03480491,-0.07254662,0.060955998,0.011519291,-0.003455682,0.022759276,-0.017532451,-0.062593065,0.016955305,-0.055026725,0.049732666,-0.044130113,0.0066099185,-0.045692045,-0.049335875,0.056840003,-0.01678286,0.044909704,0.05021949,0.020783048,0.012143665,0.0076294956,0.013464519,-0.027404685,0.07642328,-0.0033903657,-0.027718516,0.015467015,-0.019451397,0.11089335,-0.027440406,0.025022041,0.05884799,-0.07745347,-0.0033536502,0.03527419,0.07287226,-0.018791998,0.021630505,0.0021269077,-0.02551527,0.0315337,-0.051900722,0.0051395325,-0.041026432,-0.04157405,0.01846694,0.009317394,0.042311087,-0.03255629,-0.039993197,0.0059408904,-0.0054606562,0.00014519786,-0.036682665,0.015754113,-0.0155382855,0.004124303,-0.055355027,0.0034200933,0.0035068905,-0.02111274,0.004732345,0.0076524606,-0.016533023,-0.0046975375,0.032122258,0.023982123,-0.041380387,-0.021016147,0.017497139,0.043936003,-0.005377969,0.049862437,-0.009264761,-0.05283023,0.0688841,-0.022388386,-0.03811113,0.0058038803,0.044220574,-0.01305094,0.035708796,-0.011806436,-0.037944797,0.024614925,-0.008262379,0.048293244,-0.005055735,0.019080264,-0.0010472808,0.043301627,-0.05307316,0.03379447,-0.0007769168,0.02417077,0.023318952,-0.035512943,-0.028350499,0.020513186,-0.008736077,-0.03680936,-0.015238867,-0.008963178,0.02213972,-0.04281496,-0.006154888,-0.025990058,-0.04326711,0.053835664,0.0020114225,0.04120374,0.009635065,0.0017105647,-0.004282088,-0.032149225,-0.02210818,-0.05480451,0.015087854,-0.0036167875,0.024943648,-0.0019300248,-0.011820886,0.078558825,-0.02155452,-0.020034378,0.056030385,0.01984606,-0.041813206,0.013791592,-0.026404899,-0.03124113,-0.041808836,-0.00031662942,-0.02399584,0.0040157787,-0.03948613,0.021972392,0.04602424,-0.015212209,-0.049532726,-0.0023291914,-0.0011487727,-0.03215329,-0.082352966,-0.028605703,0.050147526,-0.003284706,0.025417825,-0.012817783,0.025807718,0.02216897,-0.0133784395,-0.050377738,-0.012499074,0.011821889,-0.027695788,-0.0788757,-0.013691032,-0.0021184364,-0.06343039,0.0011641076,0.036852144,0.025866313,0.026007552,0.023409707,0.022187334,0.014701809,0.031450626,-0.0097988425,0.0136173805,0.031341903,-0.031595256,0.0018226978,0.004343902,0.034877717,-0.030242898,-0.0033522202,-0.01099626,0.004628381,0.008192923,0.008974955,-0.02472948,0.025481543,0.0667808,0.025161928,0.04664181,-0.0032987609,0.0476501,-0.007362458,0.01772959,-0.028050639,0.02641333,-0.008295141,-0.014866304,-0.029081212,0.0035621913,-0.005719498,-0.0113867605,0.009173627,0.004117709,-0.007289207,0.028785974,-0.026871227,-0.0034309055,-0.02437224,0.033103902,0.0012181147,0.071906425,0.057975437,0.006637791,-0.0029158047,-0.06504005,0.005888483,0.042948358,0.027871925,0.008072501,0.0031191553,-0.042642523,0.03821094,-0.008149069,0.044368085,0.031188674,-0.0983794,0.041438993,-0.028273653,0.077410534,-0.026927298,0.052007746,0.02108347,0.007944424,0.00834441,0.02528483,-0.00606583,-0.010303571,-0.009122635,-0.011687574,0.022550821,0.04309558,-0.03303456,0.050102197,-0.0057883007,-0.0097321635,0.0073616756,0.0085746795,0.009197649,-0.05553855,0.008621646,0.035134118,-0.023421748,0.010000512,-0.010766988,0.07350948,0.08046051,-0.014371952,0.0015557851,-0.039561678,-0.007916526,-0.018203951,0.015661575,0.010147523,0.015437748,0.025184555,-0.039914537,0.03871244,0.010819097,0.007466878,0.03547528,-0.006927896,0.00676403,0.054876715,-0.030972539,-0.009350148,0.04738589,0.04832907,0.0035925424,0.0043442245,-0.0020364008,-0.010656075,0.045907512,-0.0188687,-0.003999795,-0.024400745,0.023916576,0.011142299,-0.0011152553,0.022140259,0.0025083271,0.020559698,-0.095682435,-0.0481582,-0.04154481,0.029480785,0.04275184,-0.017508257,-0.009410248,0.008044264,0.023030235,-0.056132045,-0.012973453,-0.009848018,-0.03068841,0.006115772,-0.05021344,-0.049804524,-0.0018856504,0.087514035,0.016097,-0.051439144,0.027297866,0.041460123,0.04043031,0.025013149,-0.021163134,-0.06424339,0.0632326,0.0006965553,0.022536077,0.08450249,-0.029553544,-0.028858341,0.032695726,0.010692774,0.042768136,0.018964969,-0.0427247,-0.0016981018,0.045505393,0.022079222,0.031511478,2.8601517e-05,-0.044179413,0.046894506,0.03946592,0.04083042,-0.0027695769,-0.011105982,0.025822591,0.038225107,-0.02114664,0.07671895,0.044291347,-0.10455374,-0.03243308,0.025934504,0.03523699,-0.042845473,0.013257114,0.00537619,0.04449586,0.05978451,-0.0011751051,0.032693207,0.05121978,-0.0150072435,-0.0130714765,-0.0026822824,0.013901964,0.113216184,0.05653598,0.017457677,0.0018755962,0.0032587645,0.0015632464,-0.04869087,0.056817833,0.009388526,0.0540193,-0.01861535,-0.03980227,0.044961084,-0.02497701,0.012541187,0.009862472,0.011917825,-0.051902954,0.060552303,-0.012879014,-0.050137047,4.7703983e-05,-0.03456832,0.017905511,0.041431103,-0.020654216,0.012290257,0.06134559,-0.016933555,-0.012652555,0.037483525,-0.029817607,0.027872125,0.0128623275,-0.024501603,-0.002102783,-0.041156095,-0.0578213,-0.051814806,0.0077772792,-0.0044522854,-0.0007828823,0.0038475834,0.066249005,-0.060693305,0.08004115,0.04429998,-0.024990298,-0.032204486,-0.02369124,-0.045343492,-0.036720946,0.027132751,-0.017373621,-0.02621964,0.020248024,-0.016948774,-2.2358001e-05,-0.037668914,0.062121943,-0.056690767,0.022339415,-0.06102971,-0.04055015,0.036282662,0.004037981,-0.015458597,0.017329527,0.018946044,0.0147818,-0.015379804,0.04005123,0.012019623,-0.047666926,0.038388435,-0.019267365,-0.021034727,-0.03635222,-0.010628882,-0.062258374,-0.0151680615,-0.03549116,-0.031532533,0.053192306,0.024409337,0.020378798,0.0023971342,-0.01090415,6.4705826e-05,0.004181241,-0.015488543,-0.026688982,0.04296542,0.010791706,0.0088806795,-0.018012518,0.011928968,-0.005072565,0.015675839,0.01259683,-0.0035483958,-0.014576552,0.0628034,-0.019964417,-0.08500736,0.07353901,0.010322799,-0.026632877,0.0020278774,0.018333465,-0.06944227,0.031379033,0.0009317232,0.004173704,-0.0427709,-0.002436239,-0.030714901,0.045280736,0.03386605,0.032923803,-0.059133887,-0.014776949,-0.0022041681,-0.011792439,0.04287501,-0.005412446,-0.05691073,0.0016521801,-0.04062147,-0.015153564,-0.056602057,0.014421902,-0.03579011,-0.025922926,-0.011421006,-0.004743403,-0.013192146,0.044666022,0.09096748,-0.035917725,-0.014214292,-0.041479733,-0.03915962,0.042204183,-0.010769665,-0.046487626,0.021283947,0.0033587643,-0.014175901,-0.02659683,0.05060732,-0.010386334,-0.042685427,-0.010153964,-0.043008287,0.00041206216,0.018717408,0.056969274,-0.007965898,0.022538152,0.037889253,-0.022060005,0.040248625,0.0026941386,-0.033693906,0.036887735,0.021640118,0.0004890679,0.0049053933,0.030682547,-0.042785484,0.0276463,-0.010698542,-0.032243837,-0.04980044,-0.006250256,-0.08398645,0.08326083,-0.061768297,0.0019186974,-0.008840226,-0.032890826,-0.009638705,0.023171084,0.018472398,-0.023461077,0.010621842,-0.096355125,-0.039134104,-0.083515316,0.007366742,-0.021468662,0.013232376,0.0167774,0.044029724,0.07442194,-0.009224242,0.018658366,-0.0103734,-0.012920856,-0.0004080733,-0.02072149,-0.00082613394,-0.004309335,-0.05068853,0.08554774,0.07880214,0.015139871,0.0041368217,-0.0021197274,0.02435904,0.0062768157,-0.03352535,-0.10306291,-0.031901244,0.016929442,0.05682601,-0.019786954,-0.018609602,0.024155572,-0.0187632,-0.0012688077,-0.028794872,-0.051212084,-0.01754077,0.038450673,0.010648555,-0.009570273,-0.04172987,0.012952013,0.038332216,0.031704247,0.023811541,-0.048731335,-0.014331587,-0.023012746,-0.052493844,0.032458037,-0.010705096,-0.005419399,-0.019000363,0.0461611,0.004315469,-0.023447525,-0.011133653,-0.06343584,-0.036895026,-0.015350572,-0.0126166,-0.010357374,0.019272275,-0.0093753,0.00014087296,-0.004518638,0.022586353,-0.008280694,0.033319306,0.011765899,0.054340515,-0.061332554,0.0065626525,-0.0060322997,0.042692017,-0.0009555642,-0.02957823,-0.019036533,-0.021818532,-0.05032644,0.036531452,-0.008498015,0.02674584,-0.04283449,-0.074518815,-0.07320975,-0.01627639,0.038214307,0.0035738319,-0.08437107,-0.038392827,0.014427204,-0.015918985,0.02485681,-0.029504659,0.04369869,-0.023069259,0.012915666,0.011359131,-0.033697676,0.06257847,-0.03885184,-0.04115986,-0.016272403,-0.060939558,-0.08081899,-0.024436707,-0.0008300694,0.06185064,-0.04358239,0.056560844,0.008913497,-0.0022802935,-0.02253517,0.0060491646,0.03807881,-0.035905313,-0.028074546,0.012484471,-0.0019498504,0.053624365,-0.012292817,0.014170841,-0.039525125,0.045722816,0.11470824,0.028123362,0.013379322,-0.045437783,0.0044059893,-0.01674869,-0.0332006,-0.04408595,-0.035372924,-0.038210813]",
+      "model": "nomic-embed-text:latest",
+      "created_at": "2026-10-09 11:38:47.302369+00:00"
+    },
+    {
+      "id": "5088acc5-3917-40f7-aa0b-eacf85a9effb",
+      "data": {
+        "id": "5088acc5-3917-40f7-aa0b-eacf85a9effb",
+        "owner": "Unassigned",
+        "title": "Expired password reset links",
+        "category": "Account Access",
+        "priority": "High",
+        "hypothesis": "Cause requires investigation of the cited evidence.",
+        "description": "Repeated password reset failures with expired links, leading to account lockout."
+      },
+      "centroid": "[0.031157054,0.071633466,-0.1422944,0.011581493,0.06254535,-0.015797982,-0.04810531,0.028162943,0.051366236,-0.037989166,-0.09810644,0.040653497,0.006485181,-0.029409202,-0.008537491,-0.011844384,0.06389964,-0.030732356,-0.0019206621,-0.00052154483,-0.03746041,-0.070878774,-0.044494204,-0.03264942,0.0078071584,0.030520633,0.018971264,0.008865459,-0.10576623,0.024701566,0.049333334,-0.046755943,0.021757385,-0.047422018,-0.014836667,-0.073412195,0.007940781,-0.015433272,0.00030752475,-0.0068006483,0.041516595,0.051298358,0.036128048,0.0056038946,0.016725706,-0.024667896,0.03474646,0.04228508,0.096269034,-0.047981285,0.02670102,-0.018703172,-0.025100749,-0.0067628534,0.060268387,0.053302657,0.02653365,-0.0032376202,0.033263117,-0.021104883,0.0732764,0.02426892,0.025006304,0.080553636,0.03601178,-0.00011124317,-0.013070251,0.04991015,0.07243183,-0.060384277,0.06472757,-0.011381509,-0.012825767,-0.017554346,0.014898155,0.006370122,-0.048282605,-0.029782012,0.0254235,0.018619964,-0.020067602,0.0044195624,0.02351849,0.030356126,0.052303813,0.02915431,-0.02457007,0.0061678393,-0.009395638,0.0576293,0.01168435,0.0011915336,0.028705304,0.032031145,-0.080934696,0.033044282,0.029261122,0.012841695,-0.09190747,-0.015595007,-0.056192413,-0.05521742,0.016236812,0.0047664824,0.04449654,0.008171637,0.012129854,0.020678282,-0.03434578,0.04049365,-0.06936443,0.062354162,0.0033201643,0.017057784,-0.01844297,-0.011296469,0.047640707,-0.03285147,0.027885605,0.03229312,-0.038868204,0.0017335655,0.019868456,0.054229833,0.0014237079,-0.024436869,0.013721834,-0.006888794,0.045858275,-0.032476623,-0.029628381,0.014140697,-0.026565598,0.0025579913,0.0118100485,0.028690947,-0.006057584,-0.04068042,-0.008259516,0.0021909089,0.016312938,-0.08307701,0.017969225,-0.026463684,0.050593585,-0.0737476,0.033115603,-0.023268197,-0.060865927,0.036298223,0.0055916877,-0.015446914,-0.033556677,0.016993778,0.012344435,-0.05460548,-0.0033254218,-0.02281796,0.022735339,0.06519008,0.029095756,-0.036992736,-0.022943797,0.077016436,-0.0028198792,-0.03738925,-0.023662878,0.049105853,-0.01696522,0.019966086,-0.015642071,-0.0023005593,-0.022436766,0.00022208558,0.05114096,0.014848169,0.032171637,-0.011257551,0.01777647,-0.08370229,0.030647418,-0.03930176,0.07313643,0.035415024,-0.027939744,-0.021460157,0.015458279,-0.015795669,-0.043331493,-0.050031755,-0.03208778,0.01631289,-0.05499956,-0.04989797,-0.036520224,-0.031577054,0.046817508,0.020380098,0.018092517,-0.02530768,-0.02064469,-0.014689329,-0.030086264,0.00511523,-0.042239558,0.042108923,-0.006239133,0.02875262,-0.013626601,-0.015050835,0.080575965,0.04179722,-0.03567306,0.047498062,-0.038437072,-0.0007433596,0.028965412,-0.039698686,-0.024965093,0.001179348,0.03374642,0.031213764,-0.017956015,-0.028579997,0.011899142,0.00515575,-0.05135634,-0.015923748,-0.018517397,0.017752424,-0.018706676,-0.08977423,0.026744591,0.0050745276,-0.015857058,0.024250383,0.012627666,-0.0019406077,0.0062130843,-0.02187426,0.017040078,0.0373514,0.00061806553,0.008678731,0.009718672,-0.03244021,0.014372069,-0.05144589,0.042100705,0.040906467,0.0031251397,0.033210423,0.028555404,0.058873717,-0.018513093,0.0036198655,-0.012273728,-0.0003341491,0.02230211,-0.0457327,0.037283566,-0.003629739,-0.014394116,-0.034870327,0.002333319,-0.036728993,-0.013976276,-0.009355144,0.0012168906,-0.00974751,-0.029432025,0.06950757,-0.019802414,0.045198016,0.03197657,-0.019926125,-0.019404572,-0.031978082,-0.046514105,0.052854225,-0.011248551,-0.03412151,-0.027392104,0.0490633,0.005655758,0.029043108,0.038359985,0.035390545,-0.0060243765,0.01229695,0.005225153,0.012834593,0.005816588,0.026073532,0.010405632,0.011861676,0.04903387,0.01005595,-0.016859751,-0.05112622,-0.007024394,0.053563464,0.016544843,0.031148566,0.020592116,-0.028025653,0.021358404,0.029528601,0.042259518,0.0260627,-0.039500367,0.054297153,0.0015944848,0.003242787,-0.050844084,0.04463928,0.05678252,0.028553132,0.019849505,-0.03805912,-0.007973844,-0.026628435,0.0072225053,0.0057850443,0.02272256,0.019729314,0.008721985,0.030379752,-0.09007761,0.016610092,0.020648746,0.048248187,0.017258035,-0.054840315,-0.011659866,0.020583222,0.010862223,-0.008067091,0.021937488,-0.002505441,0.096655734,-0.03323481,-0.037705734,-0.033896025,0.021501468,0.014675567,-0.018910581,-0.035560854,0.06612631,-0.012661057,-0.06107002,0.04638468,-0.018190157,0.01354098,0.0055122836,0.002287446,0.0030264272,0.052422006,-0.017971456,0.037816416,0.035126943,-0.005392678,0.026864478,-0.058887154,-0.021749217,0.039096195,0.06468914,0.011108471,-0.015569826,-0.05808134,0.022782158,-0.040706675,0.006984638,-0.006247625,0.01016328,0.036525868,-0.07500094,-0.044154406,-0.0061414866,0.041463364,0.020483859,-0.03456528,-0.043837946,0.0404788,0.031231182,-0.045422137,0.028747965,-0.0511691,0.009768206,0.040990975,-0.059850324,0.041910324,-0.016862148,0.046846587,0.028858814,-0.043032177,0.019053036,-0.010502539,0.012004562,0.007922754,-0.04232693,-0.03282828,0.013415004,0.028679155,0.0026487065,0.099074766,-0.036377203,-0.015410559,0.03823083,0.016707014,0.0076720826,0.03715215,-0.004407601,-0.042098343,-0.0023746693,0.002338694,0.062834576,0.00040238618,-0.03472255,-0.03361857,0.03206449,0.026521163,0.014118957,0.018839067,-0.014165849,0.0136433635,-0.042633854,0.0142523665,0.039420776,-0.09758153,0.026806386,0.030331893,-0.020666264,-0.024403386,-0.028585099,-0.0064440547,0.060496923,-0.0026391204,-0.0009920568,0.04675747,0.042632464,-0.017258896,-0.0037504435,0.025304543,0.021737806,0.089238465,0.05216014,0.003991106,-0.012036869,-0.0136737935,-0.009231368,-0.022723801,0.07470559,-0.034614038,0.07352841,-0.08409645,-0.012557733,0.042718094,-0.0004440371,0.062481727,-0.019296326,0.005909663,-0.023573255,0.040419757,-0.022181222,-0.052125607,0.04829452,-0.01603607,1.9537332e-05,0.07103848,0.009999485,0.019408181,0.040953323,0.004889065,0.005384171,-0.01005669,-0.030922884,0.028924197,0.028247608,0.025432134,-0.0013393174,0.0005701624,-0.04745534,-0.018191827,0.00816155,-0.013040026,0.013726063,0.020252198,0.046769626,0.028631099,0.06670604,0.038610376,0.024115706,0.01231094,0.008775834,-0.017629838,-0.06812556,0.02229211,0.02900933,-0.033754714,0.03324569,0.032705527,-0.0073861713,-0.02487631,0.057356298,-0.06291496,-0.029970175,-0.092965834,-0.021193294,-0.04584709,-0.044767223,-0.03196814,-0.042872097,0.057578962,0.081580184,-0.008879209,-0.02885487,-0.013654381,-0.027378898,0.035280768,-0.014537212,0.019646384,-0.055019822,0.026283003,-0.08271589,-0.0011646888,0.007766895,0.01646737,0.024969436,-0.013068432,0.0007430608,0.023895187,-0.02513693,0.016532918,0.025422804,-0.006444353,-0.05103607,0.000993315,-0.011185389,0.04394214,-0.008131855,0.028211785,0.004286795,-0.004165503,-0.00014319591,-0.017629009,-0.0071040536,0.018530577,0.0033269636,-0.06830969,0.015989957,-0.05531499,-0.027663402,-0.041421406,0.0027297207,-0.022165217,0.020037057,0.022591636,-0.039132185,0.013289977,0.018522156,0.027782297,0.025014406,0.010627006,0.025209876,-0.07248684,-0.0646185,-0.02764415,-0.008250039,0.0059212698,0.01385458,-0.028743424,-0.058234278,-0.022301534,-0.012900736,0.009541482,-0.013490818,-0.025862135,-0.015899532,-0.050883584,-0.04837766,-0.02048328,0.008302977,0.013426251,-0.03757826,0.0022910438,-0.043946743,-0.055986032,0.062983915,0.0028074181,-0.012426571,0.03933992,-0.0325869,0.0019443026,-0.00086513197,0.043302163,-0.027049365,-0.033833284,-0.00011467299,-0.05791332,0.010572221,0.050458148,0.05652422,-0.020486474,-0.028886443,0.05261767,-0.014921212,0.025272354,0.024616687,-0.015303628,0.012823628,0.011619653,0.025047326,-0.005618456,0.044143524,-0.048203293,0.076650076,0.0495952,-0.018231163,0.0069881175,-0.0050330805,-0.07994734,0.038552765,0.002400445,-0.023613844,0.00034817331,-0.031260174,-0.033164572,-0.0018857894,-0.015597053,0.008540779,0.0006319873,-0.07084038,-0.04385617,-0.060395416,0.01539372,0.0012980223,-0.00086663454,-0.03578071,0.026491543,0.023341263,-0.004791452,-0.025828786,0.0073820404,0.01699893,-0.020532705,0.02451004,0.0016122941,-0.012178167,-0.047279213,0.10744764,0.046625007,-0.0014685956,0.02437235,0.004447427,0.024838794,-0.011690797,-0.063600644,-0.04568712,-0.032412026,0.017721627,0.0588745,-0.023170616,-0.0059555084,0.011252796,-0.021346608,0.060296007,-0.091979064,-0.072789796,-0.021566419,0.0058608744,-0.015123889,0.052584257,-0.035100386,0.04105793,0.05528485,-0.009903532,0.0032227028,-0.0028436235,0.047421485,-0.04828077,0.017352926,-0.012821345,-0.011278052,-0.007845167,0.08983882,0.035772737,-0.023810066,-0.01033211,-0.013724566,-0.0326509,-0.03780164,0.014293493,-0.055707794,-0.029051578,0.018080642,0.0023874608,-0.037426613,-0.010097824,0.009715071,0.0004433236,0.0552162,0.025876168,0.028405378,-0.0012928088,-0.052931577,0.0064410283,-0.013725658,-0.003775531,0.0076666605,-0.008531869,-0.032715894,0.0012322698,0.035366822,0.06319088,-0.04249159,0.03541209,-0.0671896,-0.03840417,-0.023971321,0.017332345,-0.005842747,-0.06509519,-0.041126586,-0.007974793,0.0071917977,0.03950605,-0.06251279,0.0107494965,0.014530214,-0.034504488,-0.048134215,-0.008077531,0.03423232,0.002541535,-0.013916771,-0.027456526,0.005311023,-0.07992686,-0.051676407,-0.045516536,0.049384598,-0.021088019,-0.01726576,0.01657598,-0.049894195,-0.010048077,-0.00065363734,-0.010304869,-0.008778651,0.007030461,-0.011597748,-0.047648504,0.043158144,-0.004411037,0.027452793,-0.044211384,0.006602417,0.08874315,0.036394652,0.035832625,0.020406213,0.035732675,-0.04529599,-0.013798944,-0.043410867,-0.0354098,-0.009755439]",
+      "model": "nomic-embed-text:latest",
+      "created_at": "2026-10-09 11:38:48.753999+00:00"
+    }
+  ],
+  "call_issues": [
+    {
+      "call_id": "dc0375b0-d4c3-4fff-879b-f7f9f3adcf72",
+      "issue_id": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+      "mentions": 7,
+      "evidence": {
+        "indices": [0, 1, 2, 7, 8, 9, 10]
+      }
+    },
+    {
+      "call_id": "52591f93-3655-47d1-8c1b-aebb34f4fcac",
+      "issue_id": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+      "mentions": 4,
+      "evidence": {
+        "indices": [2, 3, 7, 13]
+      }
+    },
+    {
+      "call_id": "8a518650-95bf-46e5-aea5-c32e2ddeef19",
+      "issue_id": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+      "mentions": 3,
+      "evidence": {
+        "indices": [0, 6, 7]
+      }
+    },
+    {
+      "call_id": "8a518650-95bf-46e5-aea5-c32e2ddeef19",
+      "issue_id": "d4bebfd3-c294-4f9e-8f49-0955057840da",
+      "mentions": 2,
+      "evidence": {
+        "indices": [1, 12]
+      }
+    },
+    {
+      "call_id": "2a13b8bf-d559-4e20-9959-036f586f0512",
+      "issue_id": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+      "mentions": 12,
+      "evidence": {
+        "indices": [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 15, 17]
+      }
+    },
+    {
+      "call_id": "66246230-1d49-4a35-9785-2dfaa4db09a2",
+      "issue_id": "7c273c1f-f068-43f9-bce6-f14d74b1ad19",
+      "mentions": 8,
+      "evidence": {
+        "indices": [0, 1, 2, 3, 5, 7, 8, 9]
+      }
+    },
+    {
+      "call_id": "295fe5e2-f8c0-4f36-afcf-afa9e9a2fab0",
+      "issue_id": "5088acc5-3917-40f7-aa0b-eacf85a9effb",
+      "mentions": 10,
+      "evidence": {
+        "indices": [0, 1, 2, 3, 5, 7, 8, 9, 14, 15]
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "9633c3b0-ac1e-41a2-ab73-7389b4a1c8af",
+      "issue_id": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+      "data": {
+        "id": "9633c3b0-ac1e-41a2-ab73-7389b4a1c8af",
+        "model": "qwen3:4b-instruct",
+        "title": "Investigate checkout payment failures",
+        "effort": "Requires review",
+        "issueId": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+        "priority": "High",
+        "description": "Repeated payment failure during checkout",
+        "promptVersion": "call-analysis-v2",
+        "evidenceCallId": "dc0375b0-d4c3-4fff-879b-f7f9f3adcf72",
+        "proposedAction": "Inspect payment decline logs for the three attempted transactions and verify if any charge was applied.",
+        "expectedOutcome": "Successful payment completion without error messages",
+        "evidenceSegments": [0, 1, 2, 7, 8, 9, 10]
+      },
+      "created_at": "2026-10-09 11:37:08.038340+00:00"
+    },
+    {
+      "id": "dddb5518-7de8-4a68-a6e4-d98377c1a47e",
+      "issue_id": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+      "data": {
+        "id": "dddb5518-7de8-4a68-a6e4-d98377c1a47e",
+        "model": "qwen3:4b-instruct",
+        "title": "Clarify refund status messages",
+        "effort": "Requires review",
+        "issueId": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+        "priority": "Medium",
+        "description": "Customer reports confusion about what 'processing' means in refund emails and requests clearer stage explanations for returns.",
+        "promptVersion": "call-analysis-v2",
+        "evidenceCallId": "52591f93-3655-47d1-8c1b-aebb34f4fcac",
+        "proposedAction": "Review return email templates to add explanatory text for each stage (e.g., 'processing', 'refunded') and validate with customer feedback.",
+        "expectedOutcome": "Refund status updates include clear, user-friendly descriptions of each processing stage.",
+        "evidenceSegments": [2, 3, 7, 13]
+      },
+      "created_at": "2026-10-09 11:38:26.055631+00:00"
+    },
+    {
+      "id": "53b56536-05ca-4b8e-9578-60a88249a43c",
+      "issue_id": "d4bebfd3-c294-4f9e-8f49-0955057840da",
+      "data": {
+        "id": "53b56536-05ca-4b8e-9578-60a88249a43c",
+        "model": "qwen3:4b-instruct",
+        "title": "Clarify case ownership and follow-up",
+        "effort": "Requires review",
+        "issueId": "d4bebfd3-c294-4f9e-8f49-0955057840da",
+        "priority": "High",
+        "description": "No update provided on the status of a failed payment despite open case.",
+        "promptVersion": "call-analysis-v2",
+        "evidenceCallId": "8a518650-95bf-46e5-aea5-c32e2ddeef19",
+        "proposedAction": "Audit case update frequency and ensure timely communication to customers",
+        "expectedOutcome": "Regular updates on payment and order status",
+        "evidenceSegments": [1, 12]
+      },
+      "created_at": "2026-10-09 11:38:26.414789+00:00"
+    },
+    {
+      "id": "feb4ab98-d3ac-41e2-b523-6cb1fa96df1c",
+      "issue_id": "7c273c1f-f068-43f9-bce6-f14d74b1ad19",
+      "data": {
+        "id": "feb4ab98-d3ac-41e2-b523-6cb1fa96df1c",
+        "model": "qwen3:4b-instruct",
+        "title": "Improve document upload guidance",
+        "effort": "Requires review",
+        "issueId": "7c273c1f-f068-43f9-bce6-f14d74b1ad19",
+        "priority": "High",
+        "description": "PII document upload fails repeatedly with no error explanation or guidance.",
+        "promptVersion": "call-analysis-v2",
+        "evidenceCallId": "66246230-1d49-4a35-9785-2dfaa4db09a2",
+        "proposedAction": "Review the secure upload process and validate error messaging for file format, image quality, and connection issues.",
+        "expectedOutcome": "Successful document upload with clear failure reasons and instructions.",
+        "evidenceSegments": [0, 1, 2, 3, 5, 7, 8, 9]
+      },
+      "created_at": "2026-10-09 11:38:47.302369+00:00"
+    },
+    {
+      "id": "7a3e9904-d9e3-47e8-86e6-fa68816b1b70",
+      "issue_id": "5088acc5-3917-40f7-aa0b-eacf85a9effb",
+      "data": {
+        "id": "7a3e9904-d9e3-47e8-86e6-fa68816b1b70",
+        "model": "qwen3:4b-instruct",
+        "title": "Review password reset expiry",
+        "effort": "Requires review",
+        "issueId": "5088acc5-3917-40f7-aa0b-eacf85a9effb",
+        "priority": "High",
+        "description": "Repeated password reset failures with expired links, leading to account lockout.",
+        "promptVersion": "call-analysis-v2",
+        "evidenceCallId": "295fe5e2-f8c0-4f36-afcf-afa9e9a2fab0",
+        "proposedAction": "Review the password reset email flow to identify why links expire prematurely.",
+        "expectedOutcome": "Successful access via valid password reset link",
+        "evidenceSegments": [0, 1, 2, 3, 5, 7, 8, 9, 14, 15]
+      },
+      "created_at": "2026-10-09 11:38:48.753999+00:00"
+    }
+  ],
+  "summaries": [
+    {
+      "days": 7,
+      "report": {
+        "overview": "Across 6 analyzed calls from 5 customers, 4 calls had negative sentiment, 2 positive and 0 neutral. 4 calls were linked to an issue. 1 customers contacted support more than once in this period. The suggestions below identify reviews to prioritize; they do not establish a root cause.",
+        "strengths": [
+          {
+            "title": "Positive experience: Notification preferences explained clearly",
+            "observation": "Customer successfully configured notification preferences with no reported issues.",
+            "evidenceRefs": ["CALL-1290"]
+          },
+          {
+            "title": "Positive experience: Customer praises clear and helpful support",
+            "observation": "No customer-reported product or service problems were stated. The caller expressed satisfaction with the account setup assistance and thanked the team.",
+            "evidenceRefs": ["CALL-1291"]
+          }
+        ],
+        "advice": [
+          {
+            "title": "Investigate checkout error messaging and document upload workflow",
+            "observation": "Repeated payment failures and document upload issues occur without clear error messages or guidance, indicating a systemic flaw in user-facing functionality.",
+            "evidenceRefs": ["CALL-1284", "CALL-1288"],
+            "area": "Product",
+            "priority": "High",
+            "recommendation": "Investigate the checkout error messaging and document upload workflow to identify root causes and improve error feedback and user instructions.",
+            "validation": "Reproduce the reported scenario and review application logs and tests. Confirm the cause with the engineering team before changing code.",
+            "successMetric": "Issue-related contacts per relevant product attempt, using application logs for the denominator. Establish a baseline before setting a target."
+          },
+          {
+            "title": "Review case closure and follow-up protocols",
+            "observation": "Open cases remain unresolved despite agent confirmation of recording issues, with customers expressing frustration over lack of follow-up.",
+            "evidenceRefs": ["CALL-1285", "CALL-1286"],
+            "area": "Operations",
+            "priority": "High",
+            "recommendation": "Review case closure and follow-up protocols to ensure all reported issues are tracked and resolved with clear outcomes before closing.",
+            "validation": "Review case ownership, handoff records and promised updates against actual follow-ups. Confirm the service expectations before changing the process.",
+            "successMetric": "Repeat contacts about the same issue per case, using case records to match follow-ups. Establish a baseline before setting a target."
+          }
+        ],
+        "model": "qwen3:4b-instruct",
+        "promptVersion": "support-summary-v4"
+      }
+    },
+    {
+      "days": 30,
+      "report": {
+        "overview": "Across 8 analyzed calls from 6 customers, 6 calls had negative sentiment, 2 positive and 0 neutral. 6 calls were linked to an issue. 2 customers contacted support more than once in this period. The suggestions below identify reviews to prioritize; they do not establish a root cause.",
+        "strengths": [
+          {
+            "title": "Positive experience: Notification preferences explained clearly",
+            "observation": "Customer successfully configured notification preferences with no reported issues.",
+            "evidenceRefs": ["CALL-1290"]
+          },
+          {
+            "title": "Positive experience: Customer praises clear and helpful support",
+            "observation": "No customer-reported product or service problems were stated. The caller expressed satisfaction with the account setup assistance and thanked the team.",
+            "evidenceRefs": ["CALL-1291"]
+          }
+        ],
+        "advice": [
+          {
+            "title": "Improve refund process communication",
+            "observation": "Customer reports unclear refund process messaging in return emails, expressing frustration over lack of clarity in communication.",
+            "evidenceRefs": ["CALL-1287"],
+            "area": "Policy",
+            "priority": "Medium",
+            "recommendation": "Review refund process messaging in email communications to ensure clarity and consistency across all stages of the refund lifecycle.",
+            "validation": "Compare the policy documents and customer-facing explanations with the cited experiences. Confirm the existing rules with the policy owner before changing them.",
+            "successMetric": "Policy clarification contacts as a share of relevant support calls. Establish a baseline before setting a target."
+          },
+          {
+            "title": "Fix document upload failure and error messaging",
+            "observation": "Customer reports repeated failure to upload documents during account verification with no clear error message or instructions, indicating a systemic issue in the upload process.",
+            "evidenceRefs": ["CALL-1288"],
+            "area": "Product",
+            "priority": "High",
+            "recommendation": "Investigate the document upload functionality to identify root causes of failure and improve error feedback and user guidance.",
+            "validation": "Reproduce the reported scenario and review application logs and tests. Confirm the cause with the engineering team before changing code.",
+            "successMetric": "Issue-related contacts per relevant product attempt, using application logs for the denominator. Establish a baseline before setting a target."
+          },
+          {
+            "title": "Standardize follow-up for unresolved technical issues",
+            "observation": "Multiple customers report unresolved payment failures, inconsistent refund status, and failed password resets with no clear resolution or follow-up.",
+            "evidenceRefs": [
+              "CALL-1285",
+              "CALL-1284",
+              "CALL-1286",
+              "CALL-1289"
+            ],
+            "area": "Operations",
+            "priority": "High",
+            "recommendation": "Establish a standardized follow-up protocol for cases involving unresolved technical failures to ensure timely and consistent resolution.",
+            "validation": "Review case ownership, handoff records and promised updates against actual follow-ups. Confirm the service expectations before changing the process.",
+            "successMetric": "Repeat contacts about the same issue per case, using case records to match follow-ups. Establish a baseline before setting a target."
+          }
+        ],
+        "model": "qwen3:4b-instruct",
+        "promptVersion": "support-summary-v4"
+      }
+    },
+    {
+      "days": 90,
+      "report": {
+        "overview": "Across 8 analyzed calls from 6 customers, 6 calls had negative sentiment, 2 positive and 0 neutral. 6 calls were linked to an issue. 2 customers contacted support more than once in this period. The suggestions below identify reviews to prioritize; they do not establish a root cause.",
+        "strengths": [
+          {
+            "title": "Positive experience: Notification preferences explained clearly",
+            "observation": "Customer successfully configured notification preferences with no reported issues.",
+            "evidenceRefs": ["CALL-1290"]
+          },
+          {
+            "title": "Positive experience: Customer praises clear and helpful support",
+            "observation": "No customer-reported product or service problems were stated. The caller expressed satisfaction with the account setup assistance and thanked the team.",
+            "evidenceRefs": ["CALL-1291"]
+          }
+        ],
+        "advice": [
+          {
+            "title": "Improve refund process communication",
+            "observation": "Customer reports unclear refund process messaging in return emails, expressing frustration over lack of clarity in communication.",
+            "evidenceRefs": ["CALL-1287"],
+            "area": "Policy",
+            "priority": "Medium",
+            "recommendation": "Review refund process messaging in email communications to ensure clarity and consistency across all stages of the refund lifecycle.",
+            "validation": "Compare the policy documents and customer-facing explanations with the cited experiences. Confirm the existing rules with the policy owner before changing them.",
+            "successMetric": "Policy clarification contacts as a share of relevant support calls. Establish a baseline before setting a target."
+          },
+          {
+            "title": "Fix document upload failure and error messaging",
+            "observation": "Customer reports repeated failure to upload documents during account verification with no clear error message or instructions, indicating a systemic issue in the upload process.",
+            "evidenceRefs": ["CALL-1288"],
+            "area": "Product",
+            "priority": "High",
+            "recommendation": "Investigate the document upload functionality to identify root causes of failure and improve error feedback and user guidance.",
+            "validation": "Reproduce the reported scenario and review application logs and tests. Confirm the cause with the engineering team before changing code.",
+            "successMetric": "Issue-related contacts per relevant product attempt, using application logs for the denominator. Establish a baseline before setting a target."
+          },
+          {
+            "title": "Standardize follow-up for unresolved technical issues",
+            "observation": "Multiple customers report unresolved payment failures, inconsistent refund status, and failed password resets with no clear resolution or follow-up.",
+            "evidenceRefs": [
+              "CALL-1285",
+              "CALL-1284",
+              "CALL-1286",
+              "CALL-1289"
+            ],
+            "area": "Operations",
+            "priority": "High",
+            "recommendation": "Establish a standardized follow-up protocol for cases involving unresolved technical failures to ensure timely and consistent resolution.",
+            "validation": "Review case ownership, handoff records and promised updates against actual follow-ups. Confirm the service expectations before changing the process.",
+            "successMetric": "Repeat contacts about the same issue per case, using case records to match follow-ups. Establish a baseline before setting a target."
+          }
+        ],
+        "model": "qwen3:4b-instruct",
+        "promptVersion": "support-summary-v4"
+      }
+    }
+  ],
+  "editorialNotes": "Titles shortened for readability; verified over-redaction of generic words corrected in this fictional catalog. Model findings otherwise retained."
+}

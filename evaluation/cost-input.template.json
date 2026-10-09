@@ -1,0 +1,11 @@
+{
+  "currency": null,
+  "serverHourlyPrice": null,
+  "provisionedHoursPerMonth": null,
+  "targetUtilization": null,
+  "measuredCallsPerHour": null,
+  "storageGB": null,
+  "storagePricePerGBMonth": null,
+  "otherMonthlyCost": null,
+  "meanAudioSecondsPerCall": null
+}

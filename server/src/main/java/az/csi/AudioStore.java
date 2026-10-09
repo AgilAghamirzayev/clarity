@@ -55,6 +55,17 @@ class AudioStore {
   }
 
   static String mediaType(byte[] head) {
+    if (head.length >= 16
+        && new String(head, 4, 4, java.nio.charset.StandardCharsets.US_ASCII).equals("ftyp")) {
+      var brand = new String(head, 8, 4, java.nio.charset.StandardCharsets.US_ASCII);
+      int boxSize = java.nio.ByteBuffer.wrap(head, 0, 4).getInt();
+      if (boxSize >= 16
+          && boxSize % 4 == 0
+          && java.util.Set.of(
+                  "isom", "iso2", "iso3", "iso4", "iso5", "iso6", "iso7", "iso8", "iso9", "mp41",
+                  "mp42", "avc1", "M4A ", "dash")
+              .contains(brand)) return "video/mp4";
+    }
     if (head.length >= 12
         && new String(head, 0, 4, java.nio.charset.StandardCharsets.US_ASCII).equals("RIFF")
         && new String(head, 8, 4, java.nio.charset.StandardCharsets.US_ASCII).equals("WAVE"))

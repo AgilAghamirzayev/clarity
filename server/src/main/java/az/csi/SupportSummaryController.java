@@ -12,9 +12,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/v1/support-summary")
 class SupportSummaryController {
   final Database db;
+  final AnalysisProfiles profiles;
 
-  SupportSummaryController(Database db) {
+  SupportSummaryController(Database db, AnalysisProfiles profiles) {
     this.db = db;
+    this.profiles = profiles;
   }
 
   record Request(int days, boolean includeSamples) {}
@@ -52,7 +54,7 @@ class SupportSummaryController {
       @RequestHeader("Idempotency-Key") String key,
       @RequestBody Request input) {
     var user = Security.identity(auth);
-    Security.require(user, "ADMIN", "ANALYST", "REVIEWER");
+    Security.require(user, "ADMIN", "ANALYST", "REVIEWER", "DEMO");
     validate(input.days());
     if (key.length() < 8 || key.length() > 128)
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid request key");
@@ -82,7 +84,18 @@ class SupportSummaryController {
                 throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "A summary for this period is already being prepared. Refresh to view it.");
-              var data = snapshot(input.days(), input.includeSamples(), Instant.now());
+              if (user.role().equals("DEMO")
+                  && db.sql.queryForObject(
+                          "select count(*) from support_summaries where not is_demo_seed",
+                          Integer.class)
+                      >= 3)
+                throw new ResponseStatusException(
+                    HttpStatus.TOO_MANY_REQUESTS,
+                    "This demo workspace allows three summary reports");
+              var data =
+                  new LinkedHashMap<>(
+                      snapshot(input.days(), input.includeSamples(), Instant.now()));
+              data.put("analysisProfile", profiles.snapshot());
               if (((Number) ((Map<?, ?>) data.get("current")).get("calls")).longValue() == 0)
                 throw new ResponseStatusException(
                     HttpStatus.CONFLICT,

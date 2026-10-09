@@ -1,3 +1,4 @@
+import { Select } from "../../components/Select";
 import { useWorkspace } from "../../data/queries";
 import {
   auditLabels,
@@ -9,9 +10,11 @@ import {
 } from "../../domain/presentation";
 import { useState, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "../../data/api";
+import { api, guestMode } from "../../data/api";
 import { useIdentity } from "./identity";
 import { Badge, PageHeader, Panel } from "../../components/ui";
+import { DemoConnections } from "../settings/DemoConnections";
+import { PlatformStatus } from "./PlatformStatus";
 interface Integration {
   id: string;
   kind: string;
@@ -136,6 +139,8 @@ export default function LiveSettings() {
   return (
     <>
       <PageHeader title="Workspace settings" />
+      <PlatformStatus />
+      {guestMode && <DemoConnections />}
       <div className="settings-grid">
         <Panel title="Notifications">
           <div className="integration-list">
@@ -200,17 +205,17 @@ export default function LiveSettings() {
                 <form className="platform-form" onSubmit={configure}>
                   <label>
                     Integration
-                    <select
+                    <Select
                       name="kind"
+                      aria-label="Integration"
                       value={integrationKind}
-                      onChange={(event) =>
-                        setIntegrationKind(event.target.value)
-                      }
-                    >
-                      <option value="crm">CRM webhook</option>
-                      <option value="jira">Jira Cloud</option>
-                      <option value="slack">Slack</option>
-                    </select>
+                      onValueChange={setIntegrationKind}
+                      options={[
+                        { value: "crm", label: "CRM webhook" },
+                        { value: "jira", label: "Jira Cloud" },
+                        { value: "slack", label: "Slack" },
+                      ]}
+                    />
                   </label>
                   <label>
                     HTTPS endpoint
@@ -327,13 +332,14 @@ export default function LiveSettings() {
                 </label>
                 <label>
                   Role
-                  <select name="role">
-                    {["VIEWER", "ANALYST", "REVIEWER", "ADMIN"].map((r) => (
-                      <option key={r} value={r}>
-                        {roleLabels[r]}
-                      </option>
-                    ))}
-                  </select>
+                  <Select
+                    name="role"
+                    aria-label="Role"
+                    defaultValue="VIEWER"
+                    options={["VIEWER", "ANALYST", "REVIEWER", "ADMIN"].map(
+                      (value) => ({ value, label: roleLabels[value] }),
+                    )}
+                  />
                 </label>
                 {createUser.isError && (
                   <p role="alert" className="field-error">

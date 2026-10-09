@@ -42,7 +42,11 @@ class WorkspaceController {
                             r.getObject("id")));
                     c.put("id", r.getString("id"));
                     c.put("reference", "CALL-" + r.getLong("display_number"));
-                    c.put("customer", "Customer " + r.getLong("customer_number"));
+                    c.put(
+                        "customer",
+                        meta.containsKey("demoSeedVersion")
+                            ? meta.get("customerLabel")
+                            : "Customer " + r.getLong("customer_number"));
                     c.put("duration", transcript.get("duration"));
                     c.put("language", transcript.get("language"));
                     c.put("sentiment", analysis.get("sentiment"));

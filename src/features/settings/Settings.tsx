@@ -2,41 +2,12 @@ import { apiMode } from "../../data/api";
 import LiveSettings from "../platform/LiveSettings";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  AudioLines,
-  Database,
-  GitPullRequest,
-  MessageSquare,
-  RotateCcw,
-  ShieldCheck,
-} from "lucide-react";
+import { RotateCcw, ShieldCheck } from "lucide-react";
+import { DemoConnections } from "./DemoConnections";
 import { Badge, PageHeader, Panel } from "../../components/ui";
 import { Modal } from "../../components/Modal";
 import { repository, workspaceKey } from "../../data/queries";
 
-const integrations = [
-  {
-    name: "Contact center",
-    detail:
-      "Import call recordings and metadata through a backend ingestion service.",
-    icon: AudioLines,
-  },
-  {
-    name: "Transcription & AI",
-    detail: "Connect STT, redaction and analysis workers through your backend.",
-    icon: Database,
-  },
-  {
-    name: "Jira",
-    detail: "Create action items after an authorized human review.",
-    icon: GitPullRequest,
-  },
-  {
-    name: "Slack & email",
-    detail: "Deliver alerts for critical issues and decision updates.",
-    icon: MessageSquare,
-  },
-];
 export default function Settings() {
   return apiMode ? <LiveSettings /> : <DemoSettings />;
 }
@@ -65,7 +36,7 @@ function DemoSettings() {
             <div>
               <dt>Environment</dt>
               <dd>
-                <Badge>Local demo</Badge>
+                <Badge>Demo</Badge>
               </dd>
             </div>
             <div>
@@ -81,8 +52,8 @@ function DemoSettings() {
               <dd>This browser only</dd>
             </div>
             <div>
-              <dt>Authentication</dt>
-              <dd>Not connected</dd>
+              <dt>Account</dt>
+              <dd>Demo reviewer · No sign-in required</dd>
             </div>
           </dl>
           <div className="notice">
@@ -118,25 +89,7 @@ function DemoSettings() {
           </div>
         </Panel>
       </div>
-      <Panel
-        title="Integration readiness"
-        description="These connections need backend services and are not active in this preview."
-      >
-        <div className="integration-list">
-          {integrations.map(({ name, detail, icon: Icon }) => (
-            <div className="integration-row" key={name}>
-              <span className="category-icon">
-                <Icon size={20} />
-              </span>
-              <div>
-                <h3>{name}</h3>
-                <p>{detail}</p>
-              </div>
-              <Badge>Not connected</Badge>
-            </div>
-          ))}
-        </div>
-      </Panel>
+      <DemoConnections />
       <Modal
         open={confirm}
         onOpenChange={setConfirm}

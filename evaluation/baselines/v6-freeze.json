@@ -1,0 +1,9 @@
+{
+  "createdAt": "2026-10-09T14:16:16.052660+00:00",
+  "policy": "Implementation and baseline frozen before authoring this synthetic set. No tuning after results. Same-author labels, not independent human truth.",
+  "sha256": {
+    "worker/csi_worker/analysis.py": "d589c2629f97312910212ec0206f401cf6d3012086b379b8d691d9a963c7cf89",
+    "server/src/main/resources/agent/skill.json": "12ff5bdd12582ce819776e877ead8398bcd74b206421ad08c0becd356161ad9a",
+    "worker/csi_worker/evaluation/keyword_baseline.py": "969b21b061dc0540e188a73d58ce094e7d242fb2d663ddf96ec7826e0f230c09"
+  }
+}

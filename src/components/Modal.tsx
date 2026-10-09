@@ -9,6 +9,8 @@ export function Modal({
   description,
   children,
   variant = "dialog",
+  className = "",
+  onCloseAutoFocus,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -16,6 +18,8 @@ export function Modal({
   description: string;
   children: ReactNode;
   variant?: "dialog" | "navigation";
+  className?: string;
+  onCloseAutoFocus?: (event: Event) => void;
 }) {
   const returnFocus = useRef<HTMLElement | null>(null);
   return (
@@ -23,11 +27,13 @@ export function Modal({
       <Dialog.Portal>
         <Dialog.Overlay className="dialog-overlay" />
         <Dialog.Content
-          className={`dialog-content${variant === "navigation" ? " navigation-drawer" : ""}`}
+          className={`dialog-content${variant === "navigation" ? " navigation-drawer" : ""} ${className}`}
           onOpenAutoFocus={() => {
             returnFocus.current = document.activeElement as HTMLElement | null;
           }}
           onCloseAutoFocus={(event) => {
+            onCloseAutoFocus?.(event);
+            if (event.defaultPrevented) return;
             event.preventDefault();
             if (returnFocus.current?.isConnected) returnFocus.current.focus();
           }}

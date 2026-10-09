@@ -1,0 +1,13 @@
+
+> csi@0.0.0 test
+> vitest run --mode fixture
+
+
+ RUN  v4.1.11 /Users/aqilaghamirzayev/Documents/ChatGPT/CSI
+
+
+ Test Files  3 passed (3)
+      Tests  9 passed (9)
+   Start at  17:24:34
+   Duration  225ms (transform 87ms, setup 0ms, import 182ms, tests 10ms, environment 0ms)
+

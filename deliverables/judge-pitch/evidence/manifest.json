@@ -1,0 +1,90 @@
+{
+  "reviewed_on": "2026-10-09",
+  "created_at": "2026-10-09T13:38:01.476808+00:00",
+  "repository_head": "11ab209365e787a5ce871c4f40697e64df89ae0c",
+  "working_tree": "Contains pre-existing tracked and untracked implementation changes. HEAD alone does not identify reviewed content; source hashes below do.",
+  "runs": [
+    {
+      "suite": "frontend",
+      "command": "npm test",
+      "passed": 9,
+      "skipped": 0,
+      "failed": 0,
+      "log": "frontend-tests.txt",
+      "scope": "Fixture-mode unit tests; not browser or AI inference.",
+      "log_sha256": "17d686840a3a83f51a811ca4466782bd07eed312572d731a29d91e673da0468c",
+      "log_finished_at": "2026-10-09T17:24:34.396743+04:00"
+    },
+    {
+      "suite": "worker",
+      "command": "CSI_INTEGRATION_TESTS=false CSI_MODEL_TESTS=false uv run --project worker pytest worker/tests -q -rs",
+      "passed": 32,
+      "skipped": 5,
+      "failed": 0,
+      "log": "worker-tests.txt",
+      "scope": "Unit/contract checks. Three model and two PostgreSQL tests skipped. Provider and connector transports mocked.",
+      "log_sha256": "c72f0999edd8066d548cbc6a1a5af10677a6e0b588480a875cac508ebabc1f4f",
+      "log_finished_at": "2026-10-09T17:36:38.747291+04:00"
+    },
+    {
+      "suite": "api",
+      "command": "CSI_INTEGRATION_TESTS=false scripts/mvn test",
+      "passed": 6,
+      "skipped": 21,
+      "failed": 0,
+      "log": "api-tests.txt",
+      "scope": "Boundary tests passed. Database-backed suites skipped. No end-to-end server run.",
+      "log_sha256": "31c7c46ef1d28fdc80d3636e3092ad2b6ca3583226cc358450a8149c4b6c5f43",
+      "log_finished_at": "2026-10-09T17:29:09.875487+04:00"
+    }
+  ],
+  "catalog_audit": "catalog-audit.json",
+  "historical_report": "../../../docs/VALIDATION.md",
+  "not_performed": [
+    "Fresh AI inference",
+    "Current end-to-end browser or full audio-pipeline run",
+    "Production deployment verification",
+    "Customer validation or timed manual baseline",
+    "Independent model-quality, privacy or cost benchmark",
+    "Real partner delivery or provider compatibility trial"
+  ],
+  "source_sha256": {
+    "worker/csi_worker/analysis.py": "ad341bf1280a6b7547bed6116a4e23adfdf35f150739722ace3d835eb6d11d1c",
+    "worker/csi_worker/agent_profile.py": "24118aa5568103f879d5cb751587b828ec173958eabc42c29edbc580519af727",
+    "worker/csi_worker/activities.py": "f30df894e2c310bc2de886e0905f952dad848788805cc5a273122e083ef8ba85",
+    "worker/csi_worker/privacy.py": "b0744178557eb7e1c9caa54da6be6b991e727d62e16506f58cc834e5126a5e1b",
+    "worker/csi_worker/speech.py": "e08fb21ff8a645a2043ac924b7a6da80795637fe1b4b58bf99c10867c479d3d2",
+    "worker/csi_worker/support_summary.py": "f889fb1cd1ec115f2108d0d486870dce669c47a8a08d347bc4b809999ad7e656",
+    "server/src/main/java/az/csi/DecisionController.java": "e2e1f3468704cacc85570912f5a09cd6e7fb87813e57c6c4a5bcfea83857d5e8",
+    "server/src/main/java/az/csi/AnalysisProfileController.java": "1b99ceb66bd4fc7fe6bab9a34722cd3dc117b1280a4c28e3da62aa417f0385fe",
+    "server/src/main/java/az/csi/IngestionController.java": "c68a4e8f9ad5f486b9099ecf185e689cbb91da5f177cc8ae1e428eead4a30707",
+    "server/src/main/java/az/csi/DemoCatalog.java": "82704b1c88d3e9e46424496cc7ed3e26741414b423a0c3cfe9adfe023f46a11a",
+    "server/src/main/resources/agent/skill.json": "d3af9e7cddc04aaa8d2c4d938f8b93de36377d0b987dadf406f8cc371cd68f86",
+    "server/src/main/resources/demo/catalog.json": "3735af2cc75bb7165bbf042c3af2432e30d58f2a258ee17399e4be3dd4fa8a2a",
+    "demo/labels.json": "aeada8863df607f3d3d0dc5816b012ba976066b0c0cc19cd13c0cd4f306da0d9",
+    "demo/corrections.json": "5b5199a7bc6c932f1b3a019992ccc97a16b0f0052d2e43ebb76289b0c5311676",
+    "worker/csi_worker/evaluation/run.py": "57a1e00b01175b0fb5396d0ba6bd09ff14f3715e47e2123bb203a4a313eb0d3a",
+    "worker/csi_worker/evaluation/metrics.py": "590854c789f9bbebdd5082ca3f63af031fc14a54b3855874293f97aeba498801",
+    "worker/tests/test_analysis.py": "a35f6d1e802dd3d9127c1543123f76b89f804c5d78290e5fb2c2ef52c2661592",
+    "worker/tests/test_agent_profile.py": "3df26f80d3127c74f5142a513a8df23607e38212435302677cff2a3347cc180a"
+  },
+  "snapshot_note": "Implementation was changing during the review. These test logs describe their recorded runs, not later code additions. Evaluation runner/cases/test_evaluation.py appeared after the saved worker run and have no test or model-quality result claimed here.",
+  "source_snapshot_at": "2026-10-09T13:40:06.680570+00:00",
+  "presentation": {
+    "file": "../Clarity-Judge-Pitch-Reviewed.pptx",
+    "sha256": "34219d5058fdf18772d6d3b97f2581a1acc5f33b67c8f02d4d18d89accfc19ef",
+    "slides": 6,
+    "speaker_notes": 6,
+    "script_words": 402,
+    "demo_script_words": 185,
+    "checks": [
+      "PPTX package and layout validation passed",
+      "Artifact Tool import passed",
+      "All six rendered final slides visually reviewed",
+      "Speaker scripts agree between deck notes and pitch document",
+      "Local document links and rubric headings checked",
+      "Authored content checked for prohibited punctuation"
+    ],
+    "not_verified": "Not opened or tested in Microsoft PowerPoint."
+  }
+}

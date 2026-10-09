@@ -1,4 +1,5 @@
-import { useForm } from "react-hook-form";
+import { Select } from "../../components/Select";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Modal } from "../../components/Modal";
 import {
@@ -18,6 +19,7 @@ export function ReviewDialog({
   const mutation = useReview();
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<ReviewInput>({
@@ -52,10 +54,24 @@ export function ReviewDialog({
           create external tasks or send notifications.
         </div>
         <label htmlFor="decision-action">Your decision</label>
-        <select id="decision-action" {...register("action")}>
-          <option value="Approved">Approve recommendation</option>
-          <option value="Rejected">Reject recommendation</option>
-        </select>
+        <Controller
+          name="action"
+          control={control}
+          render={({ field }) => (
+            <Select
+              id="decision-action"
+              name={field.name}
+              value={field.value}
+              onValueChange={field.onChange}
+              onBlur={field.onBlur}
+              ref={field.ref}
+              options={[
+                { value: "Approved", label: "Approve recommendation" },
+                { value: "Rejected", label: "Reject recommendation" },
+              ]}
+            />
+          )}
+        />
         <label htmlFor="decision-owner">Action owner</label>
         <input
           id="decision-owner"

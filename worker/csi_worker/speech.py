@@ -2,9 +2,12 @@ import os
 from functools import lru_cache
 from math import gcd
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import soundfile as sf
 from scipy.signal import resample_poly
+
+from .media import read_mp4_audio
 
 
 @lru_cache(maxsize=1)
@@ -24,18 +27,27 @@ def speaker_encoder():
     path = Path(os.environ["SPEAKER_MODEL"]).resolve()
     if not path.is_dir():
         raise RuntimeError("LOCAL_SPEAKER_MODEL_MISSING")
-    return EncoderClassifier.from_hparams(
-        source=str(path),
-        savedir=str(path),
-        overrides={"pretrained_path": str(path)},
-        run_opts={"device": "cpu"},
-    )
+    # SpeechBrain creates checkpoint aliases while loading; model weights stay read-only.
+    with TemporaryDirectory(prefix="csi-speaker-") as cache:
+        return EncoderClassifier.from_hparams(
+            source=str(path),
+            savedir=cache,
+            overrides={"pretrained_path": str(path)},
+            run_opts={"device": "cpu"},
+        )
 
 
 def transcribe(path, metadata):
-    signal, rate = sf.read(path, dtype="float32", always_2d=True)
+    max_seconds = min(3600, int(metadata.get("maxAudioSeconds", 3600)))
+    with open(path, "rb") as audio:
+        is_mp4 = audio.read(12)[4:8] == b"ftyp"
+    signal, rate = (
+        read_mp4_audio(path, max_seconds=max_seconds)
+        if is_mp4
+        else sf.read(path, dtype="float32", always_2d=True)
+    )
     duration = len(signal) / rate
-    if duration > 3600 or signal.shape[1] > 2 or duration < 0.3:
+    if duration > max_seconds or signal.shape[1] > 2 or duration < 0.3:
         raise ValueError("UNSUPPORTED_AUDIO_DURATION_OR_CHANNELS")
     factor = gcd(rate, 16000)
     signal = resample_poly(signal, 16000 // factor, rate // factor, axis=0)
@@ -110,6 +122,10 @@ def transcribe(path, metadata):
             for index, label in zip(indices, labels):
                 names.setdefault(int(label), f"Speaker {len(names) + 1}")
                 result[index]["speaker"] = names[int(label)]
+    for segment in result:
+        known = signal.shape[1] == 2 and metadata.get("customerChannel") in (0, 1)
+        segment["role"] = segment["speaker"].lower() if known else "unknown"
+        segment["roleSource"] = "channel-metadata" if known else "unknown"
     return {
         "segments": result,
         "duration": round(duration),

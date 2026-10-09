@@ -1,0 +1,175 @@
+.driver-popover.clarity-spotlight {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: "Roboto Variable", sans-serif;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  width: 380px;
+  min-width: 0;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  box-shadow: 0 16px 64px #10251d40;
+}
+.clarity-spotlight .spotlight-chapter {
+  color: var(--green-dark);
+  font-size: 11px;
+  font-weight: 650;
+  margin: 0 30px 10px 0;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.clarity-spotlight .driver-popover-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  padding-right: 16px;
+}
+.clarity-spotlight .driver-popover-description {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-top: 14px;
+}
+.clarity-spotlight .spotlight-takeaway {
+  margin: 16px 0 0;
+  border-radius: 10px;
+  background: var(--canvas);
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.clarity-spotlight .spotlight-unavailable {
+  color: var(--color-warning);
+  background: var(--surface-warning);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+.clarity-spotlight .driver-popover-footer {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.clarity-spotlight .driver-popover-progress-text {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.clarity-spotlight .driver-popover-navigation-btns {
+  gap: 8px;
+}
+.clarity-spotlight .driver-popover-footer button {
+  min-height: 44px;
+  padding: 10px 18px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: none;
+  border-radius: 24px;
+  border: 1px solid var(--outline);
+  box-shadow: none;
+  background: var(--surface);
+  color: var(--ink);
+}
+.clarity-spotlight .driver-popover-footer .driver-popover-next-btn {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+.clarity-spotlight .driver-popover-footer .driver-popover-next-btn:hover {
+  background: var(--green-dark);
+}
+.clarity-spotlight .driver-popover-footer .driver-popover-prev-btn:hover {
+  background: var(--canvas);
+}
+.clarity-spotlight .driver-popover-close-btn {
+  width: 44px;
+  height: 44px;
+  top: 6px;
+  right: 6px;
+  font-size: 24px;
+  color: var(--muted);
+  border-radius: 50%;
+}
+.clarity-spotlight .driver-popover-close-btn:hover {
+  background: var(--canvas);
+  color: var(--ink);
+}
+.clarity-spotlight .spotlight-skip {
+  display: block;
+  min-height: 36px;
+  margin: 8px 0 -8px auto;
+  padding: 8px 0 8px 12px;
+  background: transparent;
+  border: 0;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.clarity-spotlight button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+.clarity-spotlight .driver-popover-title:focus {
+  outline: none;
+}
+.spotlight-session {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 19;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 12px;
+  box-shadow: 0 2px 10px #182a3512;
+}
+.spotlight-session button {
+  border: 0;
+  background: transparent;
+  color: var(--green-dark);
+  min-height: 32px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.spotlight-session span {
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .driver-popover.clarity-spotlight {
+    width: calc(100vw - 24px);
+    padding: 18px;
+  }
+  .clarity-spotlight .driver-popover-title {
+    font-size: 19px;
+  }
+  .clarity-spotlight .driver-popover-description {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  .clarity-spotlight .spotlight-takeaway {
+    font-size: 12px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  .clarity-spotlight .driver-popover-footer {
+    margin-top: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .driver-overlay,
+  .driver-popover {
+    animation: none !important;
+    transition: none !important;
+  }
+}

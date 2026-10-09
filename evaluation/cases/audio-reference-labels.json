@@ -1,0 +1,95 @@
+[
+  {
+    "id": "audio-checkout-declined",
+    "synthetic": true,
+    "split": "development",
+    "provenance": "Reference turns from existing fictional TTS script. These are not ASR segment indices or independently adjudicated labels.",
+    "referenceSegments": [
+      {
+        "index": 0,
+        "speaker": "Customer",
+        "text": "I have tried to pay for my order three times this morning. Each time the checkout says something went wrong. My card works on other websites, so this is very frustrating."
+      },
+      {
+        "index": 1,
+        "speaker": "Agent",
+        "text": "I understand. Can you tell me whether the error appears before or after you confirm the payment in your banking app?"
+      },
+      {
+        "index": 2,
+        "speaker": "Customer",
+        "text": "After I approve it. Then the checkout sends me back to the basket. I do not know if I have been charged, and I am worried about trying again."
+      },
+      {
+        "index": 3,
+        "speaker": "Agent",
+        "text": "Please do not make another attempt yet. I will check the payment status with our payments team and keep this case open until we confirm it."
+      },
+      {
+        "index": 4,
+        "speaker": "Customer",
+        "text": "Thank you. It would help if the error message told me whether the payment went through instead of just saying something went wrong."
+      },
+      {
+        "index": 5,
+        "speaker": "Agent",
+        "text": "I will include that feedback in the escalation. You will receive a case update once the team has checked the transaction."
+      }
+    ],
+    "expectedIssues": [
+      {
+        "id": "payment-failure",
+        "supportingReferenceSegments": [
+          0,
+          2,
+          4
+        ]
+      }
+    ],
+    "sensitiveSpans": [],
+    "spanCoordinates": "Offsets into referenceSegments joined by a newline; none labeled in these scripts.",
+    "asrEvidenceAlignment": "pending human review"
+  },
+  {
+    "id": "audio-support-appreciation",
+    "synthetic": true,
+    "split": "development",
+    "provenance": "Reference turns from existing fictional TTS script. These are not ASR segment indices or independently adjudicated labels.",
+    "referenceSegments": [
+      {
+        "index": 0,
+        "speaker": "Customer",
+        "text": "I am calling to say thank you. Your team helped me understand the account settings yesterday, and everything is working well now."
+      },
+      {
+        "index": 1,
+        "speaker": "Agent",
+        "text": "Thank you for sharing that feedback. Was there anything in the explanation that you found especially helpful?"
+      },
+      {
+        "index": 2,
+        "speaker": "Customer",
+        "text": "The advisor used simple language, explained each step and checked that I could see the right screen. I felt listened to."
+      },
+      {
+        "index": 3,
+        "speaker": "Agent",
+        "text": "That is good to hear. I will share the feedback with our support team."
+      },
+      {
+        "index": 4,
+        "speaker": "Customer",
+        "text": "Please do. I have no issue to report. I just wanted the team to know they made the experience easy."
+      },
+      {
+        "index": 5,
+        "speaker": "Agent",
+        "text": "We appreciate your feedback. Thank you for taking the time to call."
+      }
+    ],
+    "expectedIssues": [],
+    "sensitiveSpans": [],
+    "spanCoordinates": "Offsets into referenceSegments joined by a newline; none labeled in these scripts.",
+    "asrEvidenceAlignment": "pending human review"
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "audio-checkout-declined",
+    "split": "development",
+    "synthetic": true,
+    "provenance": "Existing fictional TTS demo; already exposed during product development, not held out.",
+    "audio": "server/src/main/resources/demo/audio/checkout-declined.wav",
+    "metadata": {
+      "title": "Payment declined during checkout",
+      "sample": true,
+      "customerId": "synthetic-evaluation",
+      "agent": "Evaluation support",
+      "department": "Payments",
+      "language": "en",
+      "speakers": 2,
+      "customerChannel": 0
+    },
+    "referenceText": "I have tried to pay for my order three times this morning. Each time the checkout says something went wrong. My card works on other websites, so this is very frustrating. I understand. Can you tell me whether the error appears before or after you confirm the payment in your banking app? After I approve it. Then the checkout sends me back to the basket. I do not know if I have been charged, and I am worried about trying again. Please do not make another attempt yet. I will check the payment status with our payments team and keep this case open until we confirm it. Thank you. It would help if the error message told me whether the payment went through instead of just saying something went wrong. I will include that feedback in the escalation. You will receive a case update once the team has checked the transaction.",
+    "expectedIssueIds": [
+      "payment-failure"
+    ],
+    "sensitiveSpans": [],
+    "supportAlignment": "pending: reference turns are not ASR segment indices"
+  },
+  {
+    "id": "audio-support-appreciation",
+    "split": "development",
+    "synthetic": true,
+    "provenance": "Existing fictional TTS demo; already exposed during product development, not held out.",
+    "audio": "server/src/main/resources/demo/audio/support-appreciation.wav",
+    "metadata": {
+      "title": "Customer praises clear and helpful support",
+      "sample": true,
+      "customerId": "synthetic-evaluation",
+      "agent": "Evaluation support",
+      "department": "General support",
+      "language": "en",
+      "speakers": 2,
+      "customerChannel": 0
+    },
+    "referenceText": "I am calling to say thank you. Your team helped me understand the account settings yesterday, and everything is working well now. Thank you for sharing that feedback. Was there anything in the explanation that you found especially helpful? The advisor used simple language, explained each step and checked that I could see the right screen. I felt listened to. That is good to hear. I will share the feedback with our support team. Please do. I have no issue to report. I just wanted the team to know they made the experience easy. We appreciate your feedback. Thank you for taking the time to call.",
+    "expectedIssueIds": [],
+    "sensitiveSpans": [],
+    "supportAlignment": "pending: reference turns are not ASR segment indices"
+  }
+]

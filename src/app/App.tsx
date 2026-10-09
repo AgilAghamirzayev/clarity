@@ -16,7 +16,11 @@ const ConversationDetail = lazy(
 const Issues = lazy(() => import("../features/issues/Issues"));
 const IssueDetail = lazy(() => import("../features/issues/IssueDetail"));
 const Decisions = lazy(() => import("../features/decisions/Decisions"));
+const Automation = lazy(() => import("../features/automation/Automation"));
 const Settings = lazy(() => import("../features/settings/Settings"));
+const GettingStarted = lazy(
+  () => import("../features/onboarding/GettingStarted"),
+);
 const client = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, retry: false } },
 });
@@ -36,7 +40,7 @@ export default function App() {
       <MotionConfig reducedMotion="user">
         <QueryClientProvider client={client}>
           <AuthGate>
-            <BrowserRouter>
+            <BrowserRouter basename={import.meta.env.BASE_URL}>
               <Routes>
                 <Route element={<Layout />}>
                   <Route index element={<Overview />} />
@@ -50,6 +54,8 @@ export default function App() {
                   <Route path="issues/:id" element={<IssueDetail />} />
                   <Route path="decisions" element={<Decisions />} />
                   <Route path="settings" element={<Settings />} />
+                  <Route path="automation" element={<Automation />} />
+                  <Route path="guide" element={<GettingStarted />} />
                   <Route
                     path="*"
                     element={

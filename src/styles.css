@@ -4,27 +4,27 @@
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  color: #202824;
-  background: #f6f8f7;
+  color: #182a35;
+  background: #f5f7fa;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --ink: #202824;
-  --muted: #58665f;
-  --green: #176b58;
-  --green-dark: #125543;
-  --green-light: #eaf3ed;
+  --ink: #182a35;
+  --muted: #5e6c7b;
+  --green: #146b60;
+  --green-dark: #10564d;
+  --green-light: #e9f5f1;
   --surface: #fff;
-  --border: #e1e7e3;
-  --radius: 18px;
-  --canvas: #f6f8f7;
-  --surface-tonal: #edf3ef;
-  --selected: #d6eade;
-  --outline: #87958d;
+  --border: #e3e8ef;
+  --radius: 16px;
+  --canvas: #f5f7fa;
+  --surface-tonal: #eef3f7;
+  --selected: #e6f3ee;
+  --outline: #8795a4;
   --motion-fast: 140ms;
   --motion-standard: 240ms;
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
-  --elevation-low: 0 1px 2px #20382b12, 0 2px 6px #20382b08;
+  --elevation-low: 0 4px 14px #1b324a0a, 0 1px 3px #1b324a08;
   font-size: 14px;
 }
 * {
@@ -73,7 +73,7 @@ textarea:focus-visible,
 select:focus-visible,
 summary:focus-visible,
 [tabindex="0"]:focus-visible {
-  outline: 3px solid #6aa993;
+  outline: 3px solid var(--green);
   outline-offset: 3px;
 }
 p {
@@ -920,6 +920,14 @@ blockquote {
   font-size: 11px;
   line-height: 1.7;
 }
+.analysis-review-notice {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.analysis-review-notice p {
+  margin: 0;
+}
+
 .notice.error,
 .field-error {
   color: #a34431;

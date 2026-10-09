@@ -1,3 +1,4 @@
+import { Select } from "../../components/Select";
 import { useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -9,7 +10,7 @@ import {
   Code2,
   Headphones,
 } from "lucide-react";
-import { api, apiMode } from "../../data/api";
+import { api, apiMode, guestMode } from "../../data/api";
 import { useIdentity } from "../platform/identity";
 import {
   Badge,
@@ -105,16 +106,10 @@ export default function SupportSummary() {
   const [params, setParams] = useSearchParams();
   const days = [7, 30, 90].includes(Number(params.get("period")))
     ? Number(params.get("period"))
-    : 7;
-  const samplesInUrl = params.get("samples") !== "false";
-  const [sampleControl, setSampleControl] = useState({
-    url: samplesInUrl,
-    checked: samplesInUrl,
-  });
-  if (sampleControl.url !== samplesInUrl) {
-    setSampleControl({ url: samplesInUrl, checked: samplesInUrl });
-  }
-  const includeSamples = sampleControl.checked;
+    : guestMode
+      ? 30
+      : 7;
+  const includeSamples = true;
   const [requestKey, setRequestKey] = useState(() => crypto.randomUUID());
   const key = ["support-summary", days, includeSamples];
   const query = useQuery({
@@ -144,11 +139,10 @@ export default function SupportSummary() {
       setRequestKey(crypto.randomUUID());
     },
   });
-  function change(name: string, value: string) {
-    if (name === "samples")
-      setSampleControl({ url: samplesInUrl, checked: value === "true" });
+  function changePeriod(value: string) {
     const next = new URLSearchParams(params);
-    next.set(name, value);
+    next.delete("samples");
+    next.set("period", value);
     setParams(next);
     generate.reset();
     setRequestKey(crypto.randomUUID());
@@ -158,7 +152,9 @@ export default function SupportSummary() {
     generate.isPending ||
     ["QUEUED", "PROCESSING"].includes(summary?.status ?? "");
   const canGenerate =
-    apiMode && !!user && ["ADMIN", "ANALYST", "REVIEWER"].includes(user.role);
+    apiMode &&
+    !!user &&
+    ["ADMIN", "ANALYST", "REVIEWER", "DEMO"].includes(user.role);
   return (
     <>
       <PageHeader
@@ -166,30 +162,22 @@ export default function SupportSummary() {
         action={
           <label className="period-picker">
             <span>Period</span>
-            <select
+            <Select
               aria-label="Summary period"
-              value={days}
+              value={String(days)}
               disabled={generate.isPending}
-              onChange={(e) => change("period", e.target.value)}
-            >
-              <option value={7}>Last 7 days</option>
-              <option value={30}>Last 30 days</option>
-              <option value={90}>Last 90 days</option>
-            </select>
+              onValueChange={changePeriod}
+              options={[
+                { value: "7", label: "Last 7 days" },
+                { value: "30", label: "Last 30 days" },
+                { value: "90", label: "Last 90 days" },
+              ]}
+            />
           </label>
         }
       />
-      <div className="summary-toolbar">
-        <label>
-          <input
-            type="checkbox"
-            checked={includeSamples}
-            disabled={generate.isPending}
-            onChange={(e) => change("samples", String(e.target.checked))}
-          />{" "}
-          Include sample recordings
-        </label>
-        {canGenerate && (
+      {canGenerate && (
+        <div className="summary-toolbar">
           <button
             className="button"
             disabled={busy || !summary?.snapshot.current.calls}
@@ -204,8 +192,8 @@ export default function SupportSummary() {
                   ? "Try analysis again"
                   : "Generate analysis"}
           </button>
-        )}
-      </div>
+        </div>
+      )}
       {query.isPending ? (
         <LoadingState />
       ) : query.isError ? (
@@ -230,7 +218,12 @@ function SummaryContent({
 }) {
   const { current, previous, evidence, issues, start, end } = summary.snapshot;
   const report = summary.report;
-  const span = `${new Date(start).toLocaleDateString()} to ${new Date(end).toLocaleDateString()}`;
+  const dates = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+  const span = `${dates.format(new Date(start))} to ${dates.format(new Date(end))}`;
   return (
     <>
       {current.samples > 0 && (
@@ -302,7 +295,7 @@ function SummaryContent({
       {!current.calls ? (
         <section className="panel">
           <EmptyState title="There is not enough evidence yet">
-            Choose another period, include samples, or{" "}
+            Choose another period or{" "}
             <Link to="/conversations">import recordings</Link> to begin.
           </EmptyState>
         </section>

@@ -1,0 +1,287 @@
+{
+  "kind": "keyword-baseline-v1",
+  "split": "heldout",
+  "synthetic": true,
+  "corpusSHA256": "2c9a9120d909fdc90b584797be754f9dcf670f92f929dff8a8770dae1f605e51",
+  "sourceSHA256": "969b21b061dc0540e188a73d58ce094e7d242fb2d663ddf96ec7826e0f230c09",
+  "results": [
+    {
+      "id": "v6-double-charge",
+      "status": "passed",
+      "expectedIssueCount": 1,
+      "expectedIssueIds": [
+        "duplicate-charge"
+      ],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Neutral",
+        "issues": []
+      },
+      "score": {
+        "expected": 1,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [
+          "duplicate-charge"
+        ],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": false
+      },
+      "seconds": 0.00018637499306350946
+    },
+    {
+      "id": "v6-refund-message",
+      "status": "passed",
+      "expectedIssueCount": 1,
+      "expectedIssueIds": [
+        "refund-clarity"
+      ],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Negative",
+        "issues": [
+          {
+            "title": "Refunds problem",
+            "category": "Refunds",
+            "priority": "Medium",
+            "description": "The refund page says complete, but it never explains whether the money is coming to my card or store credit. I cannot understand where to look.",
+            "evidence": [
+              0
+            ],
+            "proposedAction": "Review the reported refunds problem",
+            "expectedOutcome": "Resolve the reported problem; verify with the reporter"
+          }
+        ]
+      },
+      "score": {
+        "expected": 1,
+        "predicted": 1,
+        "matched": 1,
+        "unsupported": 0,
+        "findings": [
+          {
+            "expectedIssue": "refund-clarity",
+            "citationLabelSupported": true,
+            "actionPatternMatched": true,
+            "forbiddenPatterns": [],
+            "rubricUnsupported": false
+          }
+        ],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": true
+      },
+      "seconds": 0.0002516249951440841
+    },
+    {
+      "id": "v6-file-and-access",
+      "status": "passed",
+      "expectedIssueCount": 2,
+      "expectedIssueIds": [
+        "upload",
+        "access"
+      ],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Negative",
+        "issues": [
+          {
+            "title": "Access problem",
+            "category": "Access",
+            "priority": "Medium",
+            "description": "I also cannot sign in to the mobile app although the same password works on the website.",
+            "evidence": [
+              2
+            ],
+            "proposedAction": "Review the reported access problem",
+            "expectedOutcome": "Resolve the reported problem; verify with the reporter"
+          },
+          {
+            "title": "Uploads problem",
+            "category": "Uploads",
+            "priority": "Medium",
+            "description": "Uploading my receipt returns an error and the file vanishes.",
+            "evidence": [
+              0
+            ],
+            "proposedAction": "Review the reported uploads problem",
+            "expectedOutcome": "Resolve the reported problem; verify with the reporter"
+          }
+        ]
+      },
+      "score": {
+        "expected": 2,
+        "predicted": 2,
+        "matched": 2,
+        "unsupported": 0,
+        "findings": [
+          {
+            "expectedIssue": "access",
+            "citationLabelSupported": true,
+            "actionPatternMatched": true,
+            "forbiddenPatterns": [],
+            "rubricUnsupported": false
+          },
+          {
+            "expectedIssue": "upload",
+            "citationLabelSupported": true,
+            "actionPatternMatched": true,
+            "forbiddenPatterns": [],
+            "rubricUnsupported": false
+          }
+        ],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": true
+      },
+      "seconds": 0.00012020801659673452
+    },
+    {
+      "id": "v6-happy-payment",
+      "status": "passed",
+      "expectedIssueCount": 0,
+      "expectedIssueIds": [],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Neutral",
+        "issues": []
+      },
+      "score": {
+        "expected": 0,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": false
+      },
+      "seconds": 1.1500000255182385e-05
+    },
+    {
+      "id": "v6-hypothetical-agent",
+      "status": "passed",
+      "expectedIssueCount": 0,
+      "expectedIssueIds": [],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Neutral",
+        "issues": []
+      },
+      "score": {
+        "expected": 0,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": null
+      },
+      "seconds": 6.417016265913844e-06
+    },
+    {
+      "id": "v6-paraphrase",
+      "status": "passed",
+      "expectedIssueCount": 1,
+      "expectedIssueIds": [
+        "checkout-loop"
+      ],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Neutral",
+        "issues": []
+      },
+      "score": {
+        "expected": 1,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [
+          "checkout-loop"
+        ],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": false
+      },
+      "seconds": 9.499985026195645e-06
+    },
+    {
+      "id": "v6-unknown-speakers",
+      "status": "passed",
+      "expectedIssueCount": 1,
+      "expectedIssueIds": [
+        "late-code"
+      ],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Neutral",
+        "issues": []
+      },
+      "score": {
+        "expected": 1,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [
+          "late-code"
+        ],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": false
+      },
+      "seconds": 1.0083022061735392e-05
+    },
+    {
+      "id": "v6-instruction-in-call",
+      "status": "passed",
+      "expectedIssueCount": 1,
+      "expectedIssueIds": [
+        "invoice-download"
+      ],
+      "output": {
+        "summary": "Keyword matches require human interpretation.",
+        "topic": "Keyword baseline",
+        "sentiment": "Neutral",
+        "issues": []
+      },
+      "score": {
+        "expected": 1,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [
+          "invoice-download"
+        ],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": false
+      },
+      "seconds": 8.374976459890604e-06
+    }
+  ],
+  "metrics": {
+    "cases": 8,
+    "succeeded": 8,
+    "failed": 0,
+    "unavailable": 0,
+    "expectedIssues": 7,
+    "predictedIssues": 3,
+    "matchedIssues": 3,
+    "issueLabelPrecision": 1.0,
+    "issueLabelRecall": 0.42857142857142855,
+    "rubricUnsupportedRecommendations": 0,
+    "rubricUnsupportedRecommendationRate": 0.0,
+    "humanReviewedSemanticCorrectness": null
+  },
+  "limitation": "Rules receive only the transcript and roles, never expected labels. Reference transcripts, no ASR, no PII masking, no human timing. Lexical proxy scores do not establish semantic quality or user benefit."
+}

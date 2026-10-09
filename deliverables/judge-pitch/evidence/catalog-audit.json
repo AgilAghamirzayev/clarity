@@ -1,0 +1,154 @@
+{
+  "reviewed_on": "2026-10-09",
+  "source": "server/src/main/resources/demo/catalog.json",
+  "sha256": "3735af2cc75bb7165bbf042c3af2432e30d58f2a258ee17399e4be3dd4fa8a2a",
+  "scope": "Static prepared catalog inspection. No fresh inference and no semantic quality score.",
+  "counts": {
+    "calls": 8,
+    "issues": 5,
+    "call_issues": 7,
+    "recommendations": 5,
+    "summaries": 3
+  },
+  "call_prompt_versions": [
+    "call-analysis-v2"
+  ],
+  "no_issue_calls": [
+    {
+      "id": "a5084cb7-4acd-4dc9-8829-0b86c25184a4",
+      "title": "Notification preferences explained clearly"
+    },
+    {
+      "id": "6c247377-39fa-4265-8659-8a1ec903b5ea",
+      "title": "Customer praises clear and helpful support"
+    }
+  ],
+  "call_issue_reference_checks": [
+    {
+      "call_id": "dc0375b0-d4c3-4fff-879b-f7f9f3adcf72",
+      "issue_id": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+      "indices": [
+        0,
+        1,
+        2,
+        7,
+        8,
+        9,
+        10
+      ],
+      "indices_in_range": true
+    },
+    {
+      "call_id": "52591f93-3655-47d1-8c1b-aebb34f4fcac",
+      "issue_id": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+      "indices": [
+        2,
+        3,
+        7,
+        13
+      ],
+      "indices_in_range": true
+    },
+    {
+      "call_id": "8a518650-95bf-46e5-aea5-c32e2ddeef19",
+      "issue_id": "ddab40f9-e736-4fdf-bbf5-af0759145421",
+      "indices": [
+        0,
+        6,
+        7
+      ],
+      "indices_in_range": true
+    },
+    {
+      "call_id": "8a518650-95bf-46e5-aea5-c32e2ddeef19",
+      "issue_id": "d4bebfd3-c294-4f9e-8f49-0955057840da",
+      "indices": [
+        1,
+        12
+      ],
+      "indices_in_range": true
+    },
+    {
+      "call_id": "2a13b8bf-d559-4e20-9959-036f586f0512",
+      "issue_id": "2ae412ad-3376-4c36-8b62-d9d3818cd9dc",
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        15,
+        17
+      ],
+      "indices_in_range": true
+    },
+    {
+      "call_id": "66246230-1d49-4a35-9785-2dfaa4db09a2",
+      "issue_id": "7c273c1f-f068-43f9-bce6-f14d74b1ad19",
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        7,
+        8,
+        9
+      ],
+      "indices_in_range": true
+    },
+    {
+      "call_id": "295fe5e2-f8c0-4f36-afcf-afa9e9a2fab0",
+      "issue_id": "5088acc5-3917-40f7-aa0b-eacf85a9effb",
+      "indices": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        7,
+        8,
+        9,
+        14,
+        15
+      ],
+      "indices_in_range": true
+    }
+  ],
+  "recommendation_reference_checks": [
+    {
+      "id": "9633c3b0-ac1e-41a2-ab73-7389b4a1c8af",
+      "indices_in_range": true
+    },
+    {
+      "id": "dddb5518-7de8-4a68-a6e4-d98377c1a47e",
+      "indices_in_range": true
+    },
+    {
+      "id": "53b56536-05ca-4b8e-9578-60a88249a43c",
+      "indices_in_range": true
+    },
+    {
+      "id": "feb4ab98-d3ac-41e2-b523-6cb1fa96df1c",
+      "indices_in_range": true
+    },
+    {
+      "id": "7a3e9904-d9e3-47e8-86e6-fa68816b1b70",
+      "indices_in_range": true
+    }
+  ],
+  "payment_example": {
+    "issue_title": "Checkout payment failures",
+    "source_call_count": 2,
+    "distinct_fictional_customers": 1,
+    "call_titles": [
+      "Repeat contact about a failed card payment",
+      "Payment declined during checkout"
+    ]
+  }
+}

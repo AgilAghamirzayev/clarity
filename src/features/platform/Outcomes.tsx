@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../../data/api";
+import { api, guestMode } from "../../data/api";
 interface Outcome {
   status: string;
   baseline?: {
@@ -33,6 +33,7 @@ export function Outcomes({ id }: { id: string }) {
           </p>
         )}
         <p>
+          {guestMode ? "Sample call comparison. " : ""}
           Seven-day windows around completion. Observed differences do not prove
           causation.
         </p>

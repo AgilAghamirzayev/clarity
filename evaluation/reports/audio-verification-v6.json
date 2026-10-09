@@ -1,0 +1,30 @@
+{
+  "sourceReportSHA256": "2845fed1bcabd0f162d3fa8efb59e2a056e908d6be88bcfd710814a9a5685e8d",
+  "status": "passed",
+  "results": [
+    {
+      "id": "audio-checkout-declined",
+      "callId": "43e56eed-289d-4e67-a56c-515cf3d907af",
+      "checks": {
+        "completed": true,
+        "recordingToRecommendation": true,
+        "speakerMetadataPreserved": true
+      },
+      "linkedRecommendations": 1
+    },
+    {
+      "id": "audio-support-appreciation",
+      "callId": "66c858a0-772c-4ce6-b0c6-75b7738163e9",
+      "checks": {
+        "completed": true,
+        "recordingToRecommendation": true,
+        "speakerMetadataPreserved": true
+      },
+      "linkedRecommendations": 0
+    }
+  ],
+  "approvalBoundaries": {
+    "decisions": 0,
+    "deliveries": 0
+  }
+}

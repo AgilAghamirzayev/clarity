@@ -1,0 +1,490 @@
+{
+  "kind": "text-only",
+  "split": "development",
+  "synthetic": true,
+  "provenance": {
+    "timestamp": "2026-10-09T13:38:52Z",
+    "gitCommit": "11ab209365e787a5ce871c4f40697e64df89ae0c",
+    "workingTreeDirty": true,
+    "python": "3.12.13",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu": "Apple M4 Pro",
+    "logicalCPUs": 14,
+    "memoryBytes": 25769803776,
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.14.0",
+      "faster-whisper": "1.2.1",
+      "speechbrain": "1.0.3",
+      "torch": "2.6.0",
+      "numpy": "2.5.3"
+    },
+    "models": [
+      {
+        "name": "qwen3:4b-instruct",
+        "digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+      },
+      {
+        "name": "qwen3:4b",
+        "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+      },
+      {
+        "name": "llama3.2:latest",
+        "digest": "a80c4f17acd55265feec403c7aef86be0c25983ab279d83f3bcd3abbcb5b8b72"
+      },
+      {
+        "name": "nomic-embed-text:latest",
+        "digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      },
+      {
+        "name": "gemma3:1b",
+        "digest": "8648f39daa8fbf5b18c7b4e6a8fb4990c692751d49917417b8842ca5758e7ffc"
+      }
+    ],
+    "analysisModel": "qwen3:4b-instruct",
+    "embeddingModel": "nomic-embed-text:latest",
+    "piiBackend": "ollama",
+    "piiModel": "qwen3:4b-instruct",
+    "skillVersion": "4",
+    "promptVersion": "call-analysis-v4-speakers",
+    "profile": {
+      "providerId": "local",
+      "context": "",
+      "rules": "",
+      "language": "English",
+      "temperature": 0,
+      "maxOutputTokens": 1800,
+      "externalAllowed": false,
+      "version": 0
+    },
+    "hashes": {
+      "worker/uv.lock": "9e8456ebfa3c3d36b9df1a0d9e8d43339df68491ee52d4d05e2c0bff20e9aa10",
+      "server/src/main/resources/agent/skill.json": "d3af9e7cddc04aaa8d2c4d938f8b93de36377d0b987dadf406f8cc371cd68f86",
+      "worker/csi_worker/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "worker/csi_worker/activities.py": "422a12732fa0f48a08dd207695b8cebfde9ab8ec63b9a8a38050a43016937684",
+      "worker/csi_worker/agent_profile.py": "24118aa5568103f879d5cb751587b828ec173958eabc42c29edbc580519af727",
+      "worker/csi_worker/analysis.py": "ad341bf1280a6b7547bed6116a4e23adfdf35f150739722ace3d835eb6d11d1c",
+      "worker/csi_worker/events.py": "a57b4c55f001815a5a0896dce7f47d0718bd91ec31ce746c7f9b35a71f3519ae",
+      "worker/csi_worker/grouping.py": "c6aa0c7b02464a8bc12572d8d6741acf10d8eb3b621b8368d3ece9430906bcc0",
+      "worker/csi_worker/health.py": "9baf3554e1a1866d93f30bb319204d89e0025c9eb21a76698dfe58b1fb9926e3",
+      "worker/csi_worker/integrations.py": "c3ddd29f128b305e6250c977c5919d927f0de8654b0fa3b0cb93b47916bbe248",
+      "worker/csi_worker/main.py": "06f9e804b651a5a7b697a43565b0564243acaa1fa7214fe478e8a5170b22705d",
+      "worker/csi_worker/media.py": "8a5d35d52c07ee9c967de9da02fa600e03e88ab32efc5ffcda026a56cc76b025",
+      "worker/csi_worker/privacy.py": "b0744178557eb7e1c9caa54da6be6b991e727d62e16506f58cc834e5126a5e1b",
+      "worker/csi_worker/speech.py": "e08fb21ff8a645a2043ac924b7a6da80795637fe1b4b58bf99c10867c479d3d2",
+      "worker/csi_worker/storage.py": "61cd81825c1a6dc38a9d9b9119c1b83481ff92715acdb7b4586743f6e423d484",
+      "worker/csi_worker/support_summary.py": "f889fb1cd1ec115f2108d0d486870dce669c47a8a08d347bc4b809999ad7e656",
+      "worker/csi_worker/workflows.py": "db860aa23a4bd73012915d670b715c83f6c5b0278070fa5c8800cbb58e20df12",
+      "evaluation/cases/grouping.json": "3b6f0cd77a60f0df60e041111a95811cf93943a43f2e4eb1eb4006fae80f643c",
+      "evaluation/cases/recordings.json": "014025a03ed3ad34a982551684bd55a0d78f3c76755a4717f37187466017e616",
+      "evaluation/cases/transcripts.json": "6efe89dff61a604597ea2c50cd41e971ba9c5f7903c3690947dcf2190714d69b"
+    }
+  },
+  "results": [
+    {
+      "id": "dev-payment-promise",
+      "expectedIssueCount": 1,
+      "status": "passed",
+      "retries": 0,
+      "privacy": {
+        "sensitiveCharacters": 0,
+        "missedCharacters": 0,
+        "nonSensitiveCharacters": 143,
+        "excessiveCharacters": 0,
+        "sensitiveSpans": 0,
+        "missedSpans": 0
+      },
+      "maskedSegments": [
+        {
+          "speaker": "Customer",
+          "role": "customer",
+          "roleSource": "channel-metadata",
+          "text": "I tried paying my invoice three times. Every attempt failed."
+        },
+        {
+          "speaker": "Agent",
+          "role": "agent",
+          "roleSource": "channel-metadata",
+          "text": "I will ask the technical team to investigate. I cannot confirm the cause or a fix."
+        }
+      ],
+      "structuralValidation": "passed",
+      "output": {
+        "summary": "Customer reports three failed payment attempts for an invoice. Agent acknowledges investigation but provides no resolution or confirmation. Issue remains unresolved with no evidence of successful payment completion.",
+        "topic": "Payment Failure",
+        "sentiment": "Negative",
+        "issues": [
+          {
+            "title": "Repeated payment failure during invoice payment attempt(s) (3 attempts failed, customer report at index 0). Evidence: [0",
+            "category": "Payments",
+            "priority": "High",
+            "description": "Repeated payment failure on invoice",
+            "evidence": [
+              0
+            ],
+            "proposedAction": "Inspect payment decline logs for the reported attempts",
+            "expectedOutcome": "Successful payment completion"
+          },
+          {
+            "title": "Failed invoice payments (3 attempts, index 0)",
+            "category": "Payments",
+            "priority": "High",
+            "description": "Customer reports multiple failed payment attempts on invoice.",
+            "evidence": [
+              0
+            ],
+            "proposedAction": "Verify payment gateway status and validate invoice details at time of failure",
+            "expectedOutcome": "Successful payment completion"
+          }
+        ],
+        "model": "qwen3:4b-instruct",
+        "promptVersion": "call-analysis-v4-speakers",
+        "profileVersion": 0,
+        "providerId": "local",
+        "skillVersion": "4"
+      },
+      "score": {
+        "expected": 1,
+        "predicted": 2,
+        "matched": 1,
+        "unsupported": 1,
+        "findings": [
+          {
+            "expectedIssue": "payment-failure",
+            "citationLabelSupported": true,
+            "actionPatternMatched": true,
+            "forbiddenPatterns": [],
+            "rubricUnsupported": false
+          },
+          {
+            "expectedIssue": null,
+            "citationLabelSupported": false,
+            "actionPatternMatched": false,
+            "forbiddenPatterns": [],
+            "rubricUnsupported": true
+          }
+        ],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": true
+      },
+      "seconds": 11.45114166699932,
+      "rawModelOutputs": [
+        "{\n  \"issues\": [\n    {\n      \"category\": \"Payments\",\n      \"description\": \"Repeated payment failure on invoice\",\n      \"evidence\": [0],\n      \"expectedOutcome\": \"Successful payment completion\",\n      \"priority\": \"High\",\n      \"proposedAction\": \"Inspect payment decline logs for the reported attempts\",\n      \"title\": \"Repeated payment failure during invoice payment attempt(s) (3 attempts failed, customer report at index 0). Evidence: [0\" },\n    {\n      \"category\": \"Payments\",\n      \"description\": \"Customer reports multiple failed payment attempts on invoice.\",\n      \"evidence\": [0],\n      \"expectedOutcome\": \"Successful payment completion\",\n      \"priority\": \"High\",\n      \"proposedAction\": \"Verify payment gateway status and validate invoice details at time of failure\",\n      \"title\": \"Failed invoice payments (3 attempts, index 0)\"\n    }\n  ],\n  \"sentiment\": \"Negative\",\n  \"summary\": \"Customer reports three failed payment attempts for an invoice. Agent acknowledges investigation but provides no resolution or confirmation. Issue remains unresolved with no evidence of successful payment completion.\",\n  \"topic\": \"Payment Failure\"\n}"
+      ],
+      "resources": {
+        "pythonLifetimePeakRSSBytes": 46006272,
+        "pythonCPUSeconds": 0.171448,
+        "ollamaProcessRSSSnapshot": [
+          {
+            "pid": 1628,
+            "rssBytes": 8519680,
+            "executable": "Ollama"
+          },
+          {
+            "pid": 1805,
+            "rssBytes": 27148288,
+            "executable": "ollama"
+          },
+          {
+            "pid": 69412,
+            "rssBytes": 3937157120,
+            "executable": "llama-server"
+          }
+        ],
+        "note": "Python peak excludes Ollama and other services. Ollama RSS is a point sample, not peak memory or total system/GPU memory. CPU time excludes model server."
+      }
+    },
+    {
+      "id": "dev-agent-hypothesis",
+      "expectedIssueCount": 0,
+      "status": "passed",
+      "retries": 0,
+      "privacy": {
+        "sensitiveCharacters": 0,
+        "missedCharacters": 0,
+        "nonSensitiveCharacters": 150,
+        "excessiveCharacters": 0,
+        "sensitiveSpans": 0,
+        "missedSpans": 0
+      },
+      "maskedSegments": [
+        {
+          "speaker": "Agent",
+          "role": "agent",
+          "roleSource": "channel-metadata",
+          "text": "For training, a payment failure could be caused by a database outage. Did that happen to you?"
+        },
+        {
+          "speaker": "Customer",
+          "role": "customer",
+          "roleSource": "channel-metadata",
+          "text": "No. My payment worked. I only called to thank your team."
+        }
+      ],
+      "structuralValidation": "passed",
+      "output": {
+        "summary": "No customer-reported product or service problem was stated. The conversation concluded with a gratitude expression, not a complaint or issue.",
+        "topic": "None",
+        "sentiment": "Neutral",
+        "issues": [],
+        "model": "qwen3:4b-instruct",
+        "promptVersion": "call-analysis-v4-speakers",
+        "profileVersion": 0,
+        "providerId": "local",
+        "skillVersion": "4"
+      },
+      "score": {
+        "expected": 0,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": false
+      },
+      "seconds": 4.3443785829877015,
+      "rawModelOutputs": [
+        "{\n  \"issues\": [],\n  \"sentiment\": \"Neutral\",\n  \"summary\": \"No customer-reported product or service problem was stated. The conversation concluded with a gratitude expression, not a complaint or issue.\",\n  \"topic\": \"None\"\n}"
+      ],
+      "resources": {
+        "pythonLifetimePeakRSSBytes": 46006272,
+        "pythonCPUSeconds": 0.193334,
+        "ollamaProcessRSSSnapshot": [
+          {
+            "pid": 1628,
+            "rssBytes": 8339456,
+            "executable": "Ollama"
+          },
+          {
+            "pid": 1805,
+            "rssBytes": 27525120,
+            "executable": "ollama"
+          },
+          {
+            "pid": 69440,
+            "rssBytes": 3922591744,
+            "executable": "llama-server"
+          }
+        ],
+        "note": "Python peak excludes Ollama and other services. Ollama RSS is a point sample, not peak memory or total system/GPU memory. CPU time excludes model server."
+      }
+    },
+    {
+      "id": "dev-positive",
+      "expectedIssueCount": 0,
+      "status": "passed",
+      "retries": 0,
+      "privacy": {
+        "sensitiveCharacters": 0,
+        "missedCharacters": 0,
+        "nonSensitiveCharacters": 106,
+        "excessiveCharacters": 0,
+        "sensitiveSpans": 0,
+        "missedSpans": 0
+      },
+      "maskedSegments": [
+        {
+          "speaker": "Customer",
+          "role": "customer",
+          "roleSource": "channel-metadata",
+          "text": "Your app works perfectly. I have no issues. Thank you for the excellent service."
+        },
+        {
+          "speaker": "Agent",
+          "role": "agent",
+          "roleSource": "channel-metadata",
+          "text": "Thank you for telling us."
+        }
+      ],
+      "structuralValidation": "passed",
+      "output": {
+        "summary": "No customer-reported problems identified in the transcript. All communication reflects satisfaction with the service.",
+        "topic": "Service Satisfaction",
+        "sentiment": "Positive",
+        "issues": [],
+        "model": "qwen3:4b-instruct",
+        "promptVersion": "call-analysis-v4-speakers",
+        "profileVersion": 0,
+        "providerId": "local",
+        "skillVersion": "4"
+      },
+      "score": {
+        "expected": 0,
+        "predicted": 0,
+        "matched": 0,
+        "unsupported": 0,
+        "findings": [],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": true
+      },
+      "seconds": 5.9084614159946796,
+      "rawModelOutputs": [
+        "{\"issues\": [], \"sentiment\": \"Positive\", \"summary\": \"No customer-reported problems identified in the transcript. All communication reflects satisfaction with the service.\", \"topic\": \"Service Satisfaction\"}"
+      ],
+      "resources": {
+        "pythonLifetimePeakRSSBytes": 46006272,
+        "pythonCPUSeconds": 0.21276499999999998,
+        "ollamaProcessRSSSnapshot": [
+          {
+            "pid": 1628,
+            "rssBytes": 8339456,
+            "executable": "Ollama"
+          },
+          {
+            "pid": 1805,
+            "rssBytes": 28606464,
+            "executable": "ollama"
+          },
+          {
+            "pid": 69451,
+            "rssBytes": 3929014272,
+            "executable": "llama-server"
+          }
+        ],
+        "note": "Python peak excludes Ollama and other services. Ollama RSS is a point sample, not peak memory or total system/GPU memory. CPU time excludes model server."
+      }
+    },
+    {
+      "id": "dev-privacy",
+      "expectedIssueCount": 1,
+      "status": "passed",
+      "retries": 0,
+      "privacy": {
+        "sensitiveCharacters": 46,
+        "missedCharacters": 12,
+        "nonSensitiveCharacters": 94,
+        "excessiveCharacters": 0,
+        "sensitiveSpans": 3,
+        "missedSpans": 1
+      },
+      "maskedSegments": [
+        {
+          "speaker": "Customer",
+          "role": "customer",
+          "roleSource": "channel-metadata",
+          "text": "My name is Mira Example. Email [PII] or call [PII]. My payment failed twice."
+        },
+        {
+          "speaker": "Agent",
+          "role": "agent",
+          "roleSource": "channel-metadata",
+          "text": "I will investigate the payment failure."
+        }
+      ],
+      "structuralValidation": "passed",
+      "output": {
+        "summary": "Customer reports two failed payment attempts, indicating a recurring issue with transaction processing. Investigation required to identify root cause and prevent future failures.",
+        "topic": "Payment Processing Failure",
+        "sentiment": "Negative",
+        "issues": [
+          {
+            "title": "Repeated payment failure",
+            "category": "Payments",
+            "priority": "High",
+            "description": "Repeated payment failure",
+            "evidence": [
+              0
+            ],
+            "proposedAction": "Inspect payment decline logs for the reported attempts",
+            "expectedOutcome": "Successful payment on subsequent attempt"
+          }
+        ],
+        "model": "qwen3:4b-instruct",
+        "promptVersion": "call-analysis-v4-speakers",
+        "profileVersion": 0,
+        "providerId": "local",
+        "skillVersion": "4"
+      },
+      "score": {
+        "expected": 1,
+        "predicted": 1,
+        "matched": 1,
+        "unsupported": 0,
+        "findings": [
+          {
+            "expectedIssue": "payment-failure",
+            "citationLabelSupported": true,
+            "actionPatternMatched": true,
+            "forbiddenPatterns": [],
+            "rubricUnsupported": false
+          }
+        ],
+        "missingIssueIds": [],
+        "summaryForbiddenPatterns": [],
+        "sentimentMatch": true
+      },
+      "seconds": 6.099057166022249,
+      "rawModelOutputs": [
+        "{\n  \"issues\": [\n    {\n      \"category\": \"Payments\",\n      \"description\": \"Repeated payment failure\",\n      \"evidence\": [0],\n      \"expectedOutcome\": \"Successful payment on subsequent attempt\",\n      \"priority\": \"High\",\n      \"proposedAction\": \"Inspect payment decline logs for the reported attempts\",\n      \"title\": \"Repeated payment failure\"\n    }\n  ],\n  \"sentiment\": \"Negative\",\n  \"summary\": \"Customer reports two failed payment attempts, indicating a recurring issue with transaction processing. Investigation required to identify root cause and prevent future failures.\",\n  \"topic\": \"Payment Processing Failure\"\n}"
+      ],
+      "resources": {
+        "pythonLifetimePeakRSSBytes": 46006272,
+        "pythonCPUSeconds": 0.236821,
+        "ollamaProcessRSSSnapshot": [
+          {
+            "pid": 1628,
+            "rssBytes": 6733824,
+            "executable": "Ollama"
+          },
+          {
+            "pid": 1805,
+            "rssBytes": 17268736,
+            "executable": "ollama"
+          },
+          {
+            "pid": 69459,
+            "rssBytes": 4023730176,
+            "executable": "llama-server"
+          }
+        ],
+        "note": "Python peak excludes Ollama and other services. Ollama RSS is a point sample, not peak memory or total system/GPU memory. CPU time excludes model server."
+      }
+    }
+  ],
+  "semanticStatus": "Deterministic label/regex checks only. Human semantic adjudication pending. No model judge.",
+  "excludes": [
+    "audio decoding",
+    "ASR",
+    "diarization",
+    "queue",
+    "Temporal retries",
+    "database grouping",
+    "post-analysis output redaction"
+  ],
+  "warmup": {
+    "status": "passed",
+    "seconds": 5.2791146250092424,
+    "coldStart": false,
+    "note": "Warm-up request excluded from case latency; models may already be resident."
+  },
+  "metrics": {
+    "cases": 4,
+    "succeeded": 4,
+    "failed": 0,
+    "unavailable": 0,
+    "expectedIssues": 2,
+    "predictedIssues": 3,
+    "matchedIssues": 2,
+    "issueLabelPrecision": 0.6666666666666666,
+    "issueLabelRecall": 1.0,
+    "rubricUnsupportedRecommendations": 1,
+    "rubricUnsupportedRecommendationRate": 0.3333333333333333,
+    "humanReviewedSemanticCorrectness": null
+  },
+  "privacy": {
+    "sensitiveCharacters": 46,
+    "missedCharacters": 12,
+    "nonSensitiveCharacters": 493,
+    "excessiveCharacters": 0,
+    "sensitiveSpans": 3,
+    "missedSpans": 1,
+    "casesScored": 4,
+    "missedCharacterRate": 0.2608695652173913,
+    "excessiveCharacterRate": 0.0
+  },
+  "completed": true
+}

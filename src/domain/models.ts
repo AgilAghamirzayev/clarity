@@ -24,6 +24,15 @@ export interface Conversation {
   issueId: string | null;
   issueIds?: string[];
   summary: string;
+  reviewRequired?: boolean;
+  roleUncertainty?: boolean;
+  summaryMode?: "model" | "source-excerpts";
+  rejectedFindings?: {
+    chunkStart: number;
+    findingIndex: number;
+    code: string;
+  }[];
+  duplicatesMerged?: number;
   transcript: Segment[];
   language: string;
 }

@@ -1,0 +1,98 @@
+[
+  {
+    "id": "development-0",
+    "split": "development",
+    "group": "checkout",
+    "title": "Payment declined",
+    "description": "Card payment fails at checkout after bank approval",
+    "synthetic": true
+  },
+  {
+    "id": "development-1",
+    "split": "development",
+    "group": "checkout",
+    "title": "Checkout transaction fails",
+    "description": "Payment attempt returns an error after authorization",
+    "synthetic": true
+  },
+  {
+    "id": "development-2",
+    "split": "development",
+    "group": "refund",
+    "title": "Unclear refund status",
+    "description": "Return refund email does not explain the processing stage",
+    "synthetic": true
+  },
+  {
+    "id": "development-3",
+    "split": "development",
+    "group": "refund",
+    "title": "Confusing refund email",
+    "description": "Customer cannot understand what processing means for a refund",
+    "synthetic": true
+  },
+  {
+    "id": "development-4",
+    "split": "development",
+    "group": "password",
+    "title": "Password reset expired",
+    "description": "Reset link expires before customer can use it",
+    "synthetic": true
+  },
+  {
+    "id": "development-5",
+    "split": "development",
+    "group": "password",
+    "title": "Reset link invalid",
+    "description": "Emailed password recovery link is already expired",
+    "synthetic": true
+  },
+  {
+    "id": "heldout-0",
+    "split": "heldout",
+    "group": "upload",
+    "title": "Identity upload failure",
+    "description": "Verification document upload fails without an explanation",
+    "synthetic": true
+  },
+  {
+    "id": "heldout-1",
+    "split": "heldout",
+    "group": "upload",
+    "title": "Document submission error",
+    "description": "Identity file cannot be uploaded and no error guidance appears",
+    "synthetic": true
+  },
+  {
+    "id": "heldout-2",
+    "split": "heldout",
+    "group": "updates",
+    "title": "Missing case updates",
+    "description": "Customer gets no follow-up on an open payment support case",
+    "synthetic": true
+  },
+  {
+    "id": "heldout-3",
+    "split": "heldout",
+    "group": "updates",
+    "title": "No follow-up from support",
+    "description": "Open support ticket has no progress updates",
+    "synthetic": true
+  },
+  {
+    "id": "heldout-4",
+    "split": "heldout",
+    "group": "duplicate",
+    "title": "Duplicate card charge",
+    "description": "Customer reports the same purchase charged twice",
+    "synthetic": true
+  },
+  {
+    "id": "heldout-5",
+    "split": "heldout",
+    "group": "duplicate",
+    "title": "Double billing for purchase",
+    "description": "One order produced two card charges",
+    "synthetic": true
+  }
+]

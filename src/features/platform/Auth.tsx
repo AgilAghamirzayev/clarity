@@ -1,14 +1,66 @@
 import { useEffect, type ReactNode, type FormEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api, apiMode, ApiError } from "../../data/api";
-import { LoadingState } from "../../components/ui";
-import { IdentityContext, type Identity } from "./identity";
+import { api, apiMode, guestMode, ApiError } from "../../data/api";
+import { LoadingState, ErrorState } from "../../components/ui";
+import { demoIdentity, IdentityContext, type Identity } from "./identity";
 export function AuthGate({ children }: { children: ReactNode }) {
+  if (!apiMode) {
+    return (
+      <IdentityContext.Provider value={demoIdentity}>
+        {children}
+      </IdentityContext.Provider>
+    );
+  }
+  if (guestMode) return <GuestGate>{children}</GuestGate>;
+  return <AuthenticatedGate>{children}</AuthenticatedGate>;
+}
+
+function GuestGate({ children }: { children: ReactNode }) {
+  const client = useQueryClient();
+  const session = useQuery({
+    queryKey: ["session"],
+    queryFn: () => api<Identity>("/auth/demo", { method: "POST" }),
+    retry: false,
+    staleTime: Infinity,
+  });
+  const refetch = session.refetch;
+  useEffect(() => {
+    const expired = () => {
+      client.clear();
+      void refetch();
+    };
+    window.addEventListener("csi:unauthorized", expired);
+    return () => window.removeEventListener("csi:unauthorized", expired);
+  }, [client, refetch]);
+  if (session.isPending) return <LoadingState />;
+  if (session.isError)
+    return (
+      <main className="login-shell">
+        <section className="panel login-card">
+          <h1>Live demo is unavailable</h1>
+          <p>
+            The demo needs the API and local processing services. Your
+            recordings will not be replaced with sample results.
+          </p>
+          <ErrorState
+            error={session.error}
+            retry={() => void session.refetch()}
+          />
+        </section>
+      </main>
+    );
+  return (
+    <IdentityContext.Provider value={session.data}>
+      {children}
+    </IdentityContext.Provider>
+  );
+}
+
+function AuthenticatedGate({ children }: { children: ReactNode }) {
   const client = useQueryClient();
   const session = useQuery({
     queryKey: ["session"],
     queryFn: () => api<Identity>("/auth/me"),
-    enabled: apiMode,
     retry: false,
   });
   const login = useMutation({
@@ -31,9 +83,8 @@ export function AuthGate({ children }: { children: ReactNode }) {
     window.addEventListener("csi:unauthorized", expired);
     return () => window.removeEventListener("csi:unauthorized", expired);
   }, [client, refetchSession]);
-  if (!apiMode) return children;
   if (session.isPending) return <LoadingState />;
-  if (session.data)
+  if (session.data && session.data.role !== "DEMO")
     return (
       <IdentityContext.Provider value={session.data}>
         {children}
@@ -100,7 +151,7 @@ export function SignOut() {
     mutationFn: () => api("/auth/logout", { method: "POST" }),
     onSuccess: () => {
       client.clear();
-      window.location.assign("/");
+      window.location.assign(import.meta.env.BASE_URL);
     },
   });
   return (

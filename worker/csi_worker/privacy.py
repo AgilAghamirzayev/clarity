@@ -9,8 +9,15 @@ PATTERNS = [
     re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.I),
     re.compile(r"\b[A-Z]{2}\d{2}(?:[ ]?[A-Z0-9]){11,30}\b"),
     re.compile(r"(?<!\w)\+?\d[\d\s()-]{7,}\d(?!\w)"),
-    re.compile(r"\b(?:FIN|PIN|passport|SSN|ID|FİN)\s*[:#-]?\s*[A-Z0-9-]{5,20}\b", re.I),
+    re.compile(r"\b(?:FIN|PIN|passport|SSN|ID|FİN)(?:\s*[:#-]\s*|\s+)[A-Z0-9-]{5,20}\b", re.I),
 ]
+NAME_INTRODUCTION = re.compile(r"\b(?i:my name is)\s+([A-Z][a-z]+(?:[ '-][A-Z][a-z]+){1,3})")
+
+
+def pattern_spans(text):
+    return [(m.start(), m.end()) for pattern in PATTERNS for m in pattern.finditer(text)] + [
+        m.span(1) for m in NAME_INTRODUCTION.finditer(text)
+    ]
 
 
 def merge_spans(text, spans):
@@ -26,7 +33,7 @@ def merge_spans(text, spans):
 
 
 def mask_patterns(text):
-    return merge_spans(text, [(m.start(), m.end()) for pattern in PATTERNS for m in pattern.finditer(text)])
+    return merge_spans(text, pattern_spans(text))
 
 
 @lru_cache(maxsize=1)
@@ -86,7 +93,7 @@ def local_entities(text):
 
 
 def detect_spans(text):
-    spans = [(m.start(), m.end()) for pattern in PATTERNS for m in pattern.finditer(text)]
+    spans = pattern_spans(text)
     for offset in range(0, len(text), 500):
         spans.extend(
             (offset + start, offset + end) for start, end in local_entities(text[offset : offset + 700])
@@ -100,7 +107,11 @@ def redact(text):
 
 def redact_segments(segments):
     text = "\n".join(segment["text"] for segment in segments)
-    spans = detect_spans(text)
+    return mask_segments(segments, detect_spans(text))
+
+
+def mask_segments(segments, spans):
+    """Apply joined-text offsets without losing speaker metadata."""
     offset = 0
     result = []
     for segment in segments:
